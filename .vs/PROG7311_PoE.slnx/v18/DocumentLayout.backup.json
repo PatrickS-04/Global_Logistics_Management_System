@@ -1,7 +1,12 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "C:\\Users\\lab_services_student\\Desktop\\PROG7311_PoE\\",
-  "Documents": [],
+  "WorkspaceRootPath": "C:\\Users\\lab_services_student\\Desktop\\prog7311-poe-part2-ST10440987-Patrick\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{E6BF8179-3190-5894-ECD4-43F21532CB23}|PROG7311_PoE\\PROG7311_PoE.csproj|c:\\users\\lab_services_student\\desktop\\prog7311-poe-part2-st10440987-patrick\\prog7311_poe\\services\\contractservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E6BF8179-3190-5894-ECD4-43F21532CB23}|PROG7311_PoE\\PROG7311_PoE.csproj|solutionrelative:prog7311_poe\\services\\contractservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
   "DocumentGroupContainers": [
     {
       "Orientation": 0,
@@ -9,7 +14,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 174,
-          "SelectedChildIndex": -1,
+          "SelectedChildIndex": 3,
           "Children": [
             {
               "$type": "Bookmark",
@@ -22,6 +27,19 @@
             {
               "$type": "Bookmark",
               "Name": "ST:128:0:{116d2292-e37d-41cd-a077-ebacac4c8cc4}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "ContractService.cs",
+              "DocumentMoniker": "C:\\Users\\lab_services_student\\Desktop\\prog7311-poe-part2-ST10440987-Patrick\\PROG7311_PoE\\Services\\ContractService.cs",
+              "RelativeDocumentMoniker": "PROG7311_PoE\\Services\\ContractService.cs",
+              "ToolTip": "C:\\Users\\lab_services_student\\Desktop\\prog7311-poe-part2-ST10440987-Patrick\\PROG7311_PoE\\Services\\ContractService.cs",
+              "RelativeToolTip": "PROG7311_PoE\\Services\\ContractService.cs",
+              "ViewState": "AgIAADEAAAAAAAAAAAAAACgAAAAwAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-04-15T11:30:11.2Z",
+              "EditorCaption": ""
             }
           ]
         },

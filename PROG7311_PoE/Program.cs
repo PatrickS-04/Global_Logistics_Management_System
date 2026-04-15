@@ -1,4 +1,7 @@
+using Microsoft.EntityFrameworkCore;
 using PROG7311_PoE.Components;
+using PROG7311_PoE.Data;
+using PROG7311_PoE.Services;
 
 namespace PROG7311_PoE
 {
@@ -11,6 +14,12 @@ namespace PROG7311_PoE
             // Add services to the container.
             builder.Services.AddRazorComponents()
                 .AddInteractiveServerComponents();
+            builder.Services.AddControllersWithViews();
+
+            builder.Services.AddDbContextFactory<AppDbContext>(options =>
+                options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+            builder.Services.AddScoped<IContractFactory, ContractFactory>();
 
             var app = builder.Build();
 
