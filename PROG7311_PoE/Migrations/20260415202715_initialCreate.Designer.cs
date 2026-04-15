@@ -12,7 +12,7 @@ using PROG7311_PoE.Data;
 namespace PROG7311_PoE.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20260415121320_initialCreate")]
+    [Migration("20260415202715_initialCreate")]
     partial class initialCreate
     {
         /// <inheritdoc />
@@ -90,6 +90,40 @@ namespace PROG7311_PoE.Migrations
                     b.UseTphMappingStrategy();
                 });
 
+            modelBuilder.Entity("PROG7311_PoE.Models.ContractFile", b =>
+                {
+                    b.Property<int>("ContractFileId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ContractFileId"));
+
+                    b.Property<int>("ContractId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("fileName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("filePath")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("fileSize")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("storedFileName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("ContractFileId");
+
+                    b.HasIndex("ContractId")
+                        .IsUnique();
+
+                    b.ToTable("ContractFiles", "dbo");
+                });
+
             modelBuilder.Entity("PROG7311_PoE.Models.ServiceRequest", b =>
                 {
                     b.Property<int>("ServiceRequestId")
@@ -151,6 +185,15 @@ namespace PROG7311_PoE.Migrations
                     b.Navigation("Client");
                 });
 
+            modelBuilder.Entity("PROG7311_PoE.Models.ContractFile", b =>
+                {
+                    b.HasOne("PROG7311_PoE.Models.Contract", null)
+                        .WithOne("File")
+                        .HasForeignKey("PROG7311_PoE.Models.ContractFile", "ContractId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("PROG7311_PoE.Models.ServiceRequest", b =>
                 {
                     b.HasOne("PROG7311_PoE.Models.Contract", "Contract")
@@ -160,6 +203,11 @@ namespace PROG7311_PoE.Migrations
                         .IsRequired();
 
                     b.Navigation("Contract");
+                });
+
+            modelBuilder.Entity("PROG7311_PoE.Models.Contract", b =>
+                {
+                    b.Navigation("File");
                 });
 #pragma warning restore 612, 618
         }

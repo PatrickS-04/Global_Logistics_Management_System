@@ -17,6 +17,7 @@ namespace PROG7311_PoE.Data
         public DbSet<PremiumContract> PremiumContracts { get; set; }
         public DbSet<InternationalContract> InternationalContracts { get; set; }
         public DbSet<ServiceRequest> ServiceRequests { get; set; }
+        public DbSet<ContractFile> ContractFiles { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

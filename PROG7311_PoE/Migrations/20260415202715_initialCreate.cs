@@ -11,6 +11,9 @@ namespace PROG7311_PoE.Migrations
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.EnsureSchema(
+                name: "dbo");
+
             migrationBuilder.CreateTable(
                 name: "Clients",
                 columns: table => new
@@ -51,6 +54,30 @@ namespace PROG7311_PoE.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "ContractFiles",
+                schema: "dbo",
+                columns: table => new
+                {
+                    ContractFileId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    fileName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    storedFileName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    fileSize = table.Column<long>(type: "bigint", nullable: false),
+                    filePath = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ContractId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ContractFiles", x => x.ContractFileId);
+                    table.ForeignKey(
+                        name: "FK_ContractFiles_Contracts_ContractId",
+                        column: x => x.ContractId,
+                        principalTable: "Contracts",
+                        principalColumn: "ContractId",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "ServiceRequests",
                 columns: table => new
                 {
@@ -73,6 +100,13 @@ namespace PROG7311_PoE.Migrations
                 });
 
             migrationBuilder.CreateIndex(
+                name: "IX_ContractFiles_ContractId",
+                schema: "dbo",
+                table: "ContractFiles",
+                column: "ContractId",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Contracts_ClientId",
                 table: "Contracts",
                 column: "ClientId");
@@ -86,6 +120,10 @@ namespace PROG7311_PoE.Migrations
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropTable(
+                name: "ContractFiles",
+                schema: "dbo");
+
             migrationBuilder.DropTable(
                 name: "ServiceRequests");
 

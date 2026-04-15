@@ -1,7 +1,12 @@
-﻿namespace PROG7311_PoE.Models
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+
+namespace PROG7311_PoE.Models
 {
     public class ServiceRequest
     {
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int ServiceRequestId { get; set; }
         public int ContractId { get; set; }
         public Contract Contract { get; set; }
