@@ -7,21 +7,23 @@ namespace PROG7311_PoE.Services
 {
     public class ContractService
     {
-        private readonly AppDbContext _appDbContext;
+        private readonly IDbContextFactory<AppDbContext> _contextFactory;
         private readonly IContractFactory _contractFactory;
 
-        public ContractService(AppDbContext appDbContext, IContractFactory contractFactory)
+        public ContractService(IDbContextFactory<AppDbContext> contextFactory, IContractFactory contractFactory)
         {
-            appDbContext = _appDbContext;
+            // Injecting the DbContext Factory Interface to create a new database connection for each method so the same connection is not used across all requests
+            _contextFactory = contextFactory;
             // Injecting the Contract Factory Interface for abstraction and to follow the Factory Design Pattern that i chose in Part 1
-            contractFactory = _contractFactory;
+            _contractFactory = contractFactory;
         }
 
         // ---------------------------------------------------------------------------------------------------------
         // Method returns a list of all Active Contracts
         public async Task<List<Contract>> GetActiveContracts()
         {
-            return await _appDbContext.Contracts
+            using var contextFactoryDb = _contextFactory.CreateDbContext();
+            return await contextFactoryDb.Contracts
                 .Include(client => client.Client)
                 .Where(contract => contract.contractStatus == ContractStatus.Active).ToListAsync();
         }
@@ -37,8 +39,9 @@ namespace PROG7311_PoE.Services
             contract.endDate = endDate;
             contract.contractStatus = ContractStatus.Draft;
 
-            _appDbContext.Contracts.Add(contract);
-            await _appDbContext.SaveChangesAsync();
+            using var contextFactoryDb = _contextFactory.CreateDbContext();
+            contextFactoryDb.Contracts.Add(contract);
+            await contextFactoryDb.SaveChangesAsync();
             return contract;
         }
 
@@ -46,7 +49,8 @@ namespace PROG7311_PoE.Services
         // Method returns a filtered list of contracts by date range and contract status
         public async Task<List<Contract>> GetFilteredContracts(DateTime? startDate, DateTime? endDate, ContractStatus? contractStatus)
         {
-            var linqQuery = _appDbContext.Contracts.AsQueryable();
+            using var contextFactoryDb = _contextFactory.CreateDbContext();
+            var linqQuery = contextFactoryDb.Contracts.AsQueryable();
 
             if (startDate.HasValue)
             {
@@ -70,12 +74,13 @@ namespace PROG7311_PoE.Services
         // Method updated contract statuses and saves it to the database
         public async Task UpdateContractStatus(ContractStatus updatedContractStatus, int contractId)
         {
-            var contract = await _appDbContext.Contracts.FindAsync(contractId);
+            using var contextFactoryDb = _contextFactory.CreateDbContext();
+            var contract = await contextFactoryDb.Contracts.FindAsync(contractId);
 
             if (contract != null)
             {
                 contract.contractStatus = updatedContractStatus;
-                await _appDbContext.SaveChangesAsync();
+                await contextFactoryDb.SaveChangesAsync();
             }
         }
     }

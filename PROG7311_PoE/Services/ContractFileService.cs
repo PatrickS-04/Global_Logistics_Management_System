@@ -12,6 +12,7 @@ namespace PROG7311_PoE.Services
 
         public ContractFileService(IDbContextFactory<AppDbContext> contextFactory,  IWebHostEnvironment webHostEnvironment)
         {
+            // Injecting the DbContext Factory Interface to create a new database connection for each method so the same connection is not used across all requests
             _contextFactory = contextFactory;
             _webHostEnvironment = webHostEnvironment;
         }
