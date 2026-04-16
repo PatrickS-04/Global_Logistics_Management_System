@@ -20,6 +20,12 @@ namespace PROG7311_PoE.Services
         {
             using var dbContext = await _contextFactory.CreateDbContextAsync();
 
+            var contract = await dbContext.Contracts.FindAsync(contractId);
+            if (contract == null)
+            {
+                throw new Exception("Contract not found");
+            }
+
             var pathToUploadedContract = Path.Combine(_webHostEnvironment.WebRootPath, "uploadedContracts", "Contracts");
             if (!Directory.Exists(pathToUploadedContract))
             {
@@ -28,11 +34,6 @@ namespace PROG7311_PoE.Services
 
             var uniqueFileName = $"{Guid.NewGuid()}{Path.GetExtension(contractFile.Name)}";
             var pathOfFile = Path.Combine(pathToUploadedContract, uniqueFileName);
-
-            using (var stream = new FileStream(pathOfFile, FileMode.Create))
-            {
-                await contractFile.OpenReadStream().CopyToAsync(stream);
-            }
 
             var newContractFile = new ContractFile
             {
@@ -43,12 +44,23 @@ namespace PROG7311_PoE.Services
                 filePath = pathOfFile
             };
 
+            contract.File = newContractFile;
+
+            var contractFileTypeValidation = new CheckFileTypeStrategy();
+            if (!contractFileTypeValidation.Validate(contract)) 
+            {
+                throw new InvalidOperationException("Invalid file type. Only PDF files are allowed");
+            }
+
+            using (var stream = new FileStream(pathOfFile, FileMode.Create))
+            {
+                await contractFile.OpenReadStream(maxAllowedSize: 1024 * 1024 * 25).CopyToAsync(stream);
+            }
+
             dbContext.ContractFiles.Add(newContractFile);
             await dbContext.SaveChangesAsync();
 
             return newContractFile;
         }
-
-        public 
     }
 }

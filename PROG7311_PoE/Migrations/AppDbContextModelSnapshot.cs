@@ -66,6 +66,10 @@ namespace PROG7311_PoE.Migrations
                     b.Property<int>("contractStatus")
                         .HasColumnType("int");
 
+                    b.Property<string>("defaultCurrency")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<DateTime>("endDate")
                         .HasColumnType("datetime2");
 

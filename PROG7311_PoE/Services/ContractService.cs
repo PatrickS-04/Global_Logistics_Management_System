@@ -80,6 +80,14 @@ namespace PROG7311_PoE.Services
             if (contract != null)
             {
                 contract.contractStatus = updatedContractStatus;
+
+                var contractStatusValidation = new CheckContractStatus();
+                
+                if (!contractStatusValidation.Validate(contract))
+                {
+                    throw new InvalidOperationException("Invalid contract status");
+                }
+
                 await contextFactoryDb.SaveChangesAsync();
             }
         }

@@ -33,6 +33,11 @@ namespace PROG7311_PoE.Services
                 return false;
             }
 
+            var currencyConversionValidation = new CheckCurrencyConversion();
+            if (!currencyConversionValidation.Validate(contract))
+            {
+                return false;
+            }
             return true;
         }
 

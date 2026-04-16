@@ -1,0 +1,32 @@
+﻿using PROG7311_PoE.Models;
+
+namespace PROG7311_PoE.Services
+{
+    public class CheckContractStatus : IValidationStrategy
+    {
+        public bool Validate(Contract contract)
+        {
+            return contract.contractStatus != ContractStatus.None;
+        }
+    }
+
+    public class CheckFileTypeStrategy : IValidationStrategy
+    {
+        public bool Validate(Contract contract)
+        {
+            return contract.File != null;
+        }
+    }
+
+    public class CheckCurrencyConversion : IValidationStrategy
+    {
+        public bool Validate(Contract contract)
+        {
+            if (contract is InternationalContract)
+            {
+                if 
+            }
+            return true;
+        }
+    }
+}
