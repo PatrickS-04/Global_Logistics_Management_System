@@ -9,18 +9,23 @@ namespace PROG7311_PoE.Services
     {
         private readonly IDbContextFactory<AppDbContext> _contextFactory;
         private readonly IWebHostEnvironment _webHostEnvironment;
+        private readonly ContractService _contractService;
 
-        public ContractFileService(IDbContextFactory<AppDbContext> contextFactory,  IWebHostEnvironment webHostEnvironment)
+        public ContractFileService(IDbContextFactory<AppDbContext> contextFactory,  IWebHostEnvironment webHostEnvironment, ContractService contractService)
         {
             // Injecting the DbContext Factory Interface to create a new database connection for each method so the same connection is not used across all requests
             _contextFactory = contextFactory;
             _webHostEnvironment = webHostEnvironment;
+            _contractService = contractService;
         }
         public async Task<ContractFile> ContractFileUpload(int contractId, IBrowserFile contractFile)
         {
             using var dbContext = await _contextFactory.CreateDbContextAsync();
 
-            var contract = await dbContext.Contracts.FindAsync(contractId);
+            var contract = await dbContext.Contracts
+                .Include(contract => contract.LogisticsManager)
+                .FirstOrDefaultAsync(contract => contract.ContractId == contractId);
+
             if (contract == null)
             {
                 throw new Exception("Contract not found");
@@ -58,6 +63,19 @@ namespace PROG7311_PoE.Services
             }
 
             dbContext.ContractFiles.Add(newContractFile);
+
+            // Admins get alerted as well
+            var logisticsEmailObserver = new LogisticsManagerEmailObserver { email = contract.LogisticsManager.email };
+            var logisticsAlertObserver = new LogisticsManagerAlertObserver { phoneNumber = contract.LogisticsManager.phoneNumber };
+
+            _contractService.AttachObserver(logisticsEmailObserver);
+            _contractService.AttachObserver(logisticsAlertObserver);
+
+            _contractService.NotifyObservers($"A file has been uploaded for contract with {contractId}");
+
+            _contractService.DetachObserver(logisticsEmailObserver);
+            _contractService.DetachObserver(logisticsAlertObserver);
+
             await dbContext.SaveChangesAsync();
 
             return newContractFile;

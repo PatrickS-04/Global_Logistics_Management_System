@@ -38,7 +38,7 @@ namespace PROG7311_PoE.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("clientRegion")
+                    b.Property<string>("clientPhoneNumber")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -63,6 +63,9 @@ namespace PROG7311_PoE.Migrations
                         .HasMaxLength(13)
                         .HasColumnType("nvarchar(13)");
 
+                    b.Property<int>("LogisticsManagerId")
+                        .HasColumnType("int");
+
                     b.Property<int>("contractStatus")
                         .HasColumnType("int");
 
@@ -83,6 +86,8 @@ namespace PROG7311_PoE.Migrations
                     b.HasKey("ContractId");
 
                     b.HasIndex("ClientId");
+
+                    b.HasIndex("LogisticsManagerId");
 
                     b.ToTable("Contracts");
 
@@ -123,6 +128,31 @@ namespace PROG7311_PoE.Migrations
                         .IsUnique();
 
                     b.ToTable("ContractFiles", "dbo");
+                });
+
+            modelBuilder.Entity("PROG7311_PoE.Models.LogisticsManager", b =>
+                {
+                    b.Property<int>("LogisticsManagerId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("LogisticsManagerId"));
+
+                    b.Property<string>("email")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("phoneNumber")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("LogisticsManagerId");
+
+                    b.ToTable("LogisticsManager");
                 });
 
             modelBuilder.Entity("PROG7311_PoE.Models.ServiceRequest", b =>
@@ -183,7 +213,15 @@ namespace PROG7311_PoE.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("PROG7311_PoE.Models.LogisticsManager", "LogisticsManager")
+                        .WithMany()
+                        .HasForeignKey("LogisticsManagerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.Navigation("Client");
+
+                    b.Navigation("LogisticsManager");
                 });
 
             modelBuilder.Entity("PROG7311_PoE.Models.ContractFile", b =>

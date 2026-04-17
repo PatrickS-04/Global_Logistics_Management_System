@@ -24,6 +24,7 @@ namespace PROG7311_PoE.Models
         public ContractStatus contractStatus { get; set; }
         public string serviceLevel { get; set; }
         public ContractFile? File { get; set; }
+        public LogisticsManager LogisticsManager { get; set; }
         public string defaultCurrency { get; set; } = "ZAR";
     }
 

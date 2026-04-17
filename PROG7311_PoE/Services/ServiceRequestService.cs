@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using PROG7311_PoE.Data;
 using PROG7311_PoE.Models;
+using System.Diagnostics.Contracts;
 
 namespace PROG7311_PoE.Services
 {
@@ -8,12 +9,14 @@ namespace PROG7311_PoE.Services
     {
         private readonly IDbContextFactory<AppDbContext> _contextFactory;
         private readonly IConfiguration _configuration;
+        private readonly ContractService _contractService;
 
-        public ServiceRequestService(IDbContextFactory<AppDbContext> contextFactory, IConfiguration configuration)
+        public ServiceRequestService(IDbContextFactory<AppDbContext> contextFactory, IConfiguration configuration, ContractService contractService)
         {
             // Injecting the DbContext Factory Interface to create a new database connection for each method so the same connection is not used across all requests
             _contextFactory = contextFactory;
             _configuration = configuration;
+            _contractService = contractService;
         }
 
         // ---------------------------------------------------------------------------------------------------------
@@ -58,6 +61,28 @@ namespace PROG7311_PoE.Services
             using var contextFactoryDb = _contextFactory.CreateDbContext();
             contextFactoryDb.ServiceRequests.Add(newServiceRequest);
             await contextFactoryDb.SaveChangesAsync();
+
+            var contract = await contextFactoryDb.Contracts
+                .Include(contract => contract.Client)
+                .Include(contract => contract.LogisticsManager)
+                .FirstOrDefaultAsync(contract => contract.ContractId == newServiceRequest.ContractId);
+
+            var logisticsEmailObserver = new LogisticsManagerEmailObserver { email = contract.LogisticsManager.email };
+            var clientEmailObserver = new ClientEmailObserver { email = contract.Client.clientEmail };
+            var logisticsAlertObserver = new LogisticsManagerAlertObserver { phoneNumber = contract.LogisticsManager.phoneNumber };
+            var clientAlertObserver = new ClientAlertObserver { phoneNumber = contract.Client.clientPhoneNumber };
+
+            _contractService.AttachObserver(logisticsEmailObserver);
+            _contractService.AttachObserver(clientEmailObserver);
+            _contractService.AttachObserver(logisticsAlertObserver);
+            _contractService.AttachObserver(clientAlertObserver);
+
+            _contractService.NotifyObservers("A new service request has been created!");
+
+            _contractService.DetachObserver(logisticsEmailObserver);
+            _contractService.DetachObserver(clientEmailObserver);
+            _contractService.DetachObserver(logisticsAlertObserver);
+            _contractService.DetachObserver(clientAlertObserver);
         }
 
         // ---------------------------------------------------------------------------------------------------------

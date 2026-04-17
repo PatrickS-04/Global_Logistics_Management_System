@@ -3,18 +3,6 @@
   "WorkspaceRootPath": "C:\\Users\\lab_services_student\\Desktop\\prog7311-poe-part2-ST10440987-Patrick\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{E6BF8179-3190-5894-ECD4-43F21532CB23}|PROG7311_PoE\\PROG7311_PoE.csproj|c:\\users\\lab_services_student\\desktop\\prog7311-poe-part2-st10440987-patrick\\prog7311_poe\\services\\servicerequestservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{E6BF8179-3190-5894-ECD4-43F21532CB23}|PROG7311_PoE\\PROG7311_PoE.csproj|solutionrelative:prog7311_poe\\services\\servicerequestservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{E6BF8179-3190-5894-ECD4-43F21532CB23}|PROG7311_PoE\\PROG7311_PoE.csproj|c:\\users\\lab_services_student\\desktop\\prog7311-poe-part2-st10440987-patrick\\prog7311_poe\\services\\ivalidationstrategy.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{E6BF8179-3190-5894-ECD4-43F21532CB23}|PROG7311_PoE\\PROG7311_PoE.csproj|solutionrelative:prog7311_poe\\services\\ivalidationstrategy.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{E6BF8179-3190-5894-ECD4-43F21532CB23}|PROG7311_PoE\\PROG7311_PoE.csproj|c:\\users\\lab_services_student\\desktop\\prog7311-poe-part2-st10440987-patrick\\prog7311_poe\\services\\validationstrategy.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{E6BF8179-3190-5894-ECD4-43F21532CB23}|PROG7311_PoE\\PROG7311_PoE.csproj|solutionrelative:prog7311_poe\\services\\validationstrategy.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{E6BF8179-3190-5894-ECD4-43F21532CB23}|PROG7311_PoE\\PROG7311_PoE.csproj|c:\\users\\lab_services_student\\desktop\\prog7311-poe-part2-st10440987-patrick\\prog7311_poe\\services\\contractservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{E6BF8179-3190-5894-ECD4-43F21532CB23}|PROG7311_PoE\\PROG7311_PoE.csproj|solutionrelative:prog7311_poe\\services\\contractservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
@@ -43,51 +31,15 @@
             {
               "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "ServiceRequestService.cs",
-              "DocumentMoniker": "C:\\Users\\lab_services_student\\Desktop\\prog7311-poe-part2-ST10440987-Patrick\\PROG7311_PoE\\Services\\ServiceRequestService.cs",
-              "RelativeDocumentMoniker": "PROG7311_PoE\\Services\\ServiceRequestService.cs",
-              "ToolTip": "C:\\Users\\lab_services_student\\Desktop\\prog7311-poe-part2-ST10440987-Patrick\\PROG7311_PoE\\Services\\ServiceRequestService.cs*",
-              "RelativeToolTip": "PROG7311_PoE\\Services\\ServiceRequestService.cs*",
-              "ViewState": "AgIAAB0AAAAAAAAAAIATwCcAAAANAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-04-16T20:10:57.742Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "IValidationStrategy.cs",
-              "DocumentMoniker": "C:\\Users\\lab_services_student\\Desktop\\prog7311-poe-part2-ST10440987-Patrick\\PROG7311_PoE\\Services\\IValidationStrategy.cs",
-              "RelativeDocumentMoniker": "PROG7311_PoE\\Services\\IValidationStrategy.cs",
-              "ToolTip": "C:\\Users\\lab_services_student\\Desktop\\prog7311-poe-part2-ST10440987-Patrick\\PROG7311_PoE\\Services\\IValidationStrategy.cs",
-              "RelativeToolTip": "PROG7311_PoE\\Services\\IValidationStrategy.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-04-16T19:40:30.69Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "ValidationStrategy.cs",
-              "DocumentMoniker": "C:\\Users\\lab_services_student\\Desktop\\prog7311-poe-part2-ST10440987-Patrick\\PROG7311_PoE\\Services\\ValidationStrategy.cs",
-              "RelativeDocumentMoniker": "PROG7311_PoE\\Services\\ValidationStrategy.cs",
-              "ToolTip": "C:\\Users\\lab_services_student\\Desktop\\prog7311-poe-part2-ST10440987-Patrick\\PROG7311_PoE\\Services\\ValidationStrategy.cs",
-              "RelativeToolTip": "PROG7311_PoE\\Services\\ValidationStrategy.cs",
-              "ViewState": "AgIAAAEAAAAAAAAAAAAowBUAAAAZAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-04-16T19:00:05.713Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
               "Title": "ContractService.cs",
               "DocumentMoniker": "C:\\Users\\lab_services_student\\Desktop\\prog7311-poe-part2-ST10440987-Patrick\\PROG7311_PoE\\Services\\ContractService.cs",
               "RelativeDocumentMoniker": "PROG7311_PoE\\Services\\ContractService.cs",
               "ToolTip": "C:\\Users\\lab_services_student\\Desktop\\prog7311-poe-part2-ST10440987-Patrick\\PROG7311_PoE\\Services\\ContractService.cs",
               "RelativeToolTip": "PROG7311_PoE\\Services\\ContractService.cs",
-              "ViewState": "AgIAADUAAAAAAAAAAAALwFoAAAA6AAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABUAAAAjAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-04-15T21:29:50.04Z"
+              "WhenOpened": "2026-04-15T21:29:50.04Z",
+              "EditorCaption": ""
             }
           ]
         },

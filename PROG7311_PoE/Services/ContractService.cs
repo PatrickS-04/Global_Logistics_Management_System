@@ -2,20 +2,42 @@
 using PROG7311_PoE.Data;
 using PROG7311_PoE.Models;
 using System;
+using System.Diagnostics.Contracts;
+using Contract = PROG7311_PoE.Models.Contract;
 
 namespace PROG7311_PoE.Services
 {
-    public class ContractService
+    public class ContractService : IContractService
     {
         private readonly IDbContextFactory<AppDbContext> _contextFactory;
         private readonly IContractFactory _contractFactory;
+        private readonly List<IObserver> _observers = new List<IObserver>();
 
-        public ContractService(IDbContextFactory<AppDbContext> contextFactory, IContractFactory contractFactory)
+        public ContractService(IDbContextFactory<AppDbContext> contextFactory, IContractFactory contractFactory, List<IObserver> observers)
         {
             // Injecting the DbContext Factory Interface to create a new database connection for each method so the same connection is not used across all requests
             _contextFactory = contextFactory;
             // Injecting the Contract Factory Interface for abstraction and to follow the Factory Design Pattern that i chose in Part 1
-            _contractFactory = contractFactory;
+            _contractFactory = contractFactory;      
+            _observers = observers;
+        }
+
+        public void AttachObserver(IObserver observer)
+        {
+            _observers.Add(observer);
+        }
+
+        public void DetachObserver(IObserver observer)
+        {
+            _observers.Remove(observer);
+        }
+
+        public void NotifyObservers(string message)
+        {
+            foreach (var observer in _observers)
+            {
+                observer.UpdateObservers(message);
+            }
         }
 
         // ---------------------------------------------------------------------------------------------------------
@@ -40,8 +62,29 @@ namespace PROG7311_PoE.Services
             contract.contractStatus = ContractStatus.Draft;
 
             using var contextFactoryDb = _contextFactory.CreateDbContext();
+
             contextFactoryDb.Contracts.Add(contract);
             await contextFactoryDb.SaveChangesAsync();
+
+            var newContract = await contextFactoryDb.Contracts
+                .Include(c => c.Client)
+                .FirstOrDefaultAsync(c => c.ContractId == contract.ContractId);
+
+            if (newContract?.Client != null)
+            {
+                // Admins as well
+                var clientEmailObserver = new ClientEmailObserver { email = contract.Client.clientEmail };
+                var clientAlertObserver = new ClientAlertObserver { phoneNumber = contract.Client.clientPhoneNumber };
+
+                AttachObserver(clientEmailObserver);
+                AttachObserver(clientAlertObserver);
+
+                NotifyObservers("A new contract has been created!");
+
+                DetachObserver(clientEmailObserver);
+                DetachObserver(clientAlertObserver);
+            }
+
             return contract;
         }
 
@@ -75,10 +118,24 @@ namespace PROG7311_PoE.Services
         public async Task UpdateContractStatus(ContractStatus updatedContractStatus, int contractId)
         {
             using var contextFactoryDb = _contextFactory.CreateDbContext();
-            var contract = await contextFactoryDb.Contracts.FindAsync(contractId);
+
+            var contract = await contextFactoryDb.Contracts
+                .Include(contract => contract.Client)
+                .Include(contract => contract.LogisticsManager)
+                .FirstOrDefaultAsync(contract => contract.ContractId == contractId);
 
             if (contract != null)
             {
+                var logisticsEmailObserver = new LogisticsManagerEmailObserver { email = contract.LogisticsManager.email};
+                var clientEmailObserver = new ClientEmailObserver { email = contract.Client.clientEmail };
+                var logisticsAlertObserver = new LogisticsManagerAlertObserver { phoneNumber = contract.LogisticsManager.phoneNumber };
+                var clientAlertObserver = new ClientAlertObserver { phoneNumber = contract.Client.clientPhoneNumber };
+
+                AttachObserver(logisticsEmailObserver);
+                AttachObserver(clientEmailObserver);
+                AttachObserver(logisticsAlertObserver);
+                AttachObserver(clientAlertObserver);
+
                 contract.contractStatus = updatedContractStatus;
 
                 var contractStatusValidation = new CheckContractStatus();
@@ -87,6 +144,13 @@ namespace PROG7311_PoE.Services
                 {
                     throw new InvalidOperationException("Invalid contract status");
                 }
+
+                NotifyObservers($"The status for contract with {contractId} has been changed to {updatedContractStatus}");
+
+                DetachObserver(logisticsEmailObserver);
+                DetachObserver(clientEmailObserver);
+                DetachObserver(logisticsAlertObserver);
+                DetachObserver(clientAlertObserver);
 
                 await contextFactoryDb.SaveChangesAsync();
             }
