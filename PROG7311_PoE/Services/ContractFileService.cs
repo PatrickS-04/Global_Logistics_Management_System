@@ -54,7 +54,7 @@ namespace PROG7311_PoE.Services
             var contractFileTypeValidation = new CheckFileTypeStrategy();
             if (!contractFileTypeValidation.Validate(contract)) 
             {
-                throw new InvalidOperationException("Invalid file type. Only PDF files are allowed");
+                throw new InvalidOperationException("Invalid file type. Only .PDF files are allowed");
             }
 
             using (var stream = new FileStream(pathOfFile, FileMode.Create))

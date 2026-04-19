@@ -1,0 +1,84 @@
+﻿using Microsoft.AspNetCore.Components.Forms;
+using Microsoft.EntityFrameworkCore;
+using PROG7311_PoE.Data;
+using PROG7311_PoE.Models;
+
+namespace PROG7311_PoE.Services
+{
+    public class ContractFileService
+    {
+        private readonly IDbContextFactory<AppDbContext> _contextFactory;
+        private readonly IWebHostEnvironment _webHostEnvironment;
+        private readonly IContractService _contract_service;
+
+        public ContractFileService(IDbContextFactory<AppDbContext> contextFactory,  IWebHostEnvironment webHostEnvironment, IContractService contractService)
+        {
+            // Injecting the DbContext Factory Interface to create a new database connection for each method so the same connection is not used across all requests
+            _contextFactory = contextFactory;
+            _webHostEnvironment = webHostEnvironment;
+            _contract_service = contractService;
+        }
+        public async Task<ContractFile> ContractFileUpload(int contractId, IBrowserFile contractFile)
+        {
+            using var dbContext = await _contextFactory.CreateDbContextAsync();
+
+            var contract = await dbContext.Contracts
+                .Include(contract => contract.LogisticsManager)
+                .FirstOrDefaultAsync(contract => contract.ContractId == contractId);
+
+            if (contract == null)
+            {
+                throw new Exception("Contract not found");
+            }
+
+            var pathToUploadedContract = Path.Combine(_webHostEnvironment.WebRootPath, "uploadedContracts", "Contracts");
+            if (!Directory.Exists(pathToUploadedContract))
+            {
+                Directory.CreateDirectory(pathToUploadedContract);
+            }
+
+            var uniqueFileName = $"{Guid.NewGuid()}{Path.GetExtension(contractFile.Name)}";
+            var pathOfFile = Path.Combine(pathToUploadedContract, uniqueFileName);
+
+            var newContractFile = new ContractFile
+            {
+                ContractId = contractId,
+                fileName = contractFile.Name,
+                storedFileName = uniqueFileName,
+                fileSize = contractFile.Size,
+                filePath = pathOfFile
+            };
+
+            contract.File = newContractFile;
+
+            var contractFileTypeValidation = new CheckFileTypeStrategy();
+            if (!contractFileTypeValidation.Validate(contract)) 
+            {
+                throw new InvalidOperationException("Invalid file type. Only .PDF files are allowed");
+            }
+
+            using (var stream = new FileStream(pathOfFile, FileMode.Create))
+            {
+                await contractFile.OpenReadStream(maxAllowedSize: 1024 * 1024 * 25).CopyToAsync(stream);
+            }
+
+            dbContext.ContractFiles.Add(newContractFile);
+
+            // Admins get alerted as well
+            var logisticsEmailObserver = new LogisticsManagerEmailObserver { email = contract.LogisticsManager.email };
+            var logisticsAlertObserver = new LogisticsManagerAlertObserver { phoneNumber = contract.LogisticsManager.phoneNumber };
+
+            _contract_service.AttachObserver(logisticsEmailObserver);
+            _contract_service.AttachObserver(logisticsAlertObserver);
+
+            _contract_service.NotifyObservers($"A file has been uploaded for contract with {contractId}");
+
+            _contract_service.DetachObserver(logisticsEmailObserver);
+            _contract_service.DetachObserver(logisticsAlertObserver);
+
+            await dbContext.SaveChangesAsync();
+
+            return newContractFile;
+        }
+    }
+}
