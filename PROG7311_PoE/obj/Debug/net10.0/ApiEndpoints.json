@@ -1,0 +1,100 @@
+[
+  {
+    "ContainingType": "PROG7311_PoE.Controllers.ContractController",
+    "Method": "GetActiveContracts",
+    "RelativePath": "api/Contract/activeContracts",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.List\u00601[[PROG7311_PoE.Models.Contract, PROG7311_PoE, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "PROG7311_PoE.Controllers.ContractController",
+    "Method": "CreateContract",
+    "RelativePath": "api/Contract/createContract",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "contractCreate",
+        "Type": "PROG7311_PoE.Controllers.ContractCreate",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "PROG7311_PoE.Models.Contract",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "PROG7311_PoE.Controllers.ContractController",
+    "Method": "UpdateContractStatus",
+    "RelativePath": "api/Contract/update-contract-status/{id}",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "contractStatus",
+        "Type": "PROG7311_PoE.Models.ContractStatus",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "PROG7311_PoE.Controllers.UserAccountController",
+    "Method": "Login",
+    "RelativePath": "login-action",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "email",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "password",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "PROG7311_PoE.Controllers.UserAccountController",
+    "Method": "Logout",
+    "RelativePath": "login-action/logout",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  }
+]

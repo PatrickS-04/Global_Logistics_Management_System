@@ -1,0 +1,26 @@
+﻿@page "/"
+@page "/Login"
+
+<div class="login-container d-flex align-items-center justify-content-center" style="min-height: 80vh;">
+    <div class="card shadow-lg" style="width: 100%; max-width: 400px; border-radius: 15px;">
+        <div class="card-body p-5">
+            <div class="text-center mb-4">
+                <h3 class="fw-bold">TechMove Logistics</h3>
+                <p class="text-muted">Please log in</p>
+            </div>
+
+            <form method="post" action="/login-action">
+                <div class="form-group">
+                    <label>Email</label>
+                    <input name="email" type="email" class="form-control" />
+                </div>
+                <div class="form-group mt-2">
+                    <label>Password</label>
+                    <input name="password" type="password" class="form-control" />
+                </div>
+                <button type="submit" class="btn btn-primary mt-3 w-100">Login</button>
+            </form>
+
+        </div>
+    </div>
+</div>
