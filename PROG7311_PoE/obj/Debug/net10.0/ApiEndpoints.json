@@ -21,6 +21,36 @@
   },
   {
     "ContainingType": "PROG7311_PoE.Controllers.ContractController",
+    "Method": "GetAllContractFiles",
+    "RelativePath": "api/Contract/allContractFiles",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.List\u00601[[PROG7311_PoE.Models.ContractFile, PROG7311_PoE, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "PROG7311_PoE.Controllers.ContractController",
+    "Method": "GetAllContracts",
+    "RelativePath": "api/Contract/allContracts",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "PROG7311_PoE.Controllers.ContractController",
     "Method": "CreateContract",
     "RelativePath": "api/Contract/createContract",
     "HttpMethod": "POST",
@@ -28,9 +58,49 @@
     "Order": 0,
     "Parameters": [
       {
-        "Name": "contractCreate",
-        "Type": "PROG7311_PoE.Controllers.ContractCreate",
-        "IsRequired": true
+        "Name": "type",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "startDate",
+        "Type": "System.DateTime",
+        "IsRequired": false
+      },
+      {
+        "Name": "endDate",
+        "Type": "System.DateTime",
+        "IsRequired": false
+      },
+      {
+        "Name": "ContentType",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "ContentDisposition",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "Headers",
+        "Type": "Microsoft.AspNetCore.Http.IHeaderDictionary",
+        "IsRequired": false
+      },
+      {
+        "Name": "Length",
+        "Type": "System.Int64",
+        "IsRequired": false
+      },
+      {
+        "Name": "Name",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "FileName",
+        "Type": "System.String",
+        "IsRequired": false
       }
     ],
     "ReturnTypes": [
@@ -47,21 +117,109 @@
   },
   {
     "ContainingType": "PROG7311_PoE.Controllers.ContractController",
-    "Method": "UpdateContractStatus",
-    "RelativePath": "api/Contract/update-contract-status/{id}",
-    "HttpMethod": "PUT",
+    "Method": "FileDownload",
+    "RelativePath": "api/Contract/fileDownload/{storedName}",
+    "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
     "Parameters": [
       {
-        "Name": "id",
-        "Type": "System.Int32",
+        "Name": "storedName",
+        "Type": "System.String",
         "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "PROG7311_PoE.Controllers.ContractController",
+    "Method": "filterContracts",
+    "RelativePath": "api/Contract/filterContracts",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "startDate",
+        "Type": "System.Nullable\u00601[[System.DateTime, System.Private.CoreLib, Version=10.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "IsRequired": false
+      },
+      {
+        "Name": "endDate",
+        "Type": "System.Nullable\u00601[[System.DateTime, System.Private.CoreLib, Version=10.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "IsRequired": false
       },
       {
         "Name": "contractStatus",
-        "Type": "PROG7311_PoE.Models.ContractStatus",
-        "IsRequired": true
+        "Type": "System.Nullable\u00601[[PROG7311_PoE.Models.ContractStatus, PROG7311_PoE, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.List\u00601[[PROG7311_PoE.Models.Contract, PROG7311_PoE, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "PROG7311_PoE.Controllers.ContractController",
+    "Method": "UpdateContractStatus",
+    "RelativePath": "api/Contract/updateContractStatus",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "contractId",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "contractStatus",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "PROG7311_PoE.Controllers.ServiceRequestController",
+    "Method": "CreateServiceRequest",
+    "RelativePath": "api/servicerequest/createServiceRequest",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "contractId",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "description",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "cost",
+        "Type": "System.Decimal",
+        "IsRequired": false
+      },
+      {
+        "Name": "status",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "currency",
+        "Type": "System.String",
+        "IsRequired": false
       }
     ],
     "ReturnTypes": []

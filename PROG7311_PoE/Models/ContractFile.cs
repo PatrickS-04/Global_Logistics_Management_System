@@ -13,6 +13,8 @@ namespace PROG7311_PoE.Models
         public string storedFileName { get; set; }
         public long fileSize { get; set; }
         public string filePath { get; set; }
+        public DateTime dateOfUpload { get; set; } = DateTime.Now;
         public int ContractId { get; set; }
+        public Contract Contract { get; set; }
     }
 }

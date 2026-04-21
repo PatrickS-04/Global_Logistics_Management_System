@@ -229,6 +229,7 @@ namespace PROG7311_PoE.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ClientId"));
 
                     b.Property<string>("UserId")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("clientEmail")
@@ -264,11 +265,8 @@ namespace PROG7311_PoE.Migrations
                         .HasMaxLength(13)
                         .HasColumnType("nvarchar(13)");
 
-                    b.Property<int>("LogisticsManagerId")
+                    b.Property<int?>("LogisticsManagerId")
                         .HasColumnType("int");
-
-                    b.Property<string>("UserId")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("contractStatus")
                         .HasColumnType("int");
@@ -310,6 +308,9 @@ namespace PROG7311_PoE.Migrations
 
                     b.Property<int>("ContractId")
                         .HasColumnType("int");
+
+                    b.Property<DateTime>("dateOfUpload")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("fileName")
                         .IsRequired()
@@ -470,9 +471,7 @@ namespace PROG7311_PoE.Migrations
 
                     b.HasOne("PROG7311_PoE.Models.LogisticsManager", "LogisticsManager")
                         .WithMany()
-                        .HasForeignKey("LogisticsManagerId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("LogisticsManagerId");
 
                     b.Navigation("Client");
 
@@ -481,11 +480,13 @@ namespace PROG7311_PoE.Migrations
 
             modelBuilder.Entity("PROG7311_PoE.Models.ContractFile", b =>
                 {
-                    b.HasOne("PROG7311_PoE.Models.Contract", null)
+                    b.HasOne("PROG7311_PoE.Models.Contract", "Contract")
                         .WithOne("File")
                         .HasForeignKey("PROG7311_PoE.Models.ContractFile", "ContractId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Contract");
                 });
 
             modelBuilder.Entity("PROG7311_PoE.Models.ServiceRequest", b =>

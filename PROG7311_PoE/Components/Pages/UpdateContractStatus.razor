@@ -1,0 +1,84 @@
+﻿@page "/update-contract-status"
+@using Microsoft.AspNetCore.Authorization
+@using PROG7311_PoE.Models
+@using PROG7311_PoE.Services
+@inject ContractService ContractService
+@attribute [Authorize(Roles = "LogisticsManager")]
+
+<div class="container mt-5">
+    <div class="card shadow-sm mx-auto" style="max-width: 600px;">
+
+        <div class="card-header bg-primary text-white">
+            <h4 class="mb-0">Update Contract Status</h4>
+        </div>
+
+        <div class="card-body">
+
+            @if (!string.IsNullOrEmpty(error))
+            {
+                <div class="alert alert-danger">
+                    @error
+                </div>
+            }
+
+            <form method="post" action="/api/contract/updateContractStatus">
+                <AntiforgeryToken />
+
+                <div class="mb-3">
+                    <label class="form-label fw-bold">Contract</label>
+
+                    <select name="contractId" class="form-select" required>
+                        <option value="">-- Select Contract --</option>
+
+                        @foreach (var contract in contracts ?? new List<Contract>())
+                        {
+                            <option value="@contract.ContractId">
+                                @contract.Client?.clientName -
+                                @contract.GetType().Name -
+                                @contract.startDate.ToString("dd MMM yyyy")
+                                to
+                                @contract.endDate.ToString("dd MMM yyyy")
+                                (@contract.contractStatus)
+                            </option>
+                        }
+                    </select>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label fw-bold">New Status</label>
+
+                    <select name="contractStatus" class="form-select" required>
+                        <option value="">-- Select Status --</option>
+                        <option value="Draft">Draft</option>
+                        <option value="Active">Active</option>
+                        <option value="Expired">Expired</option>
+                        <option value="OnHold">On Hold</option>
+                    </select>
+                </div>
+
+                <div class="d-grid gap-2 mt-4">
+                    <button type="submit" class="btn btn-success">
+                        Update Status
+                    </button>
+
+                    <a href="/Home" class="btn btn-outline-secondary">
+                        Cancel
+                    </a>
+                </div>
+            </form>
+
+        </div>
+    </div>
+</div>
+
+@code {
+    [SupplyParameterFromQuery]
+    public string? error { get; set; }
+
+    private List<Contract>? contracts;
+
+    protected override async Task OnInitializedAsync()
+    {
+        contracts = await ContractService.GetAllContracts();
+    }
+}

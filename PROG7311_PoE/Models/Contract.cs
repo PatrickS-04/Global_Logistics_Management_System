@@ -17,7 +17,6 @@ namespace PROG7311_PoE.Models
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int ContractId { get; set; }
-        public string? UserId {  get; set; }
         public int ClientId { get; set; }
         public Client Client { get; set; }
         public DateTime startDate { get; set; }
@@ -25,7 +24,8 @@ namespace PROG7311_PoE.Models
         public ContractStatus contractStatus { get; set; }
         public string serviceLevel { get; set; }
         public ContractFile? File { get; set; }
-        public LogisticsManager LogisticsManager { get; set; }
+        public int? LogisticsManagerId { get; set; }
+        public LogisticsManager? LogisticsManager { get; set; }
         public string defaultCurrency { get; set; } = "ZAR";
     }
 

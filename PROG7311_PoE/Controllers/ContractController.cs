@@ -1,7 +1,9 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using PROG7311_PoE.Models;
 using PROG7311_PoE.Services;
 using System.Security.Claims;
+using static System.Net.WebRequestMethods;
 
 namespace PROG7311_PoE.Controllers
 {
@@ -11,14 +13,17 @@ namespace PROG7311_PoE.Controllers
     {
         private readonly ContractService _contractService;
         private readonly ClientService _clientService;
+        private readonly ContractFileService _contractFileService;
 
-        public ContractController(ContractService contractService, ClientService clientService)
+        public ContractController(ContractService contractService, ClientService clientService, ContractFileService contractFileService)
         {
             _contractService = contractService;
             _clientService = clientService;
+            _contractFileService = contractFileService;
         }
 
         [HttpGet("activeContracts")]
+        [IgnoreAntiforgeryToken]
         public async Task<ActionResult<List<Contract>>> GetActiveContracts()
         {
             var activeContracts = await _contractService.GetActiveContracts();
@@ -26,7 +31,10 @@ namespace PROG7311_PoE.Controllers
         }
 
         [HttpPost("createContract")]
-        public async Task<ActionResult<Contract>> CreateContract([FromBody] ContractCreate contractCreate)
+        [IgnoreAntiforgeryToken]
+        [Authorize(Roles = "Client")]
+        public async Task<ActionResult<Contract>> CreateContract([FromForm] string type, [FromForm] DateTime startDate, [FromForm] DateTime endDate, 
+            [FromForm] IFormFile? contractFile)
         {
             try
             {
@@ -34,19 +42,19 @@ namespace PROG7311_PoE.Controllers
 
                 if (string.IsNullOrEmpty(userId))
                 {
-                    return Unauthorized("User is not logged in.");
+                    return Redirect("/Login");
                 }
 
                 var client = await _clientService.GetClientByClientId(userId);
 
-                if (client == null)
+                var newContract = await _contractService.CreateNewContract(type, client.ClientId, startDate, endDate);
+
+                if (contractFile != null && contractFile.Length > 0)
                 {
-                    return BadRequest("No client profile found for this user.");
+                    await _contractFileService.UploadContractFileHelperMethod(newContract.ContractId, contractFile);
                 }
 
-                var createContract = await _contractService.CreateNewContract(contractCreate.Type, client.ClientId,
-                    contractCreate.StartDate, contractCreate.EndDate);
-                return Ok(createContract);
+                return Redirect("/Home");
             }
             catch(Exception exception)
             {
@@ -54,26 +62,67 @@ namespace PROG7311_PoE.Controllers
             }
         }
 
-        [HttpPut("update-contract-status/{id}")]
-        public async Task<IActionResult> UpdateContractStatus(int id,  [FromBody] ContractStatus contractStatus)
+        [HttpPost("updateContractStatus")]
+        [IgnoreAntiforgeryToken]
+        [Authorize(Roles = "LogisticsManager")]
+        public async Task<IActionResult> UpdateContractStatus([FromForm] int contractId, [FromForm] string contractStatus)
         {
             try
             {
-                await _contractService.UpdateContractStatus(contractStatus, id);
-                return NoContent();
+                if (!Enum.TryParse<ContractStatus>(contractStatus, out var newContractStatus))
+                {
+                    return Redirect("/update-contract-status");
+                }
+
+                await _contractService.UpdateContractStatus(newContractStatus, contractId);
+                return Redirect("/Home");
             }
             catch(Exception exception)
             {
-                return BadRequest(exception.Message);
+                return Redirect("/update-contract-status");
             }
         }
-    }
 
-    // DTO for creating a new contract method call
-    public class ContractCreate()
-    {
-        public string Type { get; set; }
-        public DateTime StartDate { get; set; }
-        public DateTime EndDate { get; set; }
+        [HttpGet("allContracts")]
+        public async Task<IActionResult> GetAllContracts()
+        {
+            var contracts = await _contractService.GetAllContracts();
+            return Ok(contracts);
+        }
+
+        [HttpGet("filterContracts")]
+        public async Task<ActionResult<List<Contract>>> filterContracts([FromQuery] DateTime? startDate, [FromQuery] DateTime? endDate, [FromQuery] ContractStatus? contractStatus)
+        {
+            var filteredContracts = await _contractService.GetFilteredContracts(startDate, endDate, contractStatus);
+            return Ok(filteredContracts);
+        }
+
+        [HttpGet("allContractFiles")]
+        [AllowAnonymous]
+        public async Task<ActionResult<List<ContractFile>>> GetAllContractFiles()
+        {
+            var listOfContractFiles = await _contractService.GetAllContractFiles();
+            return Ok(listOfContractFiles);
+        }
+
+        [HttpGet("fileDownload/{storedName}")]
+        [Authorize(Roles = "LogisticsManager")]
+        public async Task<IActionResult> FileDownload(string storedName)
+        {
+            try
+            {
+                var (fileBytes, fileOriginalName) = await _contractFileService.GetFileDetailsToDownload(storedName);
+
+                return File(fileBytes, "application/pdf", fileOriginalName);
+            }
+            catch (FileNotFoundException ex)
+            {
+                return NotFound(ex.Message);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest($"An error occurred during download: {ex.Message}");
+            }
+        }
     }
 }

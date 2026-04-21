@@ -1,5 +1,11 @@
 C:\Users\lab_services_student\Desktop\prog7311-poe-part2-ST10440987-Patrick\PROG7311_UnitTesting\bin\Debug\net10.0\.msCoverageSourceRootsMapping_PROG7311_UnitTesting
 C:\Users\lab_services_student\Desktop\prog7311-poe-part2-ST10440987-Patrick\PROG7311_UnitTesting\bin\Debug\net10.0\CoverletSourceRootsMapping_PROG7311_UnitTesting
+C:\Users\lab_services_student\Desktop\prog7311-poe-part2-ST10440987-Patrick\PROG7311_UnitTesting\obj\Debug\net10.0\PROG7311_UnitTesting.csproj.AssemblyReference.cache
+C:\Users\lab_services_student\Desktop\prog7311-poe-part2-ST10440987-Patrick\PROG7311_UnitTesting\obj\Debug\net10.0\PROG7311_UnitTesting.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\lab_services_student\Desktop\prog7311-poe-part2-ST10440987-Patrick\PROG7311_UnitTesting\obj\Debug\net10.0\PROG7311_UnitTesting.AssemblyInfoInputs.cache
+C:\Users\lab_services_student\Desktop\prog7311-poe-part2-ST10440987-Patrick\PROG7311_UnitTesting\obj\Debug\net10.0\PROG7311_UnitTesting.AssemblyInfo.cs
+C:\Users\lab_services_student\Desktop\prog7311-poe-part2-ST10440987-Patrick\PROG7311_UnitTesting\obj\Debug\net10.0\PROG7311_UnitTesting.csproj.CoreCompileInputs.cache
+C:\Users\lab_services_student\Desktop\prog7311-poe-part2-ST10440987-Patrick\PROG7311_UnitTesting\obj\Debug\net10.0\PROG7311_UnitTesting.sourcelink.json
 C:\Users\lab_services_student\Desktop\prog7311-poe-part2-ST10440987-Patrick\PROG7311_UnitTesting\bin\Debug\net10.0\testhost.dll
 C:\Users\lab_services_student\Desktop\prog7311-poe-part2-ST10440987-Patrick\PROG7311_UnitTesting\bin\Debug\net10.0\xunit.abstractions.dll
 C:\Users\lab_services_student\Desktop\prog7311-poe-part2-ST10440987-Patrick\PROG7311_UnitTesting\bin\Debug\net10.0\PROG7311_PoE.deps.json
@@ -222,12 +228,6 @@ C:\Users\lab_services_student\Desktop\prog7311-poe-part2-ST10440987-Patrick\PROG
 C:\Users\lab_services_student\Desktop\prog7311-poe-part2-ST10440987-Patrick\PROG7311_UnitTesting\bin\Debug\net10.0\runtimes\win-x86\native\Microsoft.Data.SqlClient.SNI.dll
 C:\Users\lab_services_student\Desktop\prog7311-poe-part2-ST10440987-Patrick\PROG7311_UnitTesting\bin\Debug\net10.0\PROG7311_PoE.dll
 C:\Users\lab_services_student\Desktop\prog7311-poe-part2-ST10440987-Patrick\PROG7311_UnitTesting\bin\Debug\net10.0\PROG7311_PoE.pdb
-C:\Users\lab_services_student\Desktop\prog7311-poe-part2-ST10440987-Patrick\PROG7311_UnitTesting\obj\Debug\net10.0\PROG7311_UnitTesting.csproj.AssemblyReference.cache
-C:\Users\lab_services_student\Desktop\prog7311-poe-part2-ST10440987-Patrick\PROG7311_UnitTesting\obj\Debug\net10.0\PROG7311_UnitTesting.GeneratedMSBuildEditorConfig.editorconfig
-C:\Users\lab_services_student\Desktop\prog7311-poe-part2-ST10440987-Patrick\PROG7311_UnitTesting\obj\Debug\net10.0\PROG7311_UnitTesting.AssemblyInfoInputs.cache
-C:\Users\lab_services_student\Desktop\prog7311-poe-part2-ST10440987-Patrick\PROG7311_UnitTesting\obj\Debug\net10.0\PROG7311_UnitTesting.AssemblyInfo.cs
-C:\Users\lab_services_student\Desktop\prog7311-poe-part2-ST10440987-Patrick\PROG7311_UnitTesting\obj\Debug\net10.0\PROG7311_UnitTesting.csproj.CoreCompileInputs.cache
-C:\Users\lab_services_student\Desktop\prog7311-poe-part2-ST10440987-Patrick\PROG7311_UnitTesting\obj\Debug\net10.0\PROG7311_UnitTesting.sourcelink.json
 C:\Users\lab_services_student\Desktop\prog7311-poe-part2-ST10440987-Patrick\PROG7311_UnitTesting\obj\Debug\net10.0\PROG7311.015E43F1.Up2Date
 C:\Users\lab_services_student\Desktop\prog7311-poe-part2-ST10440987-Patrick\PROG7311_UnitTesting\obj\Debug\net10.0\PROG7311_UnitTesting.dll
 C:\Users\lab_services_student\Desktop\prog7311-poe-part2-ST10440987-Patrick\PROG7311_UnitTesting\obj\Debug\net10.0\refint\PROG7311_UnitTesting.dll

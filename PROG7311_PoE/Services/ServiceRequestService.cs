@@ -67,22 +67,27 @@ namespace PROG7311_PoE.Services
                 .Include(contract => contract.LogisticsManager)
                 .FirstOrDefaultAsync(contract => contract.ContractId == newServiceRequest.ContractId);
 
-            var logisticsEmailObserver = new LogisticsManagerEmailObserver { email = contract.LogisticsManager.email };
-            var clientEmailObserver = new ClientEmailObserver { email = contract.Client.clientEmail };
-            var logisticsAlertObserver = new LogisticsManagerAlertObserver { phoneNumber = contract.LogisticsManager.phoneNumber };
-            var clientAlertObserver = new ClientAlertObserver { phoneNumber = contract.Client.clientPhoneNumber };
+            if (contract.Client != null)
+            {
+                var clientEmailObserver = new ClientEmailObserver { email = contract.Client.clientEmail };
+                var clientAlertObserver = new ClientAlertObserver { phoneNumber = contract.Client.clientPhoneNumber };
+                _contractService.AttachObserver(clientEmailObserver);
+                _contractService.AttachObserver(clientAlertObserver);
+                _contractService.NotifyObservers("A new service request has been created!");
+                _contractService.DetachObserver(clientEmailObserver);
+                _contractService.DetachObserver(clientAlertObserver);
+            }
 
-            _contractService.AttachObserver(logisticsEmailObserver);
-            _contractService.AttachObserver(clientEmailObserver);
-            _contractService.AttachObserver(logisticsAlertObserver);
-            _contractService.AttachObserver(clientAlertObserver);
-
-            _contractService.NotifyObservers("A new service request has been created!");
-
-            _contractService.DetachObserver(logisticsEmailObserver);
-            _contractService.DetachObserver(clientEmailObserver);
-            _contractService.DetachObserver(logisticsAlertObserver);
-            _contractService.DetachObserver(clientAlertObserver);
+            if (contract.LogisticsManager != null)
+            {
+                var logisticsEmailObserver = new LogisticsManagerEmailObserver { email = contract.LogisticsManager.email };
+                var logisticsAlertObserver = new LogisticsManagerAlertObserver { phoneNumber = contract.LogisticsManager.phoneNumber };
+                _contractService.AttachObserver(logisticsEmailObserver);
+                _contractService.AttachObserver(logisticsAlertObserver);
+                _contractService.NotifyObservers("A new service request has been created!");
+                _contractService.DetachObserver(logisticsEmailObserver);
+                _contractService.DetachObserver(logisticsAlertObserver);
+            }
         }
 
         // ---------------------------------------------------------------------------------------------------------

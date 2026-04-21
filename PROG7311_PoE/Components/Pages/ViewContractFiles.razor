@@ -1,0 +1,71 @@
+﻿@page "/contract-files"
+@using Microsoft.AspNetCore.Authorization
+@using PROG7311_PoE.Models
+@attribute [Authorize(Roles = "LogisticsManager")]
+@inject HttpClient Http
+
+<div class="container mt-5">
+    <h2 class="mb-4"><span class="bi bi-file-earmark-pdf text-danger"></span> Contract Document Verification</h2>
+
+    <div class="card shadow-sm">
+        <div class="table-responsive">
+            <table class="table table-hover align-middle mb-0">
+                <thead class="table-dark">
+                    <tr>
+                        <th>Contract ID</th>
+                        <th>Client Name</th>
+                        <th>File Name</th>
+                        <th>Date Uploaded</th>
+                        <th class="text-center">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (contractFiles == null)
+                    {
+                        <tr><td colspan="5" class="text-center">Loading files...</td></tr>
+                    }
+                    else if (!contractFiles.Any())
+                    {
+                        <tr><td colspan="5" class="text-center text-muted py-4">No documents have been uploaded yet.</td></tr>
+                    }
+                    else
+                    {
+                        @foreach (var file in contractFiles)
+                        {
+                            <tr>
+                                <td class="fw-bold">@file.ContractId</td>
+                                <td>@(file.Contract?.Client?.clientName ?? "N/A")</td>
+                                <td>@file.fileName</td>
+                                <td>@file.dateOfUpload</td>
+                                <td class="text-center">
+                                    <a href="/api/contract/fileDownload/@file.storedFileName"
+                                           class="btn btn-primary btn-sm"
+                                           download="@file.fileName">
+                                        <span class="bi bi-download"></span> Download
+                                    </a>
+                                </td>
+                            </tr>
+                        }
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+@code {
+    private List<ContractFile>? contractFiles;
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            contractFiles = await Http.GetFromJsonAsync<List<ContractFile>>("api/contract/allContractFiles");
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error fetching contract files: {ex.Message}");
+            contractFiles = new List<ContractFile>();
+        }
+    }
+}

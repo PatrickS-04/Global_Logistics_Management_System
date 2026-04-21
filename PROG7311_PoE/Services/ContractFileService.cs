@@ -80,5 +80,62 @@ namespace PROG7311_PoE.Services
 
             return newContractFile;
         }
+
+        public async Task<ContractFile> UploadContractFileHelperMethod(int contractId, IFormFile file)
+        {
+            using var dbContext = await _contextFactory.CreateDbContextAsync();
+
+            var pathToUploadedContract = Path.Combine(_webHostEnvironment.WebRootPath, "uploadedContracts", "Contracts");
+            if (!Directory.Exists(pathToUploadedContract))
+            {
+                Directory.CreateDirectory(pathToUploadedContract);
+            }
+
+            var uniqueFileName = $"{Guid.NewGuid()}{Path.GetExtension(file.FileName)}";
+            var pathOfFile = Path.Combine(pathToUploadedContract, uniqueFileName);
+
+            var newContractFile = new ContractFile
+            {
+                ContractId = contractId,
+                fileName = file.FileName,
+                storedFileName = uniqueFileName,
+                fileSize = file.Length,
+                filePath = pathOfFile
+            };
+
+            using (var stream = new FileStream(pathOfFile, FileMode.Create))
+            {
+                await file.CopyToAsync(stream);
+            }
+
+            dbContext.ContractFiles.Add(newContractFile);
+            await dbContext.SaveChangesAsync();
+
+            return newContractFile;
+        }
+
+        public async Task<(byte[] FileBytes, string FileName)> GetFileDetailsToDownload(string storedName)
+        {
+            using var dbContext = await _contextFactory.CreateDbContextAsync();
+
+            var file = await dbContext.ContractFiles
+                .FirstOrDefaultAsync(file => file.storedFileName == storedName);
+
+            if (file == null)
+            {
+                throw new FileNotFoundException("File record not found in database.");
+            }
+
+            var path = Path.Combine(_webHostEnvironment.WebRootPath, "uploadedContracts", "Contracts", storedName);
+
+            if (!System.IO.File.Exists(path))
+            {
+                throw new FileNotFoundException("Physical file not found on server.");
+            }
+
+            var fileBytes = await System.IO.File.ReadAllBytesAsync(path);
+
+            return (fileBytes, file.fileName);
+        }
     }
 }

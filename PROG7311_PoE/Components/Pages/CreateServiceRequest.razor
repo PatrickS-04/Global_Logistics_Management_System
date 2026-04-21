@@ -1,0 +1,73 @@
+﻿@page "/create-service-request"
+@inject ContractService ContractService
+@using Microsoft.AspNetCore.Authorization
+@using PROG7311_PoE.Models
+@using PROG7311_PoE.Services
+@attribute [Authorize(Roles = "LogisticsManager")]
+
+<div class="container mt-5">
+    <div class="card shadow-sm mx-auto" style="max-width: 600px;">
+        <div class="card-header bg-primary text-white">
+            <h4 class="mb-0">Create Service Request</h4>
+        </div>
+        <div class="card-body">
+            <form method="post" action="/api/servicerequest/createServiceRequest">
+                <AntiforgeryToken />
+                <div class="mb-3">
+                    <label class="form-label fw-bold">Contract</label>
+                    <select name="contractId" class="form-select" required>
+                        <option value="">-- Select Contract --</option>
+                        @foreach (var contract in contracts ?? new List<Contract>())
+                        {
+                            <option value="@contract.ContractId">@contract.Client.clientName - @contract.GetType().Name - 
+                                @contract.startDate.ToString("dd MMM yyyy") to @contract.endDate.ToString("dd MMM yyyy") (@contract.contractStatus)</option>
+                        }
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label fw-bold">Description</label>
+                    <textarea name="description" class="form-control" rows="3" required></textarea>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label fw-bold">Cost</label>
+                    <input name="cost" type="number" step="0.01" class="form-control" required />
+                </div>
+                <div class="mb-3">
+                    <label class="form-label fw-bold">Status</label>
+                    <select name="status" class="form-select" required>
+                        <option value="">-- Select Status --</option>
+                        <option value="Draft">Draft</option>
+                        <option value="Active">Active</option>
+                        <option value="Expired">Expired</option>
+                        <option value="OnHold">On Hold</option>
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label fw-bold">Currency</label>
+                    <select name="currency" class="form-select" required>
+                        <option value="ZAR">ZAR (Rand)</option>
+                        <option value="USD">USD (Dollar)</option>
+                        <option value="EUR">EUR (Euro)</option>
+                        <option value="GBP">GBP (Pound)</option>
+                    </select>
+                </div>
+                <div class="d-grid gap-2 mt-4">
+                    <button type="submit" class="btn btn-success">Submit Service Request</button>
+                    <a href="/Home" class="btn btn-outline-secondary">Cancel</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@code {
+    [SupplyParameterFromQuery]
+    public string? error { get; set; }
+
+    private List<Contract>? contracts;
+
+    protected override async Task OnInitializedAsync()
+    {
+        contracts = await ContractService.GetAllContracts();
+    }
+}

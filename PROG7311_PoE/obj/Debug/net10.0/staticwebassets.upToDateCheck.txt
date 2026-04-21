@@ -44,6 +44,7 @@ wwwroot\lib\bootstrap\dist\js\bootstrap.js
 wwwroot\lib\bootstrap\dist\js\bootstrap.js.map
 wwwroot\lib\bootstrap\dist\js\bootstrap.min.js
 wwwroot\lib\bootstrap\dist\js\bootstrap.min.js.map
+wwwroot\uploadedContracts\Contracts\9f7a59c6-88c9-4074-985f-9fee6f4c6e8e.pdf
 Components\Layout\ReconnectModal.razor.js
 C:\Users\lab_services_student\.nuget\packages\microsoft.aspnetcore.app.internal.assets\10.0.6\build\..\_framework\blazor.web.js
 C:\Users\lab_services_student\.nuget\packages\microsoft.aspnetcore.app.internal.assets\10.0.6\build\..\_framework\blazor.server.js

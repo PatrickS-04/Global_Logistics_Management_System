@@ -93,22 +93,28 @@ namespace PROG7311_PoE.Services
         public async Task<List<Contract>> GetFilteredContracts(DateTime? startDate, DateTime? endDate, ContractStatus? contractStatus)
         {
             using var contextFactoryDb = _contextFactory.CreateDbContext();
-            var linqQuery = contextFactoryDb.Contracts.AsQueryable();
+            var linqQuery = contextFactoryDb.Contracts.Include(client => client.Client).AsQueryable();
 
             if (startDate.HasValue)
             {
-                linqQuery = linqQuery.Where(contract => contract.startDate >= startDate.Value);
+                linqQuery = linqQuery.Where(contract => contract.startDate >= startDate.Value.Date);
             }
 
             if (endDate.HasValue)
             {
-                linqQuery = linqQuery.Where(contract => contract.endDate <= endDate.Value);
+                var dateEnded = endDate.Value.Date.AddDays(1);
+                linqQuery = linqQuery.Where(contract => contract.endDate < dateEnded);
             }
 
             if (contractStatus.HasValue)
             {
                 linqQuery = linqQuery.Where(contract => contract.contractStatus == contractStatus.Value);
             }
+
+            Console.WriteLine($"StartDate filter: {startDate}");
+            Console.WriteLine($"EndDate filter: {endDate}");
+            Console.WriteLine($"Status filter: {contractStatus}");
+            Console.WriteLine($"Total contracts in DB: {contextFactoryDb.Contracts.Count()}");
 
             return await linqQuery.ToListAsync();
         }
@@ -126,16 +132,6 @@ namespace PROG7311_PoE.Services
 
             if (contract != null)
             {
-                var logisticsEmailObserver = new LogisticsManagerEmailObserver { email = contract.LogisticsManager.email};
-                var clientEmailObserver = new ClientEmailObserver { email = contract.Client.clientEmail };
-                var logisticsAlertObserver = new LogisticsManagerAlertObserver { phoneNumber = contract.LogisticsManager.phoneNumber };
-                var clientAlertObserver = new ClientAlertObserver { phoneNumber = contract.Client.clientPhoneNumber };
-
-                AttachObserver(logisticsEmailObserver);
-                AttachObserver(clientEmailObserver);
-                AttachObserver(logisticsAlertObserver);
-                AttachObserver(clientAlertObserver);
-
                 contract.contractStatus = updatedContractStatus;
 
                 var contractStatusValidation = new CheckContractStatus();
@@ -145,15 +141,50 @@ namespace PROG7311_PoE.Services
                     throw new InvalidOperationException("Invalid contract status");
                 }
 
-                NotifyObservers($"The status for contract with {contractId} has been changed to {updatedContractStatus}");
+                if (contract.Client != null)
+                {
+                    var clientEmailObserver = new ClientEmailObserver { email = contract.Client.clientEmail };
+                    var clientAlertObserver = new ClientAlertObserver { phoneNumber = contract.Client.clientPhoneNumber };
+                    AttachObserver(clientEmailObserver);
+                    AttachObserver(clientAlertObserver);
+                    NotifyObservers($"The status for contract with {contractId} has been changed to {updatedContractStatus}");
+                    DetachObserver(clientEmailObserver);
+                    DetachObserver(clientAlertObserver);
+                }
 
-                DetachObserver(logisticsEmailObserver);
-                DetachObserver(clientEmailObserver);
-                DetachObserver(logisticsAlertObserver);
-                DetachObserver(clientAlertObserver);
+                if (contract.LogisticsManager != null)
+                {
+                    var logisticsEmailObserver = new LogisticsManagerEmailObserver { email = contract.LogisticsManager.email };
+                    var logisticsAlertObserver = new LogisticsManagerAlertObserver { phoneNumber = contract.LogisticsManager.phoneNumber };
+                    AttachObserver(logisticsEmailObserver);
+                    AttachObserver(logisticsAlertObserver);
+                    NotifyObservers($"The status for contract with {contractId} has been changed to {updatedContractStatus}");
+                    DetachObserver(logisticsEmailObserver);
+                    DetachObserver(logisticsAlertObserver);
+                }
 
                 await contextFactoryDb.SaveChangesAsync();
             }
+        }
+
+        // ---------------------------------------------------------------------------------------------------------
+        // Method gets a list of all contracts
+        public async Task<List<Contract>> GetAllContracts()
+        {
+            using var db = _contextFactory.CreateDbContext();
+            return await db.Contracts.Include(client => client.Client).ToListAsync();
+        }
+
+        // ---------------------------------------------------------------------------------------------------------
+        // Method gets a list of all contract files
+        public async Task<List<ContractFile>> GetAllContractFiles()
+        {
+            using var db = _contextFactory.CreateDbContext();
+            return await db.ContractFiles
+                .Include(file => file.Contract)
+                .ThenInclude(contract => contract.Client)
+                .OrderByDescending(files => files.ContractFileId)
+                .ToListAsync();
         }
     }
 }

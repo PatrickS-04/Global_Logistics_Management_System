@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using PROG7311_PoE.Components;
@@ -21,6 +22,22 @@ namespace PROG7311_PoE
                 options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
             builder.Services.AddScoped<IContractFactory, ContractFactory>();
+            builder.Services.AddScoped<List<IObserver>>(sp => new List<IObserver>());
+            builder.Services.AddScoped<ContractService>();
+            builder.Services.AddScoped<ServiceRequestService>();
+            builder.Services.AddScoped<ClientService>();
+            builder.Services.AddScoped<ContractFileService>();
+
+            builder.Services.AddScoped(sp =>
+            {
+                var navigationManager = sp.GetRequiredService<NavigationManager>();
+                return new HttpClient { BaseAddress = new Uri(navigationManager.BaseUri) };
+            });
+
+            builder.Services.AddControllers().AddJsonOptions(options =>
+            {
+                options.JsonSerializerOptions.ReferenceHandler = System.Text.Json.Serialization.ReferenceHandler.IgnoreCycles;
+            });
 
             builder.Services.AddIdentity<IdentityUser, IdentityRole>(options => {
                 options.SignIn.RequireConfirmedAccount = false;
@@ -50,13 +67,13 @@ namespace PROG7311_PoE
                 await InitializeDatabase.TestUsers(services);
             }
 
-            app.UseStatusCodePagesWithReExecute("/not-found", createScopeForStatusCodePages: true);
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseRouting();
             app.UseAuthentication();
             app.UseAuthorization();
             app.UseAntiforgery();
+            app.UseStatusCodePagesWithReExecute("/not-found");
 
             app.MapControllers();
             app.MapStaticAssets();

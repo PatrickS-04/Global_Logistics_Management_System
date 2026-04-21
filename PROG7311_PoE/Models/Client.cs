@@ -8,7 +8,7 @@ namespace PROG7311_PoE.Models
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int ClientId { get; set; }
-        public string? UserId { get; set; }
+        public string UserId { get; set; }
         public string clientName { get; set; }
         public string clientEmail { get; set; }
         public string clientPhoneNumber { get; set; }

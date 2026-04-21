@@ -1,8 +1,5 @@
 ﻿@page "/create-contract"
 @using Microsoft.AspNetCore.Authorization
-@using PROG7311_PoE.Controllers
-@inject HttpClient Http
-@inject NavigationManager Navigation
 @attribute [Authorize(Roles = "Client")]
 
 <div class="container mt-5">
@@ -11,88 +8,34 @@
             <h4 class="mb-0">Create New Contract</h4>
         </div>
         <div class="card-body">
-            <EditForm Model="contractCreate" OnValidSubmit="HandleSubmit">
-                <DataAnnotationsValidator />
-
+            <form method="post" action="/api/contract/createContract" enctype="multipart/form-data">
                 <div class="mb-3">
                     <label class="form-label fw-bold">Contract Type</label>
-                    <InputSelect @bind-Value="contractCreate.Type" class="form-select">
+                    <select name="type" class="form-select" required>
                         <option value="">-- Select Type --</option>
                         <option value="Standard">Standard</option>
                         <option value="Premium">Premium</option>
                         <option value="International">International</option>
-                    </InputSelect>
-                    <ValidationMessage For="() => contractCreate.Type" class="text-danger" />
+                    </select>
                 </div>
-
-                <div class="row">
-                    <div class="col-md-6 mb-3">
-                        <label class="form-label fw-bold">Start Date</label>
-                        <InputDate @bind-Value="contractCreate.StartDate" class="form-control" />
-                    </div>
-                    <div class="col-md-6 mb-3">
-                        <label class="form-label fw-bold">End Date</label>
-                        <InputDate @bind-Value="contractCreate.EndDate" class="form-control" />
-                    </div>
+                <div class="mb-3">
+                    <label class="form-label fw-bold">Start Date</label>
+                    <input name="startDate" type="date" class="form-control" required />
                 </div>
-
+                <div class="mb-3">
+                    <label class="form-label fw-bold">End Date</label>
+                    <input name="endDate" type="date" class="form-control" required />
+                </div>
+                <div class="mb-3">
+                    <label class="form-label fw-bold">Contract File Upload (Optional)</label>
+                    <input name="contractFile" type="file" class="form-control" accept=".pdf" />
+                    <small class="text-muted">Upload a .PDF contract file</small>
+                </div>
                 <div class="d-grid gap-2 mt-4">
-                    <button type="submit" class="btn btn-success" disabled="@isSubmitting">
-                        @if (isSubmitting)
-                        {
-                            <span class="spinner-border spinner-border-sm"></span> <span>Processing...</span>
-                        }
-                        else
-                        {
-                            <span>Submit Contract</span>
-                        }
-                    </button>
-                    <button type="button" class="btn btn-outline-secondary" @onclick="Cancel">Cancel</button>
+                    <button type="submit" class="btn btn-success">Submit Contract</button>
+                    <a href="/Home" class="btn btn-outline-secondary">Cancel</a>
                 </div>
-            </EditForm>
-
-            @if (!string.IsNullOrEmpty(statusMessage))
-            {
-                <div class="alert alert-info mt-3">@statusMessage</div>
-            }
+            </form>
         </div>
     </div>
 </div>
-
-@code {
-    private ContractCreate contractCreate = new() { StartDate = DateTime.Now, EndDate = DateTime.Now.AddMonths(1) };
-    private bool isSubmitting = false;
-    private string? statusMessage;
-
-    private async Task HandleSubmit()
-    {
-        isSubmitting = true;
-        statusMessage = "Sending request to server...";
-
-        try
-        {
-            var response = await Http.PostAsJsonAsync("api/contract/create", contractCreate);
-
-            if (response.IsSuccessStatusCode)
-            {
-                statusMessage = "Contract created successfully! Redirecting...";
-                await Task.Delay(2000);
-                Navigation.NavigateTo("/Home");
-            }
-            else
-            {
-                statusMessage = $"Error: {await response.Content.ReadAsStringAsync()}";
-            }
-        }
-        catch (Exception ex)
-        {
-            statusMessage = $"An error occurred: {ex.Message}";
-        }
-        finally
-        {
-            isSubmitting = false;
-        }
-    }
-
-    private void Cancel() => Navigation.NavigateTo("/Home");
-}
