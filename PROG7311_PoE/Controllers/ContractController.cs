@@ -45,7 +45,7 @@ namespace PROG7311_PoE.Controllers
                     return Redirect("/Login");
                 }
 
-                var client = await _clientService.GetClientByClientId(userId);
+                var client = await _clientService.GetClientByUserId(userId);
 
                 var newContract = await _contractService.CreateNewContract(type, client.ClientId, startDate, endDate);
 
@@ -60,6 +60,17 @@ namespace PROG7311_PoE.Controllers
             {
                 return BadRequest(exception.Message);
             }
+        }
+
+        [HttpGet("allClientContracts/{userId}")]
+        [IgnoreAntiforgeryToken]
+        public async Task<IActionResult> GetAllClientContracts(string userId)
+        {
+            var client = await _clientService.GetClientByUserId(userId);
+            if (client == null) return NotFound("Client profile not found.");
+
+            var contracts = await _clientService.GetClientsContracts(client.ClientId);
+            return Ok(contracts);
         }
 
         [HttpPost("updateContractStatus")]

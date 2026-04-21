@@ -171,16 +171,16 @@ namespace PROG7311_PoE.Services
         // Method gets a list of all contracts
         public async Task<List<Contract>> GetAllContracts()
         {
-            using var db = _contextFactory.CreateDbContext();
-            return await db.Contracts.Include(client => client.Client).ToListAsync();
+            using var dbContext = _contextFactory.CreateDbContext();
+            return await dbContext.Contracts.Include(client => client.Client).ToListAsync();
         }
 
         // ---------------------------------------------------------------------------------------------------------
         // Method gets a list of all contract files
         public async Task<List<ContractFile>> GetAllContractFiles()
         {
-            using var db = _contextFactory.CreateDbContext();
-            return await db.ContractFiles
+            using var dbContext = _contextFactory.CreateDbContext();
+            return await dbContext.ContractFiles
                 .Include(file => file.Contract)
                 .ThenInclude(contract => contract.Client)
                 .OrderByDescending(files => files.ContractFileId)

@@ -62,8 +62,16 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xMb2dpbi5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/Users/lab_services_student/Desktop/prog7311-poe-part2-ST10440987-Patrick/PROG7311_PoE/Components/Pages/ManageUsers.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xNYW5hZ2VVc2Vycy5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/lab_services_student/Desktop/prog7311-poe-part2-ST10440987-Patrick/PROG7311_PoE/Components/Pages/NotFound.razor]
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xOb3RGb3VuZC5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/lab_services_student/Desktop/prog7311-poe-part2-ST10440987-Patrick/PROG7311_PoE/Components/Pages/ShowAllContracts.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xTaG93QWxsQ29udHJhY3RzLnJhem9y
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/lab_services_student/Desktop/prog7311-poe-part2-ST10440987-Patrick/PROG7311_PoE/Components/Pages/UpdateContractStatus.razor]
@@ -74,12 +82,20 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xWaWV3Q29udHJhY3RGaWxlcy5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/Users/lab_services_student/Desktop/prog7311-poe-part2-ST10440987-Patrick/PROG7311_PoE/Components/Pages/ViewMyContracts.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xWaWV3TXlDb250cmFjdHMucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/lab_services_student/Desktop/prog7311-poe-part2-ST10440987-Patrick/PROG7311_PoE/Components/Routes.razor]
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xSb3V0ZXMucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/lab_services_student/Desktop/prog7311-poe-part2-ST10440987-Patrick/PROG7311_PoE/Components/_Imports.razor]
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xfSW1wb3J0cy5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/lab_services_student/Desktop/prog7311-poe-part2-ST10440987-Patrick/PROG7311_PoE/Pages/Admin.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQWRtaW4ucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/lab_services_student/Desktop/prog7311-poe-part2-ST10440987-Patrick/PROG7311_PoE/Components/Layout/MainLayout.razor]

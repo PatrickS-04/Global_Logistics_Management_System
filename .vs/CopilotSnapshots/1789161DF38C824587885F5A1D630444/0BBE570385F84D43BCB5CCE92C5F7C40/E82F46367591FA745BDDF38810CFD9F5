@@ -1,0 +1,73 @@
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Identity;
+using PROG7311_PoE.Services;
+
+namespace PROG7311_PoE.Controllers
+{
+    [ApiController]
+    [Route("api/[controller]")]
+    [Authorize(Roles = "Admin")]
+    public class AdminController : ControllerBase
+    {
+        private readonly AdminService _adminService;
+
+        public AdminController(AdminService adminService)
+        {
+            _adminService = adminService;
+        }
+
+        [HttpGet("users")]
+        public async Task<IActionResult> GetUsers()
+        {
+            var users = await _adminService.GetAllUsersAsync();
+            return Ok(users);
+        }
+
+        public class CreateUserRequest
+        {
+            public string Email { get; set; } = null!;
+            public string Password { get; set; } = null!;
+            public string? Role { get; set; }
+        }
+
+        [HttpPost("create")]
+        public async Task<IActionResult> CreateUser([FromBody] CreateUserRequest request)
+        {
+            var result = await _adminService.CreateUserAsync(request.Email, request.Password, request.Role);
+            if (!result.Succeeded)
+            {
+                return BadRequest(result.Errors);
+            }
+            return Ok();
+        }
+
+        [HttpDelete("delete/{id}")]
+        public async Task<IActionResult> DeleteUser(string userId)
+        {
+            var result = await _adminService.DeleteUserAsync(userId);
+            if (!result.Succeeded)
+            {
+                return BadRequest(result.Errors);
+            }
+            return Ok();
+        }
+
+        public class ChangeRoleRequest
+        {
+            public string UserId { get; set; } = null!;
+            public string NewRole { get; set; } = null!;
+        }
+
+        [HttpPost("changeRole")]
+        public async Task<IActionResult> ChangeRole([FromBody] ChangeRoleRequest request)
+        {
+            var result = await _adminService.ChangeUserRoleAsync(request.UserId, request.NewRole);
+            if (!result.Succeeded)
+            {
+                return BadRequest(result.Errors);
+            }
+            return Ok();
+        }
+    }
+}

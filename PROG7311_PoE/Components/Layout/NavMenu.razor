@@ -29,12 +29,12 @@
 
                 <AuthorizeView Roles="Admin" Context="firstInnerContext">
                     <div class="nav-item px-3">
-                        <NavLink class="nav-link" href="admin/all-contracts">
+                        <NavLink class="nav-link" href="all-contracts">
                             <span class="bi bi-shield-lock" aria-hidden="true"></span> All Contracts
                         </NavLink>
                     </div>
                     <div class="nav-item px-3">
-                        <NavLink class="nav-link" href="admin/users">
+                        <NavLink class="nav-link" href="manage-users">
                             <span class="bi bi-people" aria-hidden="true"></span> Manage Users
                         </NavLink>
                     </div>
@@ -76,6 +76,12 @@
                     <div class="nav-item px-3">
                         <NavLink class="nav-link" href="create-contract">
                             <span class="bi bi-file-earmark-plus" aria-hidden="true"></span> Create Contract
+                        </NavLink>
+                    </div>
+
+                    <div class="nav-item px-3">
+                        <NavLink class="nav-link" href="show-my-contracts">
+                            <span class="bi bi-file-earmark-plus" aria-hidden="true"></span> View My Contracts
                         </NavLink>
                     </div>
                 </AuthorizeView>

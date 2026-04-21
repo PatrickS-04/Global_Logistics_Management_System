@@ -13,12 +13,19 @@ namespace PROG7311_PoE.Services
             _contextFactory = contextFactory;
         }
 
-        public async Task<Client?> GetClientByClientId(string userId)
+        public async Task<Client?> GetClientByUserId(string userId)
         {
             using var context = _contextFactory.CreateDbContext();
 
             return await context.Clients
                 .FirstOrDefaultAsync(client => client.UserId == userId);
+        }
+
+        public async Task<List<Contract>> GetClientsContracts(int clientId)
+        {
+            using var dbContext = _contextFactory.CreateDbContext();
+            return await dbContext.Contracts
+                .Where(contract => contract.ClientId == clientId).ToListAsync();
         }
     }
 }

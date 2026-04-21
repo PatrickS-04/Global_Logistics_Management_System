@@ -1,5 +1,78 @@
 [
   {
+    "ContainingType": "PROG7311_PoE.Controllers.AdminController",
+    "Method": "ChangeRole",
+    "RelativePath": "api/Admin/changeRole",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "userId",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "newRole",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "PROG7311_PoE.Controllers.AdminController",
+    "Method": "CreateUser",
+    "RelativePath": "api/Admin/createUser",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "email",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "password",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "role",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "PROG7311_PoE.Controllers.AdminController",
+    "Method": "DeleteUser",
+    "RelativePath": "api/Admin/deleteUser",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "userId",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "PROG7311_PoE.Controllers.AdminController",
+    "Method": "GetUsers",
+    "RelativePath": "api/Admin/getUsers",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "PROG7311_PoE.Controllers.ContractController",
     "Method": "GetActiveContracts",
     "RelativePath": "api/Contract/activeContracts",
@@ -18,6 +91,22 @@
         "StatusCode": 200
       }
     ]
+  },
+  {
+    "ContainingType": "PROG7311_PoE.Controllers.ContractController",
+    "Method": "GetAllClientContracts",
+    "RelativePath": "api/Contract/allClientContracts/{userId}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "userId",
+        "Type": "System.String",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
   },
   {
     "ContainingType": "PROG7311_PoE.Controllers.ContractController",

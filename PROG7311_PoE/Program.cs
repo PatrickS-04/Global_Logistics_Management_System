@@ -27,6 +27,7 @@ namespace PROG7311_PoE
             builder.Services.AddScoped<ServiceRequestService>();
             builder.Services.AddScoped<ClientService>();
             builder.Services.AddScoped<ContractFileService>();
+            builder.Services.AddScoped<AdminService>();
 
             builder.Services.AddScoped(sp =>
             {

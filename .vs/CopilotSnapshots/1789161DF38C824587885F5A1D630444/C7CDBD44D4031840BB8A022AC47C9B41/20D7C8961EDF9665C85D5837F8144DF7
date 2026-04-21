@@ -1,0 +1,34 @@
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using PROG7311_PoE.Data;
+
+namespace PROG7311_PoE.Services
+{
+    public class AdminService
+    {
+        private readonly IDbContextFactory<AppDbContext> _contextFactory;
+        private readonly UserManager<IdentityUser> _userManager;
+        private readonly RoleManager<IdentityRole> _roleManager;
+        public AdminService(IDbContextFactory<AppDbContext> contextFactory, UserManager<IdentityUser> userManager, RoleManager<IdentityRole> roleManager)
+        {
+            _contextFactory = contextFactory;
+            _userManager = userManager;
+            _roleManager = roleManager;
+        }
+
+        public async Task<IActionResult> GetAllUsers()
+        {
+            var users = _userManager.Users.ToList();
+            var listOfUsers = new List<Object>();
+
+            foreach (var user in users)
+            {
+                var roles = await _userManager.GetRolesAsync(user);
+                listOfUsers.Add(new { user.Id, user.Email, Role = roles.FirstOrDefault() ?? "No Role" });
+            }
+
+            return Ok(listOfUsers);
+        }
+    }
+}
