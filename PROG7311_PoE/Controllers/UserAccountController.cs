@@ -15,6 +15,8 @@ namespace PROG7311_PoE.Controllers
             _signInManager = signInManager;
         }
 
+        // ---------------------------------------------------------------------------------------------------------
+        // Method logs in users with correct credentials
         [HttpPost]
         [IgnoreAntiforgeryToken]
         public async Task<IActionResult> Login([FromForm] string email, [FromForm] string password)
@@ -29,7 +31,8 @@ namespace PROG7311_PoE.Controllers
             return Redirect("/Login");
         }
 
-        
+        // ---------------------------------------------------------------------------------------------------------
+        // Method logs users out
         [HttpPost("logout")]
         [IgnoreAntiforgeryToken]
         public async Task<IActionResult> Logout()
@@ -39,3 +42,4 @@ namespace PROG7311_PoE.Controllers
         }
     }
 }
+// --------------------------------------------------------000... End Of File ...000------------------------------------------------------------------

@@ -4,6 +4,8 @@ namespace PROG7311_PoE.Services
 {
     public class CheckContractStatus : IValidationStrategy
     {
+        // ---------------------------------------------------------------------------------------------------------
+        // Method implements the IValidationStrategy interface
         public bool Validate(Contract contract)
         {
             return contract.contractStatus != ContractStatus.None;
@@ -12,6 +14,8 @@ namespace PROG7311_PoE.Services
 
     public class CheckFileTypeStrategy : IValidationStrategy
     {
+        // ---------------------------------------------------------------------------------------------------------
+        // Method implements the IValidationStrategy interface
         public bool Validate(Contract contract)
         {
             if (contract.File != null)
@@ -25,6 +29,8 @@ namespace PROG7311_PoE.Services
 
     public class CheckCurrencyConversion : IValidationStrategy
     {
+        // ---------------------------------------------------------------------------------------------------------
+        // Method implements the IValidationStrategy interface
         public bool Validate(Contract contract)
         {
             if (contract == null)
@@ -44,3 +50,4 @@ namespace PROG7311_PoE.Services
         }
     }
 }
+// --------------------------------------------------------000... End Of File ...000------------------------------------------------------------------

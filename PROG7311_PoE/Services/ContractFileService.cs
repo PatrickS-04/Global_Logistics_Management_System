@@ -18,6 +18,9 @@ namespace PROG7311_PoE.Services
             _webHostEnvironment = webHostEnvironment;
             _contractService = contractService;
         }
+
+        // ---------------------------------------------------------------------------------------------------------
+        // Method allow user to upload a contract file in .pdf format
         public async Task<ContractFile> ContractFileUpload(int contractId, IBrowserFile contractFile)
         {
             using var dbContext = await _contextFactory.CreateDbContextAsync();
@@ -64,7 +67,6 @@ namespace PROG7311_PoE.Services
 
             dbContext.ContractFiles.Add(newContractFile);
 
-            // Admins get alerted as well
             var logisticsEmailObserver = new LogisticsManagerEmailObserver { email = contract.LogisticsManager.email };
             var logisticsAlertObserver = new LogisticsManagerAlertObserver { phoneNumber = contract.LogisticsManager.phoneNumber };
 
@@ -81,6 +83,8 @@ namespace PROG7311_PoE.Services
             return newContractFile;
         }
 
+        // ---------------------------------------------------------------------------------------------------------
+        // Method is a helper for the contract file upload method above
         public async Task<ContractFile> UploadContractFileHelperMethod(int contractId, IFormFile file)
         {
             using var dbContext = await _contextFactory.CreateDbContextAsync();
@@ -114,6 +118,8 @@ namespace PROG7311_PoE.Services
             return newContractFile;
         }
 
+        // ---------------------------------------------------------------------------------------------------------
+        // Method allows for the download of the contract file that was uploaded
         public async Task<(byte[] FileBytes, string FileName)> GetFileDetailsToDownload(string storedName)
         {
             using var dbContext = await _contextFactory.CreateDbContextAsync();
@@ -139,3 +145,4 @@ namespace PROG7311_PoE.Services
         }
     }
 }
+// --------------------------------------------------------000... End Of File ...000------------------------------------------------------------------

@@ -4,6 +4,8 @@ namespace PROG7311_PoE.Services
 {
     public class ContractFactory : IContractFactory
     {
+        // ---------------------------------------------------------------------------------------------------------
+        // Method implements the IContractFactory interface
         public Contract CreateContract(string type)
         {
             switch (type.ToLower())
@@ -20,3 +22,4 @@ namespace PROG7311_PoE.Services
         }
     }
 }
+// --------------------------------------------------------000... End Of File ...000------------------------------------------------------------------

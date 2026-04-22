@@ -16,6 +16,8 @@ namespace PROG7311_PoE.Controllers
             _adminService = adminService;
         }
 
+        // ---------------------------------------------------------------------------------------------------------
+        // Method returns a list of all users
         [HttpGet("getUsers")]
         public async Task<IActionResult> GetUsers()
         {
@@ -23,6 +25,8 @@ namespace PROG7311_PoE.Controllers
             return Ok(users);
         }
 
+        // ---------------------------------------------------------------------------------------------------------
+        // Method allows admins to create a user
         [HttpPost("createUser")]
         public async Task<IActionResult> CreateUser([FromForm] string email, [FromForm] string password, [FromForm] string role)
         {
@@ -34,6 +38,8 @@ namespace PROG7311_PoE.Controllers
             return Redirect("/manage-users");
         }
 
+        // ---------------------------------------------------------------------------------------------------------
+        // Method allows admins to delete a user
         [HttpPost("deleteUser")]
         public async Task<IActionResult> DeleteUser([FromForm] string userId)
         {
@@ -45,6 +51,8 @@ namespace PROG7311_PoE.Controllers
             return Redirect("/manage-users");
         }
 
+        // ---------------------------------------------------------------------------------------------------------
+        // Method allows admins to change the role of the user
         [HttpPost("changeRole")]
         public async Task<IActionResult> ChangeRole([FromForm] string userId, [FromForm] string newRole)
         {
@@ -57,3 +65,4 @@ namespace PROG7311_PoE.Controllers
         }
     }
 }
+// --------------------------------------------------------000... End Of File ...000------------------------------------------------------------------

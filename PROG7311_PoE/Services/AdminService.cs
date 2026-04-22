@@ -24,6 +24,8 @@ namespace PROG7311_PoE.Services
             _roleManager = roleManager;
         }
 
+        // ---------------------------------------------------------------------------------------------------------
+        // Method gets a list all users
         public async Task<List<AdminUserDto>> GetAllUsersAsync()
         {
             var users = await _userManager.Users.ToListAsync();
@@ -38,6 +40,8 @@ namespace PROG7311_PoE.Services
             return listOfUsers;
         }
 
+        // ---------------------------------------------------------------------------------------------------------
+        // Method creates new users
         public async Task<IdentityResult> CreateUserAsync(string email, string password, string? role = null)
         {
             var user = new IdentityUser { UserName = email, Email = email };
@@ -61,6 +65,8 @@ namespace PROG7311_PoE.Services
             return result;
         }
 
+        // ---------------------------------------------------------------------------------------------------------
+        // Method deletes existing users
         public async Task<IdentityResult> DeleteUserAsync(string userId)
         {
             var user = await _userManager.FindByIdAsync(userId);
@@ -73,6 +79,8 @@ namespace PROG7311_PoE.Services
             return await _userManager.DeleteAsync(user);
         }
 
+        // ---------------------------------------------------------------------------------------------------------
+        // Method changes the role of an existing user
         public async Task<IdentityResult> ChangeUserRoleAsync(string userId, string newRole)
         {
             var user = await _userManager.FindByIdAsync(userId);
@@ -100,3 +108,4 @@ namespace PROG7311_PoE.Services
         }
     }
 }
+// --------------------------------------------------------000... End Of File ...000------------------------------------------------------------------

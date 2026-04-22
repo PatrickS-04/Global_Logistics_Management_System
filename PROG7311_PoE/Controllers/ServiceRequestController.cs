@@ -17,6 +17,8 @@ namespace PROG7311_PoE.Controllers
             _serviceRequestService = serviceRequestService;
         }
 
+        // ---------------------------------------------------------------------------------------------------------
+        // Method creates new service request via the UI by calling the method from the service
         [HttpPost("createServiceRequest")]
         [IgnoreAntiforgeryToken]
         [Authorize(Roles = "LogisticsManager")]
@@ -43,3 +45,4 @@ namespace PROG7311_PoE.Controllers
         }
     }
 }
+// --------------------------------------------------------000... End Of File ...000------------------------------------------------------------------

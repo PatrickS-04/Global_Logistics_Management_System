@@ -6,6 +6,8 @@ namespace PROG7311_PoE.Services
     {
         public string email { get; set; }
 
+        // ---------------------------------------------------------------------------------------------------------
+        // Method implements the IObserver interface
         public void UpdateObservers(string message)
         {
             Console.WriteLine($"An [EMAIL] has been sent to LOGISTICS MANAGER {email}: {message}");
@@ -16,6 +18,8 @@ namespace PROG7311_PoE.Services
     {
         public string email { get; set; }
 
+        // ---------------------------------------------------------------------------------------------------------
+        // Method implements the IObserver interface
         public void UpdateObservers(string message)
         {
             Console.WriteLine($"An [EMAIL] has been sent to CLIENT {email}: {message}");
@@ -26,6 +30,8 @@ namespace PROG7311_PoE.Services
     {
         public string email { get; set; }
 
+        // ---------------------------------------------------------------------------------------------------------
+        // Method implements the IObserver interface
         public void UpdateObservers(string message)
         {
             Console.WriteLine($"An [EMAIL] has been sent to ADMIN {email}: {message}");
@@ -36,6 +42,8 @@ namespace PROG7311_PoE.Services
     {
         public string phoneNumber { get; set; }
 
+        // ---------------------------------------------------------------------------------------------------------
+        // Method implements the IObserver interface
         public void UpdateObservers(string message)
         {
             Console.WriteLine($"An [SMS] has been sent to LOGISTICS MANAGER {phoneNumber}: {message}");
@@ -46,6 +54,8 @@ namespace PROG7311_PoE.Services
     {
         public string phoneNumber { get; set; }
 
+        // ---------------------------------------------------------------------------------------------------------
+        // Method implements the IObserver interface
         public void UpdateObservers(string message)
         {
             Console.WriteLine($"An [SMS] has been sent to CLIENT {phoneNumber}: {message}");
@@ -56,9 +66,12 @@ namespace PROG7311_PoE.Services
     {
         public string phoneNumber { get; set; }
 
+        // ---------------------------------------------------------------------------------------------------------
+        // Method implements the IObserver interface
         public void UpdateObservers(string message)
         {
             Console.WriteLine($"An [SMS] has been sent to ADMIN {phoneNumber}: {message}");
         }
     }
 }
+// --------------------------------------------------------000... End Of File ...000------------------------------------------------------------------

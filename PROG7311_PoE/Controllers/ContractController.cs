@@ -22,6 +22,8 @@ namespace PROG7311_PoE.Controllers
             _contractFileService = contractFileService;
         }
 
+        // ---------------------------------------------------------------------------------------------------------
+        // Method gets a list of all active contracts in the UI by calling the method from the service
         [HttpGet("activeContracts")]
         [IgnoreAntiforgeryToken]
         public async Task<ActionResult<List<Contract>>> GetActiveContracts()
@@ -30,6 +32,8 @@ namespace PROG7311_PoE.Controllers
             return Ok(activeContracts);
         }
 
+        // ---------------------------------------------------------------------------------------------------------
+        // Method creates a new user in the UI by calling the method from the service
         [HttpPost("createContract")]
         [IgnoreAntiforgeryToken]
         [Authorize(Roles = "Client")]
@@ -62,6 +66,8 @@ namespace PROG7311_PoE.Controllers
             }
         }
 
+        // ---------------------------------------------------------------------------------------------------------
+        // Method gets a list of all contracts belonging to a client by calling the relevant methods from the service
         [HttpGet("allClientContracts/{userId}")]
         [IgnoreAntiforgeryToken]
         public async Task<IActionResult> GetAllClientContracts(string userId)
@@ -73,6 +79,8 @@ namespace PROG7311_PoE.Controllers
             return Ok(contracts);
         }
 
+        // ---------------------------------------------------------------------------------------------------------
+        // Method updates the contracts status by calling the relevant method from the service
         [HttpPost("updateContractStatus")]
         [IgnoreAntiforgeryToken]
         [Authorize(Roles = "LogisticsManager")]
@@ -94,6 +102,8 @@ namespace PROG7311_PoE.Controllers
             }
         }
 
+        // ---------------------------------------------------------------------------------------------------------
+        // Method gets a list of all contracts by calling the method from the service
         [HttpGet("allContracts")]
         public async Task<IActionResult> GetAllContracts()
         {
@@ -101,6 +111,8 @@ namespace PROG7311_PoE.Controllers
             return Ok(contracts);
         }
 
+        // ---------------------------------------------------------------------------------------------------------
+        // Method filters contracts in the UI by calling the method from the service
         [HttpGet("filterContracts")]
         public async Task<ActionResult<List<Contract>>> filterContracts([FromQuery] DateTime? startDate, [FromQuery] DateTime? endDate, [FromQuery] ContractStatus? contractStatus)
         {
@@ -108,6 +120,8 @@ namespace PROG7311_PoE.Controllers
             return Ok(filteredContracts);
         }
 
+        // ---------------------------------------------------------------------------------------------------------
+        // Method gets a list of all contract files in the UI by calling the method from the service
         [HttpGet("allContractFiles")]
         [AllowAnonymous]
         public async Task<ActionResult<List<ContractFile>>> GetAllContractFiles()
@@ -116,6 +130,8 @@ namespace PROG7311_PoE.Controllers
             return Ok(listOfContractFiles);
         }
 
+        // ---------------------------------------------------------------------------------------------------------
+        // Method allows the user to download the contract file in the UI by calling the method from the service
         [HttpGet("fileDownload/{storedName}")]
         [Authorize(Roles = "LogisticsManager")]
         public async Task<IActionResult> FileDownload(string storedName)
@@ -137,3 +153,4 @@ namespace PROG7311_PoE.Controllers
         }
     }
 }
+// --------------------------------------------------------000... End Of File ...000------------------------------------------------------------------

@@ -56,6 +56,7 @@ namespace PROG7311_UnitTesting
             var client = new Client
             {
                 ClientId = 1,
+                UserId = "test-user-id",
                 clientName = "Harry Doyle",
                 clientEmail = "hDoyle@test.com",
                 clientPhoneNumber = "0437583386"
@@ -107,6 +108,7 @@ namespace PROG7311_UnitTesting
             var client = new Client
             {
                 ClientId = 1,
+                UserId = "test-user-id",
                 clientName = "Harry Doyle",
                 clientEmail = "hDoyle@test.com",
                 clientPhoneNumber = "0437583386"
