@@ -3,8 +3,8 @@
   "WorkspaceRootPath": "C:\\Users\\lab_services_student\\Desktop\\prog7311-poe-part2-ST10440987-Patrick\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{3BD36EE3-AADB-4AF7-985D-DA57D0012C33}|PROG7311_UnitTesting\\PROG7311_UnitTesting.csproj|c:\\users\\lab_services_student\\desktop\\prog7311-poe-part2-st10440987-patrick\\prog7311_unittesting\\unittests.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{3BD36EE3-AADB-4AF7-985D-DA57D0012C33}|PROG7311_UnitTesting\\PROG7311_UnitTesting.csproj|solutionrelative:prog7311_unittesting\\unittests.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{E6BF8179-3190-5894-ECD4-43F21532CB23}|PROG7311_PoE\\PROG7311_PoE.csproj|c:\\users\\lab_services_student\\desktop\\prog7311-poe-part2-st10440987-patrick\\prog7311_poe\\components\\pages\\manageusers.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{E6BF8179-3190-5894-ECD4-43F21532CB23}|PROG7311_PoE\\PROG7311_PoE.csproj|solutionrelative:prog7311_poe\\components\\pages\\manageusers.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     }
   ],
   "DocumentGroupContainers": [
@@ -31,14 +31,14 @@
             {
               "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "UnitTests.cs",
-              "DocumentMoniker": "C:\\Users\\lab_services_student\\Desktop\\prog7311-poe-part2-ST10440987-Patrick\\PROG7311_UnitTesting\\UnitTests.cs",
-              "RelativeDocumentMoniker": "PROG7311_UnitTesting\\UnitTests.cs",
-              "ToolTip": "C:\\Users\\lab_services_student\\Desktop\\prog7311-poe-part2-ST10440987-Patrick\\PROG7311_UnitTesting\\UnitTests.cs*",
-              "RelativeToolTip": "PROG7311_UnitTesting\\UnitTests.cs*",
-              "ViewState": "AgIAAEsAAAAAAAAAAEAtwG4AAAAoAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-04-22T10:47:42.634Z",
+              "Title": "ManageUsers.razor",
+              "DocumentMoniker": "C:\\Users\\lab_services_student\\Desktop\\prog7311-poe-part2-ST10440987-Patrick\\PROG7311_PoE\\Components\\Pages\\ManageUsers.razor",
+              "RelativeDocumentMoniker": "PROG7311_PoE\\Components\\Pages\\ManageUsers.razor",
+              "ToolTip": "C:\\Users\\lab_services_student\\Desktop\\prog7311-poe-part2-ST10440987-Patrick\\PROG7311_PoE\\Components\\Pages\\ManageUsers.razor*",
+              "RelativeToolTip": "PROG7311_PoE\\Components\\Pages\\ManageUsers.razor*",
+              "ViewState": "AgIAAE8AAAAAAAAAAMArwHIAAABFAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-04-22T17:12:02.452Z",
               "EditorCaption": ""
             }
           ]

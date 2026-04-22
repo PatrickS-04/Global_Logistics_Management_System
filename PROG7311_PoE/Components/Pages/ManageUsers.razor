@@ -103,9 +103,26 @@
                                 </td>
 
                                 <td class="align-middle">
-                                    <span class="badge bg-secondary">
-                                        @user.Role
-                                    </span>
+                                    @if (user.Role == "Admin")
+                                    {
+                                        <span class="badge bg-info">
+                                            @user.Role
+                                        </span>
+                                    }
+
+                                    @if (user.Role == "LogisticsManager")
+                                    {
+                                        <span class="badge bg-primary">
+                                            @user.Role
+                                        </span>
+                                    }
+
+                                    @if (user.Role == "Client")
+                                    {
+                                        <span class="badge bg-success">
+                                            @user.Role
+                                        </span>
+                                    }
                                 </td>
 
                                 <td class="text-center align-middle">
