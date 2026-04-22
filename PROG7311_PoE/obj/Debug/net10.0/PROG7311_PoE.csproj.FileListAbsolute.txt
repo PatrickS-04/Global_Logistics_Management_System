@@ -151,7 +151,6 @@ C:\Users\lab_services_student\Desktop\prog7311-poe-part2-ST10440987-Patrick\PROG
 C:\Users\lab_services_student\Desktop\prog7311-poe-part2-ST10440987-Patrick\PROG7311_PoE\obj\Debug\net10.0\scopedcss\Components\Layout\ReconnectModal.razor.rz.scp.css
 C:\Users\lab_services_student\Desktop\prog7311-poe-part2-ST10440987-Patrick\PROG7311_PoE\obj\Debug\net10.0\scopedcss\bundle\PROG7311_PoE.styles.css
 C:\Users\lab_services_student\Desktop\prog7311-poe-part2-ST10440987-Patrick\PROG7311_PoE\obj\Debug\net10.0\scopedcss\projectbundle\PROG7311_PoE.bundle.scp.css
-C:\Users\lab_services_student\Desktop\prog7311-poe-part2-ST10440987-Patrick\PROG7311_PoE\obj\Debug\net10.0\compressed\9sudmoc6mc-{0}-khy4lop6wu-khy4lop6wu.gz
 C:\Users\lab_services_student\Desktop\prog7311-poe-part2-ST10440987-Patrick\PROG7311_PoE\obj\Debug\net10.0\compressed\zl1vu8wbxz-{0}-bqjiyaj88i-bqjiyaj88i.gz
 C:\Users\lab_services_student\Desktop\prog7311-poe-part2-ST10440987-Patrick\PROG7311_PoE\obj\Debug\net10.0\compressed\s9loxrp6tq-{0}-c2jlpeoesf-c2jlpeoesf.gz
 C:\Users\lab_services_student\Desktop\prog7311-poe-part2-ST10440987-Patrick\PROG7311_PoE\obj\Debug\net10.0\compressed\m9af3g39cs-{0}-erw9l3u2r3-erw9l3u2r3.gz
@@ -213,3 +212,4 @@ C:\Users\lab_services_student\Desktop\prog7311-poe-part2-ST10440987-Patrick\PROG
 C:\Users\lab_services_student\Desktop\prog7311-poe-part2-ST10440987-Patrick\PROG7311_PoE\obj\Debug\net10.0\PROG7311_PoE.pdb
 C:\Users\lab_services_student\Desktop\prog7311-poe-part2-ST10440987-Patrick\PROG7311_PoE\obj\Debug\net10.0\PROG7311_PoE.genruntimeconfig.cache
 C:\Users\lab_services_student\Desktop\prog7311-poe-part2-ST10440987-Patrick\PROG7311_PoE\obj\Debug\net10.0\ref\PROG7311_PoE.dll
+C:\Users\lab_services_student\Desktop\prog7311-poe-part2-ST10440987-Patrick\PROG7311_PoE\obj\Debug\net10.0\compressed\9sudmoc6mc-{0}-vyb52g66m6-vyb52g66m6.gz

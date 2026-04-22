@@ -58,3 +58,57 @@ h1:focus {
 .form-floating > .form-control-plaintext:focus::placeholder, .form-floating > .form-control:focus::placeholder {
     text-align: start;
 }
+
+body {
+    background-image: url('/images/Web_App_Background.jpg');
+    background-size: cover;
+    background-attachment: fixed;
+    background-position: center;
+    min-height: 100vh;
+}
+
+body.dark-mode {
+    background-color: #1a1a2e;
+    color: #ffffff;
+}
+
+body.dark-mode .card {
+    background-color: #16213e;
+    border-color: #0f3460;
+    color: #ffffff;
+}
+
+body.dark-mode .table {
+    color: #ffffff;
+}
+
+body.dark-mode .table-light {
+    background-color: #0f3460;
+    color: #ffffff;
+}
+
+body.dark-mode .nav-link {
+    color: rgba(255,255,255,0.8) !important;
+}
+
+body.dark-mode .form-control,
+body.dark-mode .form-select {
+    background-color: #0f3460;
+    border-color: #ffffff;
+    color: #ffffff;
+}
+
+body.dark-mode .top-row {
+    background-color: #0f3460 !important;
+    border-bottom-color: #1a1a2e !important;
+    color: #ffffff;
+}
+
+body.dark-mode .top-row a {
+    color: #ffffff !important;
+}
+
+body.dark-mode .top-row .btn-outline-secondary {
+    color: #ffffff !important;
+    border-color: #ffffff !important;
+}
