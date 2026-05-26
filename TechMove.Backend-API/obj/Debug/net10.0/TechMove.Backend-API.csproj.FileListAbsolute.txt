@@ -1,0 +1,9 @@
+C:\Users\lab_services_student\Desktop\prog7311-poe-part2-ST10440987-Patrick\TechMove.Backend-API\obj\Debug\net10.0\TechMove.Backend-API.csproj.AssemblyReference.cache
+C:\Users\lab_services_student\Desktop\prog7311-poe-part2-ST10440987-Patrick\TechMove.Backend-API\obj\Debug\net10.0\rpswa.dswa.cache.json
+C:\Users\lab_services_student\Desktop\prog7311-poe-part2-ST10440987-Patrick\TechMove.Backend-API\obj\Debug\net10.0\TechMove.Backend-API.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\lab_services_student\Desktop\prog7311-poe-part2-ST10440987-Patrick\TechMove.Backend-API\obj\Debug\net10.0\TechMove.Backend-API.AssemblyInfoInputs.cache
+C:\Users\lab_services_student\Desktop\prog7311-poe-part2-ST10440987-Patrick\TechMove.Backend-API\obj\Debug\net10.0\TechMove.Backend-API.AssemblyInfo.cs
+C:\Users\lab_services_student\Desktop\prog7311-poe-part2-ST10440987-Patrick\TechMove.Backend-API\obj\Debug\net10.0\TechMove.Backend-API.csproj.CoreCompileInputs.cache
+C:\Users\lab_services_student\Desktop\prog7311-poe-part2-ST10440987-Patrick\TechMove.Backend-API\obj\Debug\net10.0\TechMove.Backend-API.MvcApplicationPartsAssemblyInfo.cs
+C:\Users\lab_services_student\Desktop\prog7311-poe-part2-ST10440987-Patrick\TechMove.Backend-API\obj\Debug\net10.0\TechMove.Backend-API.MvcApplicationPartsAssemblyInfo.cache
+C:\Users\lab_services_student\Desktop\prog7311-poe-part2-ST10440987-Patrick\TechMove.Backend-API\obj\Debug\net10.0\TechMove.Backend-API.sourcelink.json

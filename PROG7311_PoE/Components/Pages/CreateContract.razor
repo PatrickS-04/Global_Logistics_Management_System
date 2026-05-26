@@ -1,5 +1,8 @@
 ﻿@page "/create-contract"
+@inject HttpClient Http
+@inject NavigationManager NavigationManager
 @using Microsoft.AspNetCore.Authorization
+@using TechMove.Database.Models
 @attribute [Authorize(Roles = "Client")]
 
 <div class="container mt-5">
@@ -8,34 +11,92 @@
             <h4 class="mb-0">Create New Contract</h4>
         </div>
         <div class="card-body">
-            <form method="post" action="/api/contract/createContract" enctype="multipart/form-data">
+            <EditForm Model="@contractModel" OnValidSubmit="HandleSubmit">
+                <DataAnnotationsValidator />
+                <ValidationSummary class="text-danger small" />
+
                 <div class="mb-3">
                     <label class="form-label fw-bold">Contract Type</label>
-                    <select name="type" class="form-select" required>
+                    <InputSelect @bind-Value="contractModel.Type" class="form-select">
                         <option value="">-- Select Type --</option>
                         <option value="Standard">Standard</option>
                         <option value="Premium">Premium</option>
                         <option value="International">International</option>
-                    </select>
+                    </InputSelect>
                 </div>
+
                 <div class="mb-3">
                     <label class="form-label fw-bold">Start Date</label>
-                    <input name="startDate" type="date" class="form-control" required />
+                    <InputDate @bind-Value="contractModel.StartDate" class="form-control" />
                 </div>
+
                 <div class="mb-3">
                     <label class="form-label fw-bold">End Date</label>
-                    <input name="endDate" type="date" class="form-control" required />
+                    <InputDate @bind-Value="contractModel.EndDate" class="form-control" />
                 </div>
+
                 <div class="mb-3">
                     <label class="form-label fw-bold">Contract File Upload (Optional)</label>
-                    <input name="contractFile" type="file" class="form-control" accept=".pdf" />
+                    <InputFile OnChange="HandleFileSelected" class="form-control" accept=".pdf" />
                     <small class="text-muted">Upload a .PDF contract file</small>
                 </div>
+
                 <div class="d-grid gap-2 mt-4">
                     <button type="submit" class="btn btn-success">Submit Contract</button>
                     <a href="/Home" class="btn btn-outline-secondary">Cancel</a>
                 </div>
-            </form>
+            </EditForm>
         </div>
     </div>
 </div>
+
+@code {
+    private ContractFormModel contractModel = new();
+    private IBrowserFile? selectedFile;
+
+    private void HandleFileSelected(InputFileChangeEventArgs ev)
+    {
+        selectedFile = ev.File;
+    }
+
+    private async Task HandleSubmit()
+    {
+        try
+        {
+            using var content = new MultipartFormDataContent();
+
+            content.Add(new StringContent(contractModel.Type ?? ""), "type");
+            content.Add(new StringContent(contractModel.StartDate.ToString("yyyy-MM-dd")), "startDate");
+            content.Add(new StringContent(contractModel.EndDate.ToString("yyyy-MM-dd")), "endDate");
+
+            if (selectedFile != null)
+            {
+                var fileStream = selectedFile.OpenReadStream(maxAllowedSize: 1024 * 1024 * 5);
+                var streamContent = new StreamContent(fileStream);
+
+                streamContent.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue(selectedFile.ContentType);
+
+                content.Add(streamContent, "contractFile", selectedFile.Name);
+            }
+
+            var response = await Http.PostAsync("api/contract/createContract", content);
+
+            if (response.IsSuccessStatusCode)
+            {
+
+                NavigationManager.NavigateTo("/Home");
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Network error transmitting contract data: {ex.Message}");
+        }
+    }
+
+    public class ContractFormModel
+    {
+        public string? Type { get; set; }
+        public DateTime StartDate { get; set; } = DateTime.Today;
+        public DateTime EndDate { get; set; } = DateTime.Today.AddYears(1);
+    }
+}

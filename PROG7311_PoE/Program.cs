@@ -2,8 +2,6 @@ using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using PROG7311_PoE.Components;
-using PROG7311_PoE.Data;
-using PROG7311_PoE.Services;
 
 namespace PROG7311_PoE
 {
@@ -14,41 +12,18 @@ namespace PROG7311_PoE
             var builder = WebApplication.CreateBuilder(args);
 
             // Add services to the container.
-            builder.Services.AddControllers();
             builder.Services.AddRazorComponents()
                 .AddInteractiveServerComponents();
 
-            builder.Services.AddDbContextFactory<AppDbContext>(options =>
-                options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
-
-            builder.Services.AddScoped<IContractFactory, ContractFactory>();
-            builder.Services.AddScoped<List<IObserver>>(sp => new List<IObserver>());
-            builder.Services.AddScoped<ContractService>();
-            builder.Services.AddScoped<ServiceRequestService>();
-            builder.Services.AddScoped<ClientService>();
-            builder.Services.AddScoped<ContractFileService>();
-            builder.Services.AddScoped<AdminService>();
-
-            builder.Services.AddScoped(sp =>
+            builder.Services.AddScoped(sp => new HttpClient
             {
-                var navigationManager = sp.GetRequiredService<NavigationManager>();
-                return new HttpClient { BaseAddress = new Uri(navigationManager.BaseUri) };
+                BaseAddress = new Uri("http://localhost:5068/")
             });
 
             builder.Services.AddControllers().AddJsonOptions(options =>
             {
                 options.JsonSerializerOptions.ReferenceHandler = System.Text.Json.Serialization.ReferenceHandler.IgnoreCycles;
             });
-
-            builder.Services.AddIdentity<IdentityUser, IdentityRole>(options => {
-                options.SignIn.RequireConfirmedAccount = false;
-                options.Password.RequireDigit = false;
-                options.Password.RequiredLength = 5;
-                options.Password.RequireNonAlphanumeric = false;
-                options.Password.RequireUppercase = false;
-            })
-            .AddEntityFrameworkStores<AppDbContext>()
-            .AddDefaultTokenProviders();
 
             builder.Services.AddCascadingAuthenticationState();
 
@@ -57,15 +32,10 @@ namespace PROG7311_PoE
             // Configure the HTTP request pipeline.
             if (!app.Environment.IsDevelopment())
             {
+
                 app.UseExceptionHandler("/Error");
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
-            }
-
-            using (var scope = app.Services.CreateScope())
-            {
-                var services = scope.ServiceProvider;
-                await InitializeDatabase.TestUsers(services);
             }
 
             app.UseHttpsRedirection();
@@ -76,7 +46,6 @@ namespace PROG7311_PoE
             app.UseAntiforgery();
             app.UseStatusCodePagesWithReExecute("/not-found");
 
-            app.MapControllers();
             app.MapStaticAssets();
             app.MapRazorComponents<App>()
                 .AddInteractiveServerRenderMode();

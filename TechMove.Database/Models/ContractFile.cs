@@ -1,0 +1,20 @@
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+
+namespace TechMove.Database.Models
+{
+    [Table("ContractFiles", Schema = "dbo")]
+    public class ContractFile
+    {
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int ContractFileId { get; set; }
+        public string fileName { get; set; }
+        public string storedFileName { get; set; }
+        public long fileSize { get; set; }
+        public string filePath { get; set; }
+        public DateTime dateOfUpload { get; set; } = DateTime.Now;
+        public int ContractId { get; set; }
+        public Contract Contract { get; set; }
+    }
+}

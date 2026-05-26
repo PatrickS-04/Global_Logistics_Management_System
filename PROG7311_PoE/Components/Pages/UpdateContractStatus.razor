@@ -1,8 +1,7 @@
 ﻿@page "/update-contract-status"
 @using Microsoft.AspNetCore.Authorization
-@using PROG7311_PoE.Models
-@using PROG7311_PoE.Services
-@inject ContractService ContractService
+@using TechMove.Database.Models
+@inject HttpClient Http
 @attribute [Authorize(Roles = "LogisticsManager")]
 
 <div class="container mt-5">
@@ -77,8 +76,8 @@
 
     private List<Contract>? contracts;
 
-    protected override async Task OnInitializedAsync()
+    /*protected override async Task OnInitializedAsync()
     {
         contracts = await ContractService.GetAllContracts();
-    }
+    }*/
 }

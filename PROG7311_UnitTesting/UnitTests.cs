@@ -3,11 +3,11 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Moq;
-using PROG7311_PoE.Data;
-using PROG7311_PoE.Models;
-using PROG7311_PoE.Services;
+using TechMove.Backend_API.Data;
+using TechMove.Database.Models;
+using TechMove.Backend_API.Services;
 using System.Diagnostics.Contracts;
-using Contract = PROG7311_PoE.Models.Contract;
+using Contract = TechMove.Database.Models.Contract;
 
 namespace PROG7311_UnitTesting
 {
