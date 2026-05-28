@@ -50,7 +50,7 @@
     "ContainingType": "TechMove.Backend_API.Controllers.AdminController",
     "Method": "DeleteUser",
     "RelativePath": "api/Admin/deleteUser",
-    "HttpMethod": "POST",
+    "HttpMethod": "DELETE",
     "IsController": true,
     "Order": 0,
     "Parameters": [
@@ -225,7 +225,7 @@
     "ContainingType": "TechMove.Backend_API.Controllers.ContractController",
     "Method": "UpdateContractStatus",
     "RelativePath": "api/Contract/updateContractStatus",
-    "HttpMethod": "POST",
+    "HttpMethod": "PATCH",
     "IsController": true,
     "Order": 0,
     "Parameters": [
@@ -281,7 +281,7 @@
   {
     "ContainingType": "TechMove.Backend_API.Controllers.UserAccountController",
     "Method": "Login",
-    "RelativePath": "login-action",
+    "RelativePath": "login-action/login",
     "HttpMethod": "POST",
     "IsController": true,
     "Order": 0,

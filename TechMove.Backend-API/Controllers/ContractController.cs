@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using TechMove.Database.Models;
 using TechMove.Backend_API.Services;
+using TechMove.Database.DTOs;
 using System.Security.Claims;
 using static System.Net.WebRequestMethods;
 
@@ -25,17 +26,27 @@ namespace TechMove.Backend_API.Controllers
         // ---------------------------------------------------------------------------------------------------------
         // Method gets a list of all active contracts in the UI by calling the method from the service
         [HttpGet("activeContracts")]
-        [IgnoreAntiforgeryToken]
-        public async Task<ActionResult<List<Contract>>> GetActiveContracts()
+        public async Task<ActionResult<List<ContractDto>>> GetActiveContracts()
         {
             var activeContracts = await _contractService.GetActiveContracts();
-            return Ok(activeContracts);
+
+            var contractDTOs = activeContracts.Select(contract => new ContractDto
+            {
+                ContractId = contract.ContractId,
+                ClientName = contract.Client?.clientName ?? "Unknown Client",
+                Type = contract.GetType().Name,
+                StartDate = contract.startDate,
+                EndDate = contract.endDate,
+                ContractStatus = contract.contractStatus.ToString(),
+                DefaultCurrency = contract.defaultCurrency ?? "ZAR"
+            }).ToList();
+
+            return Ok(contractDTOs);
         }
 
         // ---------------------------------------------------------------------------------------------------------
         // Method creates a new user in the UI by calling the method from the service
         [HttpPost("createContract")]
-        [IgnoreAntiforgeryToken]
         [Authorize(Roles = "Client")]
         public async Task<ActionResult> CreateContract([FromForm] ContractFormModel contractModel)
         {
@@ -62,7 +73,18 @@ namespace TechMove.Backend_API.Controllers
                     await _contractFileService.UploadContractFileHelperMethod(newContract.ContractId, contractModel.ContractFile);
                 }
 
-                return Ok(newContract);
+                var responseDTO = new ContractDto
+                {
+                    ContractId = newContract.ContractId,
+                    ClientName = client.clientName,
+                    Type = contractModel.Type,
+                    StartDate = newContract.startDate,
+                    EndDate = newContract.endDate,
+                    ContractStatus = newContract.contractStatus.ToString(),
+                    DefaultCurrency = newContract.defaultCurrency ?? "ZAR"
+                };
+
+                return Ok(responseDTO);
             }
             catch(Exception exception)
             {
@@ -73,20 +95,30 @@ namespace TechMove.Backend_API.Controllers
         // ---------------------------------------------------------------------------------------------------------
         // Method gets a list of all contracts belonging to a client by calling the relevant methods from the service
         [HttpGet("allClientContracts/{userId}")]
-        [IgnoreAntiforgeryToken]
         public async Task<IActionResult> GetAllClientContracts(string userId)
         {
             var client = await _clientService.GetClientByUserId(userId);
             if (client == null) return NotFound("Client profile not found.");
 
             var contracts = await _clientService.GetClientsContracts(client.ClientId);
-            return Ok(contracts);
+
+            var contractDTOs = contracts.Select(contract => new ContractDto
+            {
+                ContractId = contract.ContractId,
+                ClientName = contract.Client?.clientName ?? "Unknown Client",
+                Type = contract.GetType().Name,
+                StartDate = contract.startDate,
+                EndDate = contract.endDate,
+                ContractStatus = contract.contractStatus.ToString(),
+                DefaultCurrency = contract.defaultCurrency ?? "ZAR"
+            }).ToList();
+
+            return Ok(contractDTOs);
         }
 
         // ---------------------------------------------------------------------------------------------------------
         // Method updates the contracts status by calling the relevant method from the service
-        [HttpPost("updateContractStatus")]
-        [IgnoreAntiforgeryToken]
+        [HttpPatch("updateContractStatus")]
         [Authorize(Roles = "LogisticsManager")]
         public async Task<IActionResult> UpdateContractStatus([FromForm] int contractId, [FromForm] string contractStatus)
         {
@@ -94,15 +126,15 @@ namespace TechMove.Backend_API.Controllers
             {
                 if (!Enum.TryParse<ContractStatus>(contractStatus, out var newContractStatus))
                 {
-                    return Redirect("/update-contract-status");
+                    return BadRequest($"Invalid status value: {contractStatus}");
                 }
 
                 await _contractService.UpdateContractStatus(newContractStatus, contractId);
-                return Ok("Contract status was updated successfully");
+                return Ok(new { message = "Contract status was updated successfully" });
             }
             catch(Exception exception)
             {
-                return BadRequest(exception.Message);
+                return BadRequest(new { error = exception.Message });
             }
         }
 
@@ -112,6 +144,18 @@ namespace TechMove.Backend_API.Controllers
         public async Task<IActionResult> GetAllContracts()
         {
             var contracts = await _contractService.GetAllContracts();
+
+            var contractDTOs = contracts.Select(contract => new ContractDto
+            {
+                ContractId = contract.ContractId,
+                ClientName = contract.Client?.clientName ?? "N/A",
+                Type = contract.GetType().Name,
+                StartDate = contract.startDate,
+                EndDate = contract.endDate,
+                ContractStatus = contract.contractStatus.ToString(),
+                DefaultCurrency = contract.defaultCurrency ?? "ZAR"
+            }).ToList();
+
             return Ok(contracts);
         }
 
@@ -121,17 +165,39 @@ namespace TechMove.Backend_API.Controllers
         public async Task<ActionResult<List<Contract>>> filterContracts([FromQuery] DateTime? startDate, [FromQuery] DateTime? endDate, [FromQuery] ContractStatus? contractStatus)
         {
             var filteredContracts = await _contractService.GetFilteredContracts(startDate, endDate, contractStatus);
-            return Ok(filteredContracts);
+
+            var contractDTOs = filteredContracts.Select(c => new ContractDto
+            {
+                ContractId = c.ContractId,
+                ClientName = c.Client?.clientName ?? "Unknown Client",
+                Type = c.GetType().Name,
+                StartDate = c.startDate,
+                EndDate = c.endDate,
+                ContractStatus = c.contractStatus.ToString(),
+                DefaultCurrency = c.defaultCurrency ?? "ZAR"
+            }).ToList();
+
+            return Ok(contractDTOs);
         }
 
         // ---------------------------------------------------------------------------------------------------------
         // Method gets a list of all contract files in the UI by calling the method from the service
         [HttpGet("allContractFiles")]
         [AllowAnonymous]
-        public async Task<ActionResult<List<ContractFile>>> GetAllContractFiles()
+        public async Task<ActionResult<List<ContractFileDto>>> GetAllContractFiles()
         {
             var listOfContractFiles = await _contractService.GetAllContractFiles();
-            return Ok(listOfContractFiles);
+
+            var contractFileDTOs = listOfContractFiles.Select(contractFile => new ContractFileDto
+            {
+                ContractId = contractFile.ContractId,
+                ClientName = contractFile.Contract?.Client?.clientName ?? "N/A",
+                FileName = contractFile.fileName,
+                StoredFileName = contractFile.storedFileName,
+                DateOfUpload = contractFile.dateOfUpload
+            }).ToList();
+
+            return Ok(contractFileDTOs);
         }
 
         // ---------------------------------------------------------------------------------------------------------

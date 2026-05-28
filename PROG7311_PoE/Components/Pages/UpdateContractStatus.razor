@@ -1,7 +1,8 @@
 ﻿@page "/update-contract-status"
+@inject PROG7311_PoE.Services.ContractService ContractService
 @using Microsoft.AspNetCore.Authorization
-@using TechMove.Database.Models
-@inject HttpClient Http
+@using TechMove.Database.DTOs
+@inject NavigationManager NavigationManager
 @attribute [Authorize(Roles = "LogisticsManager")]
 
 <div class="container mt-5">
@@ -20,52 +21,47 @@
                 </div>
             }
 
-            <form method="post" action="/api/contract/updateContractStatus">
-                <AntiforgeryToken />
+            <div class="mb-3">
+                <label class="form-label fw-bold">Contract</label>
 
-                <div class="mb-3">
-                    <label class="form-label fw-bold">Contract</label>
+                <select @bind="contractId" class="form-select" required>
+                    <option value="">-- Select Contract --</option>
 
-                    <select name="contractId" class="form-select" required>
-                        <option value="">-- Select Contract --</option>
+                    @foreach (var contract in contracts)
+                    {
+                        <option value="@contract.ContractId">
+                            @contract.ClientName -
+                            @contract.Type -
+                            @contract.StartDate.ToString("dd MMM yyyy")
+                            to
+                            @contract.EndDate.ToString("dd MMM yyyy")
+                            (@contract.ContractStatus)
+                        </option>
+                    }
+                </select>
+            </div>
 
-                        @foreach (var contract in contracts ?? new List<Contract>())
-                        {
-                            <option value="@contract.ContractId">
-                                @contract.Client?.clientName -
-                                @contract.GetType().Name -
-                                @contract.startDate.ToString("dd MMM yyyy")
-                                to
-                                @contract.endDate.ToString("dd MMM yyyy")
-                                (@contract.contractStatus)
-                            </option>
-                        }
-                    </select>
-                </div>
+            <div class="mb-3">
+                <label class="form-label fw-bold">New Status</label>
 
-                <div class="mb-3">
-                    <label class="form-label fw-bold">New Status</label>
+                <select @bind="contractStatus" class="form-select" required>
+                    <option value="">-- Select Status --</option>
+                    <option value="Draft">Draft</option>
+                    <option value="Active">Active</option>
+                    <option value="Expired">Expired</option>
+                    <option value="OnHold">On Hold</option>
+                </select>
+            </div>
 
-                    <select name="contractStatus" class="form-select" required>
-                        <option value="">-- Select Status --</option>
-                        <option value="Draft">Draft</option>
-                        <option value="Active">Active</option>
-                        <option value="Expired">Expired</option>
-                        <option value="OnHold">On Hold</option>
-                    </select>
-                </div>
+            <div class="d-grid gap-2 mt-4">
+                <button type="submit" class="btn btn-success" @onclick="HandleUpdateContractStatus" disabled="@(contractId == 0 || string.IsNullOrEmpty(contractStatus))">
+                    Update Status
+                </button>
 
-                <div class="d-grid gap-2 mt-4">
-                    <button type="submit" class="btn btn-success">
-                        Update Status
-                    </button>
-
-                    <a href="/Home" class="btn btn-outline-secondary">
-                        Cancel
-                    </a>
-                </div>
-            </form>
-
+                <a href="/Home" class="btn btn-outline-secondary">
+                    Cancel
+                </a>
+            </div>
         </div>
     </div>
 </div>
@@ -74,10 +70,41 @@
     [SupplyParameterFromQuery]
     public string? error { get; set; }
 
-    private List<Contract>? contracts;
+    private List<ContractDto>? contracts;
+    private int contractId;
+    private string contractStatus = string.Empty;
 
-    /*protected override async Task OnInitializedAsync()
+    protected override async Task OnInitializedAsync()
     {
-        contracts = await ContractService.GetAllContracts();
-    }*/
+        try
+        {
+            contracts = await ContractService.ShowAllContractsAsync();
+        }
+        catch (Exception exception)
+        {
+            Console.WriteLine("Update failure: Could not populate the contracts list");
+        }
+    }
+
+    private async Task HandleUpdateContractStatus()
+    {
+        string errorMessage = null;
+        try
+        {
+            bool success = await ContractService.UpdateContractStatusAsync(contractId, contractStatus);
+
+            if (success)
+            {
+                NavigationManager.NavigateTo("/Home");
+            }
+            else
+            {
+                errorMessage = "Your update status request has been rejected";
+            }
+        }
+        catch (Exception exception)
+        {
+            errorMessage = $"Network Error: {exception.Message}";
+        }
+    }
 }

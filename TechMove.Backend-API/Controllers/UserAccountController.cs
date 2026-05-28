@@ -18,7 +18,7 @@ namespace TechMove.Backend_API.Controllers
 
         // ---------------------------------------------------------------------------------------------------------
         // Method logs in users with correct credentials
-        [HttpPost]
+        [HttpPost("login")]
         [IgnoreAntiforgeryToken]
         public async Task<IActionResult> Login([FromForm] string email, [FromForm] string password)
         {
@@ -26,10 +26,10 @@ namespace TechMove.Backend_API.Controllers
 
             if (userLoggedIn.Succeeded)
             {
-                return Redirect("/Home");
+                return Ok("User Successfully Logged In!");
             }
 
-            return Redirect("/Login");
+            return BadRequest("User was NOT logged in successfully");
         }
 
         // ---------------------------------------------------------------------------------------------------------
@@ -39,7 +39,7 @@ namespace TechMove.Backend_API.Controllers
         public async Task<IActionResult> Logout()
         {
             await _signInManager.SignOutAsync();
-            return Redirect("/Login");
+            return Ok("User was successfully Logged Out");
         }
     }
 }

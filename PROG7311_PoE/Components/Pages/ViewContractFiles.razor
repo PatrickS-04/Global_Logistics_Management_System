@@ -1,8 +1,9 @@
 ﻿@page "/contract-files"
+@inject PROG7311_PoE.Services.ContractService ContractService
 @using Microsoft.AspNetCore.Authorization
-@using TechMove.Database.Models
+@using TechMove.Database.DTOs
+@inject IJSRuntime JS
 @attribute [Authorize(Roles = "LogisticsManager")]
-@inject HttpClient Http
 
 <div class="container mt-5">
     <h2 class="mb-4"><span class="bi bi-file-earmark-pdf text-danger"></span> View Contract Files</h2>
@@ -34,13 +35,13 @@
                         {
                             <tr>
                                 <td class="fw-bold">@file.ContractId</td>
-                                <td>@(file.Contract?.Client?.clientName ?? "N/A")</td>
-                                <td>@file.fileName</td>
-                                <td>@file.dateOfUpload</td>
+                                <td>@file.ClientName</td>
+                                <td>@file.FileName</td>
+                                <td>@file.DateOfUpload</td>
                                 <td class="text-center">
-                                    <a href="/api/contract/fileDownload/@file.storedFileName"
+                                    <a href="/api/contract/fileDownload/@file.StoredFileName"
                                            class="btn btn-primary btn-sm"
-                                           download="@file.fileName">
+                                           @onclick="() => DownloadFile(file.StoredFileName, file.FileName)">
                                         <span class="bi bi-download"></span> Download
                                     </a>
                                 </td>
@@ -54,18 +55,43 @@
 </div>
 
 @code {
-    private List<ContractFile>? contractFiles;
+    private List<ContractFileDto>? contractFiles;
 
     protected override async Task OnInitializedAsync()
     {
         try
         {
-            contractFiles = await Http.GetFromJsonAsync<List<ContractFile>>("api/contract/allContractFiles");
+            contractFiles = await ContractService.ViewContractFilesAsync();
         }
         catch (Exception ex)
         {
             Console.WriteLine($"Error fetching contract files: {ex.Message}");
-            contractFiles = new List<ContractFile>();
+            contractFiles = new List<ContractFileDto>();
+        }
+    }
+
+    private async Task DownloadFile(string storedFileName, string originalFileName)
+    {
+        string errorMessage = null;
+
+        try
+        {
+            var response = await ContractService.FileDownloadAsync(storedFileName);
+
+            if (response.IsSuccessStatusCode)
+            {
+                var bytesOfFile = await response.Content.ReadAsByteArrayAsync();
+                var baseData = Convert.ToBase64String(bytesOfFile);
+                await JS.InvokeVoidAsync("open", $"data:application/pdf;base64,{baseData}", "_blank");
+            }
+            else
+            {
+                errorMessage = "Failed to download the contract file";
+            }
+        }
+        catch (Exception exception)
+        {
+            errorMessage = $"Streaming error: {exception.Message}";
         }
     }
 }

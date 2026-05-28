@@ -1,8 +1,8 @@
 ﻿@rendermode InteractiveServer
 @page "/filtered-contracts"
+@inject PROG7311_PoE.Services.ContractService ContractService
 @using Microsoft.AspNetCore.Authorization
-@using TechMove.Database.Models
-@inject HttpClient Http
+@using TechMove.Database.DTOs
 @inject NavigationManager Navigation
 @attribute [Authorize(Roles = "LogisticsManager")]
 
@@ -96,53 +96,53 @@
                         {
                             <tr>
                                 <td class="align-middle">
-                                    @contract.Client?.clientName
+                                    @contract.ClientName
                                 </td>
 
                                 <td class="align-middle">
-                                    @contract.GetType().Name
+                                    @contract.Type
                                 </td>
 
                                 <td class="align-middle">
-                                    @contract.startDate.ToString("dd MMM yyyy")
+                                    @contract.StartDate.ToString("dd MMM yyyy")
                                 </td>
 
                                 <td class="align-middle">
-                                    @contract.endDate.ToString("dd MMM yyyy")
+                                    @contract.EndDate.ToString("dd MMM yyyy")
                                 </td>
 
                                 <td class="align-middle">
-                                    @if (contract.contractStatus == ContractStatus.Expired)
+                                    @if (contract.ContractStatus == "Expired")
                                     {
                                         <span class="badge bg-danger">
-                                            @contract.contractStatus
+                                            @contract.ContractStatus
                                         </span>
                                     }
                                     
-                                    @if (contract.contractStatus == ContractStatus.OnHold)
+                                    @if (contract.ContractStatus == "OnHold")
                                     {
                                         <span class="badge bg-warning">
-                                            @contract.contractStatus
+                                            @contract.ContractStatus
                                         </span>
                                     }
                                     
-                                    @if (contract.contractStatus == ContractStatus.Active)
+                                    @if (contract.ContractStatus == "Active")
                                     {
                                         <span class="badge bg-success">
-                                            @contract.contractStatus
+                                            @contract.ContractStatus
                                         </span>
                                     }
 
-                                    @if (contract.contractStatus == ContractStatus.Draft)
+                                    @if (contract.ContractStatus == "Draft")
                                     {
                                         <span class="badge bg-primary">
-                                            @contract.contractStatus
+                                            @contract.ContractStatus
                                         </span>
                                     }
                                 </td>
 
                                 <td class="align-middle">
-                                    @contract.defaultCurrency
+                                    @contract.DefaultCurrency
                                 </td>
                             </tr>
                         }
@@ -163,7 +163,7 @@
 </div>
 
 @code {
-    private List<Contract>? contracts;
+    private List<ContractDto>? contracts;
 
     private DateTime? startDate;
     private DateTime? endDate;
@@ -173,36 +173,12 @@
     {
         try
         {
-            var queryParams = new List<string>();
-
-            if (startDate.HasValue)
-            {
-                queryParams.Add($"startDate={startDate.Value:yyyy-MM-dd}");
-            }
-
-            if (endDate.HasValue)
-            {
-                queryParams.Add($"endDate={endDate.Value:yyyy-MM-dd}");
-            }
-
-            if (!string.IsNullOrEmpty(selectedStatus))
-            {
-                queryParams.Add($"contractStatus={selectedStatus}");
-            }
-
-            var query = "api/contract/filterContracts";
-
-            if (queryParams.Any())
-            {
-                query += "?" + string.Join("&", queryParams);
-            }
-
-            contracts = await Http.GetFromJsonAsync<List<Contract>>(query);
+            contracts = await ContractService.GetFilteredContractsAsync(startDate, endDate, selectedStatus);
         }
         catch (Exception ex)
         {
             Console.WriteLine($"Error fetching filtered contracts: {ex.Message}");
-            contracts = new List<Contract>();
+            contracts = new List<ContractDto>();
         }
     }
 

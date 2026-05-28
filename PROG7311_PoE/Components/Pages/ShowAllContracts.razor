@@ -1,7 +1,7 @@
 ﻿@page "/all-contracts"
+@inject PROG7311_PoE.Services.ContractService ContractService
 @using Microsoft.AspNetCore.Authorization
-@using TechMove.Database.Models
-@inject HttpClient Http
+@using TechMove.Database.DTOs
 @attribute [Authorize(Roles = "Admin")]
 
 <div class="container mt-5">
@@ -53,53 +53,53 @@
                         {
                             <tr>
                                 <td class="align-middle">
-                                    @contract.Client?.clientName
+                                    @contract.
                                 </td>
 
                                 <td class="align-middle">
-                                    @contract.serviceLevel
+                                    @contract.Type
                                 </td>
 
                                 <td class="align-middle">
-                                    @contract.startDate.ToString("dd MMM yyyy")
+                                    @contract.StartDate.ToString("dd MMM yyyy")
                                 </td>
 
                                 <td class="align-middle">
-                                    @contract.endDate.ToString("dd MMM yyyy")
+                                    @contract.EndDate.ToString("dd MMM yyyy")
                                 </td>
 
                                 <td class="align-middle">
-                                    @if (contract.contractStatus == ContractStatus.Expired)
+                                    @if (contract.ContractStatus == "Expired")
                                     {
                                         <span class="badge bg-danger">
-                                            @contract.contractStatus
+                                            @contract.ContractStatus
                                         </span>
                                     }
                                     
-                                    @if (contract.contractStatus == ContractStatus.OnHold)
+                                    @if (contract.ContractStatus == "OnHold")
                                     {
                                         <span class="badge bg-warning">
-                                            @contract.contractStatus
+                                            @contract.ContractStatus
                                         </span>
                                     }
                                     
-                                    @if (contract.contractStatus == ContractStatus.Active)
+                                    @if (contract.ContractStatus == "Active")
                                     {
                                         <span class="badge bg-success">
-                                            @contract.contractStatus
+                                            @contract.ContractStatus
                                         </span>
                                     }
 
-                                    @if (contract.contractStatus == ContractStatus.Draft)
+                                    @if (contract.ContractStatus == "Draft")
                                     {
                                         <span class="badge bg-primary">
-                                            @contract.contractStatus
+                                            @contract.ContractStatus
                                         </span>
                                     }
                                 </td>
 
                                 <td class="align-middle">
-                                    @contract.defaultCurrency
+                                    @contract.DefaultCurrency
                                 </td>
                             </tr>
                         }
@@ -118,20 +118,18 @@
 </div>
 
 @code {
-    private List<Contract>? contracts;
+    private List<ContractDto>? contracts;
 
     protected override async Task OnInitializedAsync()
     {
         try
         {
-            contracts = await Http.GetFromJsonAsync<List<Contract>>(
-                "api/contract/allContracts"
-            );
+            contracts = await ContractService.ShowAllContractsAsync();
         }
         catch (Exception ex)
         {
             Console.WriteLine($"Error fetching contracts: {ex.Message}");
-            contracts = new List<Contract>();
+            contracts = new List<ContractDto>();
         }
     }
 }

@@ -61,7 +61,7 @@
       }
     },
     "/api/Admin/deleteUser": {
-      "post": {
+      "delete": {
         "tags": [
           "Admin"
         ],
@@ -241,7 +241,7 @@
       }
     },
     "/api/Contract/updateContractStatus": {
-      "post": {
+      "patch": {
         "tags": [
           "Contract"
         ],
@@ -470,7 +470,7 @@
         }
       }
     },
-    "/login-action": {
+    "/login-action/login": {
       "post": {
         "tags": [
           "UserAccount"

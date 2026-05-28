@@ -20,6 +20,7 @@ namespace TechMove.Backend_API.Controllers
         // ---------------------------------------------------------------------------------------------------------
         // Method returns a list of all users
         [HttpGet("getUsers")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> GetUsers()
         {
             var users = await _adminService.GetAllUsersAsync();
@@ -29,6 +30,7 @@ namespace TechMove.Backend_API.Controllers
         // ---------------------------------------------------------------------------------------------------------
         // Method allows admins to create a user
         [HttpPost("createUser")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> CreateUser([FromForm] string email, [FromForm] string password, [FromForm] string role)
         {
             var result = await _adminService.CreateUserAsync(email, password, role);
@@ -41,7 +43,8 @@ namespace TechMove.Backend_API.Controllers
 
         // ---------------------------------------------------------------------------------------------------------
         // Method allows admins to delete a user
-        [HttpPost("deleteUser")]
+        [HttpDelete("deleteUser")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> DeleteUser([FromForm] string userId)
         {
             var result = await _adminService.DeleteUserAsync(userId);
@@ -55,6 +58,7 @@ namespace TechMove.Backend_API.Controllers
         // ---------------------------------------------------------------------------------------------------------
         // Method allows admins to change the role of the user
         [HttpPost("changeRole")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> ChangeRole([FromForm] string userId, [FromForm] string newRole)
         {
             var result = await _adminService.ChangeUserRoleAsync(userId, newRole);

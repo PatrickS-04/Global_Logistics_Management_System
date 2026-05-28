@@ -1,5 +1,5 @@
 ﻿@page "/create-contract"
-@inject HttpClient Http
+@inject PROG7311_PoE.Services.ContractService ContractService
 @inject NavigationManager NavigationManager
 @using Microsoft.AspNetCore.Authorization
 @using TechMove.Database.Models
@@ -63,33 +63,21 @@
     {
         try
         {
-            using var content = new MultipartFormDataContent();
+            bool isSuccessful = await ContractService.CreateContractAsync(
+                contractModel.Type,
+                contractModel.StartDate,
+                contractModel.EndDate,
+                selectedFile
+            );
 
-            content.Add(new StringContent(contractModel.Type ?? ""), "type");
-            content.Add(new StringContent(contractModel.StartDate.ToString("yyyy-MM-dd")), "startDate");
-            content.Add(new StringContent(contractModel.EndDate.ToString("yyyy-MM-dd")), "endDate");
-
-            if (selectedFile != null)
+            if (isSuccessful)
             {
-                var fileStream = selectedFile.OpenReadStream(maxAllowedSize: 1024 * 1024 * 5);
-                var streamContent = new StreamContent(fileStream);
-
-                streamContent.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue(selectedFile.ContentType);
-
-                content.Add(streamContent, "contractFile", selectedFile.Name);
-            }
-
-            var response = await Http.PostAsync("api/contract/createContract", content);
-
-            if (response.IsSuccessStatusCode)
-            {
-
                 NavigationManager.NavigateTo("/Home");
             }
         }
         catch (Exception ex)
         {
-            Console.WriteLine($"Network error transmitting contract data: {ex.Message}");
+            Console.WriteLine($"Error transmitting contract data over network: {ex.Message}");
         }
     }
 

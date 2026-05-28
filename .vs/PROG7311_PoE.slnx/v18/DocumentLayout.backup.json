@@ -3,16 +3,16 @@
   "WorkspaceRootPath": "C:\\Users\\lab_services_student\\Desktop\\prog7311-poe-part2-ST10440987-Patrick\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{E6BF8179-3190-5894-ECD4-43F21532CB23}|PROG7311_PoE\\PROG7311_PoE.csproj|c:\\users\\lab_services_student\\desktop\\prog7311-poe-part2-st10440987-patrick\\prog7311_poe\\components\\pages\\createcontract.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{E6BF8179-3190-5894-ECD4-43F21532CB23}|PROG7311_PoE\\PROG7311_PoE.csproj|solutionrelative:prog7311_poe\\components\\pages\\createcontract.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E6BF8179-3190-5894-ECD4-43F21532CB23}|PROG7311_PoE\\PROG7311_PoE.csproj|c:\\users\\lab_services_student\\desktop\\prog7311-poe-part2-st10440987-patrick\\prog7311_poe\\services\\contractservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E6BF8179-3190-5894-ECD4-43F21532CB23}|PROG7311_PoE\\PROG7311_PoE.csproj|solutionrelative:prog7311_poe\\services\\contractservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{4B60D883-EE43-44A7-A618-228964963B91}|TechMove.Backend-API\\TechMove.Backend_API.csproj|c:\\users\\lab_services_student\\desktop\\prog7311-poe-part2-st10440987-patrick\\techmove.backend-api\\controllers\\contractcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{4B60D883-EE43-44A7-A618-228964963B91}|TechMove.Backend-API\\TechMove.Backend_API.csproj|solutionrelative:techmove.backend-api\\controllers\\contractcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{E6BF8179-3190-5894-ECD4-43F21532CB23}|PROG7311_PoE\\PROG7311_PoE.csproj|c:\\users\\lab_services_student\\desktop\\prog7311-poe-part2-st10440987-patrick\\prog7311_poe\\components\\pages\\createservicerequest.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{E6BF8179-3190-5894-ECD4-43F21532CB23}|PROG7311_PoE\\PROG7311_PoE.csproj|solutionrelative:prog7311_poe\\components\\pages\\createservicerequest.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{E6BF8179-3190-5894-ECD4-43F21532CB23}|PROG7311_PoE\\PROG7311_PoE.csproj|c:\\users\\lab_services_student\\desktop\\prog7311-poe-part2-st10440987-patrick\\prog7311_poe\\components\\pages\\updatecontractstatus.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{E6BF8179-3190-5894-ECD4-43F21532CB23}|PROG7311_PoE\\PROG7311_PoE.csproj|solutionrelative:prog7311_poe\\components\\pages\\updatecontractstatus.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     }
   ],
   "DocumentGroupContainers": [
@@ -39,39 +39,41 @@
             {
               "$type": "Document",
               "DocumentIndex": 0,
+              "Title": "CreateContract.razor",
+              "DocumentMoniker": "C:\\Users\\lab_services_student\\Desktop\\prog7311-poe-part2-ST10440987-Patrick\\PROG7311_PoE\\Components\\Pages\\CreateContract.razor",
+              "RelativeDocumentMoniker": "PROG7311_PoE\\Components\\Pages\\CreateContract.razor",
+              "ToolTip": "C:\\Users\\lab_services_student\\Desktop\\prog7311-poe-part2-ST10440987-Patrick\\PROG7311_PoE\\Components\\Pages\\CreateContract.razor*",
+              "RelativeToolTip": "PROG7311_PoE\\Components\\Pages\\CreateContract.razor*",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAEAAAAtAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-05-28T10:57:25.129Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
               "Title": "ContractController.cs",
               "DocumentMoniker": "C:\\Users\\lab_services_student\\Desktop\\prog7311-poe-part2-ST10440987-Patrick\\TechMove.Backend-API\\Controllers\\ContractController.cs",
               "RelativeDocumentMoniker": "TechMove.Backend-API\\Controllers\\ContractController.cs",
-              "ToolTip": "C:\\Users\\lab_services_student\\Desktop\\prog7311-poe-part2-ST10440987-Patrick\\TechMove.Backend-API\\Controllers\\ContractController.cs*",
-              "RelativeToolTip": "TechMove.Backend-API\\Controllers\\ContractController.cs*",
-              "ViewState": "AgIAAHYAAAAAAAAAAIAZwJAAAAAKAAAAAAAAAA==",
+              "ToolTip": "C:\\Users\\lab_services_student\\Desktop\\prog7311-poe-part2-ST10440987-Patrick\\TechMove.Backend-API\\Controllers\\ContractController.cs",
+              "RelativeToolTip": "TechMove.Backend-API\\Controllers\\ContractController.cs",
+              "ViewState": "AgIAAIQAAAAAAAAAAAAqwJsAAAAiAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-05-26T13:25:54.098Z",
+              "WhenOpened": "2026-05-28T10:39:38.877Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 1,
-              "Title": "CreateServiceRequest.razor",
-              "DocumentMoniker": "C:\\Users\\lab_services_student\\Desktop\\prog7311-poe-part2-ST10440987-Patrick\\PROG7311_PoE\\Components\\Pages\\CreateServiceRequest.razor",
-              "RelativeDocumentMoniker": "PROG7311_PoE\\Components\\Pages\\CreateServiceRequest.razor",
-              "ToolTip": "C:\\Users\\lab_services_student\\Desktop\\prog7311-poe-part2-ST10440987-Patrick\\PROG7311_PoE\\Components\\Pages\\CreateServiceRequest.razor",
-              "RelativeToolTip": "PROG7311_PoE\\Components\\Pages\\CreateServiceRequest.razor",
-              "ViewState": "AgIAADkAAAAAAAAAAAAcwEYAAAAHAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2026-05-26T12:26:47.19Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "UpdateContractStatus.razor",
-              "DocumentMoniker": "C:\\Users\\lab_services_student\\Desktop\\prog7311-poe-part2-ST10440987-Patrick\\PROG7311_PoE\\Components\\Pages\\UpdateContractStatus.razor",
-              "RelativeDocumentMoniker": "PROG7311_PoE\\Components\\Pages\\UpdateContractStatus.razor",
-              "ToolTip": "C:\\Users\\lab_services_student\\Desktop\\prog7311-poe-part2-ST10440987-Patrick\\PROG7311_PoE\\Components\\Pages\\UpdateContractStatus.razor",
-              "RelativeToolTip": "PROG7311_PoE\\Components\\Pages\\UpdateContractStatus.razor",
-              "ViewState": "AgIAAD8AAAAAAAAAAAAlwFEAAAAHAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2026-05-26T12:17:06.397Z"
+              "Title": "ContractService.cs",
+              "DocumentMoniker": "C:\\Users\\lab_services_student\\Desktop\\prog7311-poe-part2-ST10440987-Patrick\\PROG7311_PoE\\Services\\ContractService.cs",
+              "RelativeDocumentMoniker": "PROG7311_PoE\\Services\\ContractService.cs",
+              "ToolTip": "C:\\Users\\lab_services_student\\Desktop\\prog7311-poe-part2-ST10440987-Patrick\\PROG7311_PoE\\Services\\ContractService.cs*",
+              "RelativeToolTip": "PROG7311_PoE\\Services\\ContractService.cs*",
+              "ViewState": "AgIAAAUAAAAAAAAAAADQvyAAAABlAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-28T10:26:02.108Z",
+              "EditorCaption": ""
             }
           ]
         },
