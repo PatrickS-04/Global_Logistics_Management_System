@@ -1,9 +1,10 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using TechMove.Database.Models;
+using System.Diagnostics.Contracts;
+using System.Security.Claims;
 using TechMove.Backend_API.Services;
 using TechMove.Database.DTOs;
-using System.Security.Claims;
+using TechMove.Database.Models;
 using static System.Net.WebRequestMethods;
 
 namespace TechMove.Backend_API.Controllers
@@ -102,15 +103,26 @@ namespace TechMove.Backend_API.Controllers
 
             var contracts = await _clientService.GetClientsContracts(client.ClientId);
 
-            var contractDTOs = contracts.Select(contract => new ContractDto
+            var contractDTOs = contracts.Select(contract =>
             {
-                ContractId = contract.ContractId,
-                ClientName = contract.Client?.clientName ?? "Unknown Client",
-                Type = contract.GetType().Name,
-                StartDate = contract.startDate,
-                EndDate = contract.endDate,
-                ContractStatus = contract.contractStatus.ToString(),
-                DefaultCurrency = contract.defaultCurrency ?? "ZAR"
+                string normalizedType = contract switch
+                {
+                    StandardContract => "Standard",
+                    PremiumContract => "Premium",
+                    InternationalContract => "International",
+                    _ => "Standard"
+                };
+
+                return new ContractDto
+                {
+                    ContractId = contract.ContractId,
+                    ClientName = contract.Client?.clientName ?? "Unknown Client",
+                    Type = normalizedType,
+                    StartDate = contract.startDate,
+                    EndDate = contract.endDate,
+                    ContractStatus = contract.contractStatus.ToString(),
+                    DefaultCurrency = contract.defaultCurrency ?? "ZAR"
+                };
             }).ToList();
 
             return Ok(contractDTOs);
@@ -145,36 +157,47 @@ namespace TechMove.Backend_API.Controllers
         {
             var contracts = await _contractService.GetAllContracts();
 
-            var contractDTOs = contracts.Select(contract => new ContractDto
+            var contractDTOs = contracts.Select(contract =>
             {
-                ContractId = contract.ContractId,
-                ClientName = contract.Client?.clientName ?? "N/A",
-                Type = contract.GetType().Name,
-                StartDate = contract.startDate,
-                EndDate = contract.endDate,
-                ContractStatus = contract.contractStatus.ToString(),
-                DefaultCurrency = contract.defaultCurrency ?? "ZAR"
+                string normalizedType = contract switch
+                {
+                    StandardContract => "Standard",
+                    PremiumContract => "Premium",
+                    InternationalContract => "International",
+                    _ => "Standard"
+                };
+
+                return new ContractDto
+                {
+                    ContractId = contract.ContractId,
+                    ClientName = contract.Client?.clientName ?? "Unknown Client",
+                    Type = normalizedType,
+                    StartDate = contract.startDate,
+                    EndDate = contract.endDate,
+                    ContractStatus = contract.contractStatus.ToString(),
+                    DefaultCurrency = contract.defaultCurrency ?? "ZAR"
+                };
             }).ToList();
 
-            return Ok(contracts);
+            return Ok(contractDTOs);
         }
 
         // ---------------------------------------------------------------------------------------------------------
         // Method filters contracts in the UI by calling the method from the service
         [HttpGet("filterContracts")]
-        public async Task<ActionResult<List<Contract>>> filterContracts([FromQuery] DateTime? startDate, [FromQuery] DateTime? endDate, [FromQuery] ContractStatus? contractStatus)
+        public async Task<ActionResult<List<ContractDto>>> filterContracts([FromQuery] DateTime? startDate, [FromQuery] DateTime? endDate, [FromQuery] ContractStatus? contractStatus)
         {
             var filteredContracts = await _contractService.GetFilteredContracts(startDate, endDate, contractStatus);
 
-            var contractDTOs = filteredContracts.Select(c => new ContractDto
+            var contractDTOs = filteredContracts.Select(contract => new ContractDto
             {
-                ContractId = c.ContractId,
-                ClientName = c.Client?.clientName ?? "Unknown Client",
-                Type = c.GetType().Name,
-                StartDate = c.startDate,
-                EndDate = c.endDate,
-                ContractStatus = c.contractStatus.ToString(),
-                DefaultCurrency = c.defaultCurrency ?? "ZAR"
+                ContractId = contract.ContractId,
+                ClientName = contract.Client?.clientName ?? "Unknown Client",
+                Type = contract.GetType().Name,
+                StartDate = contract.startDate,
+                EndDate = contract.endDate,
+                ContractStatus = contract.contractStatus.ToString(),
+                DefaultCurrency = contract.defaultCurrency ?? "ZAR"
             }).ToList();
 
             return Ok(contractDTOs);

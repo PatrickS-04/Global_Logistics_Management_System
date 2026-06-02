@@ -17,7 +17,7 @@ namespace TechMove.Backend_API.Services
         // Method gets client by their user Id
         public async Task<Client?> GetClientByUserId(string userId)
         {
-            using var context = _contextFactory.CreateDbContext();
+            await using var context = await _contextFactory.CreateDbContextAsync();
 
             return await context.Clients
                 .FirstOrDefaultAsync(client => client.UserId == userId);
@@ -27,8 +27,9 @@ namespace TechMove.Backend_API.Services
         // Method gets clients contracts by using that user Id that was found
         public async Task<List<Contract>> GetClientsContracts(int clientId)
         {
-            using var dbContext = _contextFactory.CreateDbContext();
+            await using var dbContext = await _contextFactory.CreateDbContextAsync();
             return await dbContext.Contracts
+                .Include(client => client.Client)
                 .Where(contract => contract.ClientId == clientId).ToListAsync();
         }
     }

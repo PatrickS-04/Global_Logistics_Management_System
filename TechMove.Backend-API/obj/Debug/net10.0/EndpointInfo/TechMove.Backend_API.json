@@ -60,30 +60,21 @@
         }
       }
     },
-    "/api/Admin/deleteUser": {
+    "/api/Admin/deleteUser/{userId}": {
       "delete": {
         "tags": [
           "Admin"
         ],
-        "requestBody": {
-          "content": {
-            "multipart/form-data": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "userId": {
-                    "type": "string"
-                  }
-                }
-              },
-              "encoding": {
-                "userId": {
-                  "style": "form"
-                }
-              }
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
             }
           }
-        },
+        ],
         "responses": {
           "200": {
             "description": "OK"
@@ -141,7 +132,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/Contract"
+                    "$ref": "#/components/schemas/ContractDto"
                   }
                 }
               },
@@ -149,7 +140,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/Contract"
+                    "$ref": "#/components/schemas/ContractDto"
                   }
                 }
               },
@@ -157,7 +148,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/Contract"
+                    "$ref": "#/components/schemas/ContractDto"
                   }
                 }
               }
@@ -328,7 +319,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/Contract"
+                    "$ref": "#/components/schemas/ContractDto"
                   }
                 }
               },
@@ -336,7 +327,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/Contract"
+                    "$ref": "#/components/schemas/ContractDto"
                   }
                 }
               },
@@ -344,7 +335,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/Contract"
+                    "$ref": "#/components/schemas/ContractDto"
                   }
                 }
               }
@@ -366,7 +357,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/ContractFile"
+                    "$ref": "#/components/schemas/ContractFileDto"
                   }
                 }
               },
@@ -374,7 +365,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/ContractFile"
+                    "$ref": "#/components/schemas/ContractFileDto"
                   }
                 }
               },
@@ -382,7 +373,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/ContractFile"
+                    "$ref": "#/components/schemas/ContractFileDto"
                   }
                 }
               }
@@ -470,7 +461,7 @@
         }
       }
     },
-    "/login-action/login": {
+    "/api/account/login": {
       "post": {
         "tags": [
           "UserAccount"
@@ -507,8 +498,20 @@
         }
       }
     },
-    "/login-action/logout": {
+    "/api/account/logout": {
       "post": {
+        "tags": [
+          "UserAccount"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/account/userState": {
+      "get": {
         "tags": [
           "UserAccount"
         ],
@@ -522,45 +525,32 @@
   },
   "components": {
     "schemas": {
-      "Client": {
-        "type": "object",
-        "properties": {
-          "clientId": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "userId": {
-            "type": "string",
-            "nullable": true
-          },
-          "clientName": {
-            "type": "string",
-            "nullable": true
-          },
-          "clientEmail": {
-            "type": "string",
-            "nullable": true
-          },
-          "clientPhoneNumber": {
-            "type": "string",
-            "nullable": true
-          }
-        },
-        "additionalProperties": false
-      },
-      "Contract": {
+      "ContractDto": {
         "type": "object",
         "properties": {
           "contractId": {
             "type": "integer",
             "format": "int32"
           },
-          "clientId": {
-            "type": "integer",
-            "format": "int32"
+          "clientName": {
+            "type": "string",
+            "nullable": true
           },
-          "client": {
-            "$ref": "#/components/schemas/Client"
+          "contractStatus": {
+            "type": "string",
+            "nullable": true
+          },
+          "type": {
+            "type": "string",
+            "nullable": true
+          },
+          "totalCost": {
+            "type": "number",
+            "format": "double"
+          },
+          "defaultCurrency": {
+            "type": "string",
+            "nullable": true
           },
           "startDate": {
             "type": "string",
@@ -569,38 +559,20 @@
           "endDate": {
             "type": "string",
             "format": "date-time"
-          },
-          "contractStatus": {
-            "$ref": "#/components/schemas/ContractStatus"
-          },
-          "serviceLevel": {
-            "type": "string",
-            "nullable": true
-          },
-          "file": {
-            "$ref": "#/components/schemas/ContractFile"
-          },
-          "logisticsManagerId": {
-            "type": "integer",
-            "format": "int32",
-            "nullable": true
-          },
-          "logisticsManager": {
-            "$ref": "#/components/schemas/LogisticsManager"
-          },
-          "defaultCurrency": {
-            "type": "string",
-            "nullable": true
           }
         },
         "additionalProperties": false
       },
-      "ContractFile": {
+      "ContractFileDto": {
         "type": "object",
         "properties": {
-          "contractFileId": {
+          "contractId": {
             "type": "integer",
             "format": "int32"
+          },
+          "clientName": {
+            "type": "string",
+            "nullable": true
           },
           "fileName": {
             "type": "string",
@@ -610,24 +582,9 @@
             "type": "string",
             "nullable": true
           },
-          "fileSize": {
-            "type": "integer",
-            "format": "int64"
-          },
-          "filePath": {
-            "type": "string",
-            "nullable": true
-          },
           "dateOfUpload": {
             "type": "string",
             "format": "date-time"
-          },
-          "contractId": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "contract": {
-            "$ref": "#/components/schemas/Contract"
           }
         },
         "additionalProperties": false
@@ -642,28 +599,6 @@
         ],
         "type": "integer",
         "format": "int32"
-      },
-      "LogisticsManager": {
-        "type": "object",
-        "properties": {
-          "logisticsManagerId": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "name": {
-            "type": "string",
-            "nullable": true
-          },
-          "phoneNumber": {
-            "type": "string",
-            "nullable": true
-          },
-          "email": {
-            "type": "string",
-            "nullable": true
-          }
-        },
-        "additionalProperties": false
       }
     }
   },

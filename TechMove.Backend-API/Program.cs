@@ -20,6 +20,17 @@ namespace TechMove.Backend_API
             .AddEntityFrameworkStores<AppDbContext>()
             .AddDefaultTokenProviders();
 
+            builder.Services.AddCors(options =>
+            {
+                options.AddPolicy("AllowBlazorFrontend", policy =>
+                {
+                    policy.WithOrigins("http://localhost:5105", "https://localhost:7155")
+                        .AllowAnyHeader()
+                        .AllowAnyMethod()
+                        .AllowCredentials();
+                });
+            });
+
             builder.Services.AddScoped<IContractFactory, ContractFactory>();
             builder.Services.AddScoped<List<IObserver>>(sp => new List<IObserver>());
             builder.Services.AddScoped<ContractService>();
@@ -47,10 +58,10 @@ namespace TechMove.Backend_API
                 await InitializeDatabase.TestUsers(services);
             }
 
+            app.UseHttpsRedirection();
+            app.UseCors("AllowBlazorFrontend");
             app.UseAuthentication();
             app.UseAuthorization();
-
-
             app.MapControllers();
 
             app.Run();

@@ -1,58 +1,59 @@
 ﻿@page "/manage-users"
 @using Microsoft.AspNetCore.Authorization
 @using System.Text.Json
-@inject HttpClient Http
+@using TechMove.Database.DTOs
+@inject NavigationManager NavigationManager
+@inject PROG7311_PoE.Services.AdminService AdminService
 @attribute [Authorize(Roles = "Admin")]
 
 <div class="container mt-5">
 
     <h2 class="fw-bold text-primary mb-4">Manage Users</h2>
 
-    @if (!string.IsNullOrEmpty(error))
+    @if (listOfErrors != null && listOfErrors.Any())
     {
-        <div class="alert alert-danger">
-            @error
+        <div class="alert alert-danger shadow-sm">
+            <h6 class="fw-bold">An error occurred:</h6>
+            <ul class="mb-0">
+                @foreach (var error in listOfErrors)
+                {
+                    <li>@error</li>
+                }
+            </ul>
         </div>
     }
 
     <div class="card shadow-sm mb-4">
-
         <div class="card-header bg-success text-white">
             <h5 class="mb-0">Create New User</h5>
         </div>
-
         <div class="card-body">
-            <form method="post" action="/api/admin/createUser">
-
-                <div class="row">
-
-                    <div class="col-md-4 mb-3">
-                        <label class="form-label fw-bold">Email</label>
-                        <input name="email" type="email" class="form-control" required />
-                    </div>
-
-                    <div class="col-md-4 mb-3">
-                        <label class="form-label fw-bold">Password</label>
-                        <input name="password" type="password" class="form-control" required />
-                    </div>
-
-                    <div class="col-md-4 mb-3">
-                        <label class="form-label fw-bold">Role</label>
-                        <select name="role" class="form-select" required>
-                            <option value="">-- Select Role --</option>
-                            <option value="Admin">Admin</option>
-                            <option value="LogisticsManager">Logistics Manager</option>
-                            <option value="Client">Client</option>
-                        </select>
-                    </div>
-
+            <div class="row">
+                <div class="col-md-4 mb-3">
+                    <label class="form-label fw-bold">Email</label>
+                    <input @bind="newEmail" type="email" class="form-control" placeholder="email" />
                 </div>
 
-                <button type="submit" class="btn btn-success">
-                    Create User
-                </button>
+                <div class="col-md-4 mb-3">
+                    <label class="form-label fw-bold">Password</label>
+                    <input @bind="newPassword" type="password" class="form-control" />
+                </div>
 
-            </form>
+                <div class="col-md-4 mb-3">
+                    <label class="form-label fw-bold">Role</label>
+                    <select @bind="newRole" class="form-select">
+                        <option value="">-- Select Role --</option>
+                        <option value="Admin">Admin</option>
+                        <option value="LogisticsManager">Logistics Manager</option>
+                        <option value="Client">Client</option>
+                    </select>
+                </div>
+            </div>
+
+            <button type="button" class="btn btn-success" @onclick="HandleCreateUser"
+                disabled="@(string.IsNullOrEmpty(newEmail) || string.IsNullOrEmpty(newPassword) || string.IsNullOrEmpty(newRole))">
+                Create User
+            </button>
         </div>
     </div>
 
@@ -63,25 +64,22 @@
         </div>
 
         <div class="card-body p-0">
-
-            <table class="table table-hover mb-0">
-
+            <table class="table table-hover align-middle mb-0">
                 <thead class="table-light">
                     <tr>
                         <th>Email</th>
                         <th>Role</th>
                         <th class="text-center">Change Role</th>
-                        <th class="text-center">Delete</th>
+                        <th class="text-center">Delete Action</th>
                     </tr>
                 </thead>
-
                 <tbody>
-
                     @if (users == null)
                     {
                         <tr>
                             <td colspan="4" class="text-center py-4">
-                                <div class="spinner-border text-primary"></div>
+                                <div class="spinner-border text-primary" role="status"></div>
+                                <p class="mt-2 mb-0 text-muted">Loading user accounts...</p>
                             </td>
                         </tr>
                     }
@@ -89,7 +87,7 @@
                     {
                         <tr>
                             <td colspan="4" class="text-center py-4 text-muted">
-                                No users found.
+                                No user accounts registered.
                             </td>
                         </tr>
                     }
@@ -98,74 +96,44 @@
                         @foreach (var user in users)
                         {
                             <tr>
-                                <td class="align-middle">
-                                    @user.Email
-                                </td>
-
-                                <td class="align-middle">
+                                <td class="fw-bold">@user.Email</td>
+                                <td>
                                     @if (user.Role == "Admin")
                                     {
-                                        <span class="badge bg-info">
-                                            @user.Role
-                                        </span>
+                                        <span class="badge bg-info">@user.Role</span>
                                     }
-
-                                    @if (user.Role == "LogisticsManager")
+                                    else if (user.Role == "LogisticsManager")
                                     {
-                                        <span class="badge bg-primary">
-                                            @user.Role
-                                        </span>
+                                        <span class="badge bg-primary">Logistics Manager</span>
                                     }
-
-                                    @if (user.Role == "Client")
+                                    else
                                     {
-                                        <span class="badge bg-success">
-                                            @user.Role
-                                        </span>
+                                        <span class="badge bg-success">@user.Role</span>
                                     }
                                 </td>
-
-                                <td class="text-center align-middle">
-
-                                    <form method="post" action="/api/admin/changeRole">
-
-                                        <input type="hidden" name="userId" value="@user.Id" />
-
-                                        <select name="newRole" class="form-select form-select-sm d-inline w-auto">
+                                <td class="text-center">
+                                    <div class="d-inline-flex justify-content-center">
+                                        <select @bind="user.SelectedRoleChange" class="form-select form-select-sm w-auto">
                                             <option value="Admin">Admin</option>
-                                            <option value="LogisticsManager">Logistics Manager</option>
+                                            <option value="LogisticsManager">LogisticsManager</option>
                                             <option value="Client">Client</option>
                                         </select>
-
-                                        <button type="submit" class="btn btn-sm btn-outline-primary ms-2">
+                                        <button type="button" class="btn btn-sm btn-outline-primary ms-2" 
+                                                @onclick="() => HandleChangeRole(user.Id, user.SelectedRoleChange)">
                                             Change
                                         </button>
-
-                                    </form>
-
+                                    </div>
                                 </td>
-
-                                <td class="text-center align-middle">
-
-                                    <form method="post" action="/api/admin/deleteUser">
-
-                                        <input type="hidden" name="userId" value="@user.Id" />
-
-                                        <button type="submit" class="btn btn-sm btn-danger">
-                                            Delete
-                                        </button>
-
-                                    </form>
-
+                                <td class="text-center">
+                                    <button type="button" class="btn btn-sm btn-danger" @onclick="() => HandleDeleteUser(user.Id)">
+                                        <span class="bi bi-trash"></span> Delete
+                                    </button>
                                 </td>
                             </tr>
                         }
                     }
-
                 </tbody>
-
             </table>
-
         </div>
     </div>
 
@@ -178,10 +146,12 @@
 </div>
 
 @code {
-    [SupplyParameterFromQuery]
-    public string? error { get; set; }
+    private List<AdminUserDto>? users;
+    private List<string> listOfErrors = new List<string>();
 
-    private List<UserDto>? users;
+    private string newEmail = string.Empty;
+    private string newPassword = string.Empty;
+    private string newRole = string.Empty;
 
     protected override async Task OnInitializedAsync()
     {
@@ -192,26 +162,93 @@
     {
         try
         {
-            var response = await Http.GetFromJsonAsync<List<JsonElement>>("api/admin/getUsers");
+            listOfErrors.Clear();
+            users = await AdminService.GetUsersAsync();
 
-            users = response?.Select(u => new UserDto
+            foreach (var user in users)
             {
-                Id = u.GetProperty("id").GetString() ?? "",
-                Email = u.GetProperty("email").GetString() ?? "",
-                Role = u.GetProperty("role").GetString() ?? ""
-            }).ToList();
+                user.SelectedRoleChange = user.Role == "Logistics Manager" ? "LogisticsManager" : user.Role;
+            }
         }
-        catch (Exception ex)
+        catch (Exception exception)
         {
-            Console.WriteLine($"Error loading users: {ex.Message}");
-            users = new List<UserDto>();
+            listOfErrors.Add($"Could not get the list of users: {exception.Message}");
+            users = new List<AdminUserDto>();
         }
     }
 
-    public class UserDto
+    private async Task HandleCreateUser()
     {
-        public string Id { get; set; } = "";
-        public string Email { get; set; } = "";
-        public string Role { get; set; } = "";
+        try
+        {
+            listOfErrors.Clear();
+
+            var response = await AdminService.CreateUserAsync(newEmail, newPassword, newRole);
+
+            if (response.IsSuccessStatusCode)
+            {
+                newEmail = string.Empty;
+                newPassword = string.Empty;
+                newRole = string.Empty;
+                await LoadUsers();
+            }
+            else
+            {
+                var errors = await response.Content.ReadFromJsonAsync<List<string>>();
+                listOfErrors = errors ?? new List<string> { "Error occured while validating the creation of a new user" };
+            }
+        }    
+        catch (Exception exception)
+        {
+            listOfErrors.Add($"Could not create a new user: {exception.Message}");
+        }
+    }
+
+    private async Task HandleChangeRole(string userId, string selectedRole)
+    {
+        try
+        {
+            listOfErrors.Clear();
+
+            var response = await AdminService.ChangeUserRoleAsync(userId, selectedRole);
+
+            if (response.IsSuccessStatusCode)
+            {
+                await LoadUsers();
+            }
+            else
+            {
+                var errors = await response.Content.ReadFromJsonAsync<List<string>>();
+                listOfErrors = errors ?? new List<string> { "Error occured while trying to change users role" };
+            }
+        }
+        catch (Exception exception)
+        {
+            listOfErrors.Add($"Could not change the role of this user: {exception.Message}");
+        }
+    }
+
+    private async Task HandleDeleteUser(string userId)
+    {
+        try
+        {
+            listOfErrors.Clear();
+
+            var response = await AdminService.DeleteUserAsync(userId);
+
+            if (response.IsSuccessStatusCode)
+            {
+                await LoadUsers();
+            }
+            else
+            {
+                var errors = await response.Content.ReadFromJsonAsync<List<string>>();
+                listOfErrors = errors ?? new List<string> { "Request to delete user waas rejected" };
+            }
+        }
+        catch (Exception exception)
+        {
+            listOfErrors.Add($"Could not delete this user: {exception.Message}");
+        }
     }
 }

@@ -85,7 +85,7 @@ namespace TechMove.Backend_API.Services
                 DetachObserver(clientAlertObserver);
             }
 
-            return contract;
+            return newContract ?? contract;
         }
 
         // ---------------------------------------------------------------------------------------------------------

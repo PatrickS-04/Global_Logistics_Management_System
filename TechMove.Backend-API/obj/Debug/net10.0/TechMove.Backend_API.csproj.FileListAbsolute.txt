@@ -9,6 +9,7 @@ C:\Users\lab_services_student\Desktop\prog7311-poe-part2-ST10440987-Patrick\Tech
 C:\Users\lab_services_student\Desktop\prog7311-poe-part2-ST10440987-Patrick\TechMove.Backend-API\obj\Debug\net10.0\TechMove.Backend_API.sourcelink.json
 C:\Users\lab_services_student\Desktop\prog7311-poe-part2-ST10440987-Patrick\TechMove.Backend-API\bin\Debug\net10.0\appsettings.Development.json
 C:\Users\lab_services_student\Desktop\prog7311-poe-part2-ST10440987-Patrick\TechMove.Backend-API\bin\Debug\net10.0\appsettings.json
+C:\Users\lab_services_student\Desktop\prog7311-poe-part2-ST10440987-Patrick\TechMove.Backend-API\bin\Debug\net10.0\TechMove.Backend_API.staticwebassets.runtime.json
 C:\Users\lab_services_student\Desktop\prog7311-poe-part2-ST10440987-Patrick\TechMove.Backend-API\bin\Debug\net10.0\TechMove.Backend_API.staticwebassets.endpoints.json
 C:\Users\lab_services_student\Desktop\prog7311-poe-part2-ST10440987-Patrick\TechMove.Backend-API\bin\Debug\net10.0\TechMove.Backend_API.exe
 C:\Users\lab_services_student\Desktop\prog7311-poe-part2-ST10440987-Patrick\TechMove.Backend-API\bin\Debug\net10.0\TechMove.Backend_API.deps.json
@@ -164,4 +165,3 @@ C:\Users\lab_services_student\Desktop\prog7311-poe-part2-ST10440987-Patrick\Tech
 C:\Users\lab_services_student\Desktop\prog7311-poe-part2-ST10440987-Patrick\TechMove.Backend-API\obj\Debug\net10.0\TechMove.Backend_API.pdb
 C:\Users\lab_services_student\Desktop\prog7311-poe-part2-ST10440987-Patrick\TechMove.Backend-API\obj\Debug\net10.0\TechMove.Backend_API.genruntimeconfig.cache
 C:\Users\lab_services_student\Desktop\prog7311-poe-part2-ST10440987-Patrick\TechMove.Backend-API\obj\Debug\net10.0\ref\TechMove.Backend_API.dll
-C:\Users\lab_services_student\Desktop\prog7311-poe-part2-ST10440987-Patrick\TechMove.Backend-API\bin\Debug\net10.0\TechMove.Backend_API.staticwebassets.runtime.json

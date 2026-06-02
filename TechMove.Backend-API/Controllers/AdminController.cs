@@ -1,8 +1,6 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Identity;
 using TechMove.Backend_API.Services;
-using TechMove.Database.Models;
 
 namespace TechMove.Backend_API.Controllers
 {
@@ -36,21 +34,21 @@ namespace TechMove.Backend_API.Controllers
             var result = await _adminService.CreateUserAsync(email, password, role);
             if (!result.Succeeded)
             {
-                return BadRequest(result.Errors);
+                return BadRequest(result.Errors.Select(error => error.Description));
             }
             return Ok(new { Message = "User was created Successfully!" });
         }
 
         // ---------------------------------------------------------------------------------------------------------
         // Method allows admins to delete a user
-        [HttpDelete("deleteUser")]
+        [HttpDelete("deleteUser/{userId}")]
         [Authorize(Roles = "Admin")]
-        public async Task<IActionResult> DeleteUser([FromForm] string userId)
+        public async Task<IActionResult> DeleteUser(string userId)
         {
             var result = await _adminService.DeleteUserAsync(userId);
             if (!result.Succeeded)
             {
-                return BadRequest(result.Errors);
+                return BadRequest(result.Errors.Select(error => error.Description));
             }
             return Ok(new { Message = "User was deleted Successfully!" });
         }

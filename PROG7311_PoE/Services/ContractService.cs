@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Components.Forms;
 using TechMove.Database.DTOs;
-using TechMove.Database.Models;
 
 namespace PROG7311_PoE.Services
 {
@@ -17,7 +16,7 @@ namespace PROG7311_PoE.Services
         {
             using var content = new MultipartFormDataContent();
 
-            content.Add(new StringContent(type ?? ""), "type");
+            content.Add(new StringContent(type ?? ""), "Type");
             content.Add(new StringContent(startDate.ToString("yyyy-MM-dd")), "StartDate");
             content.Add(new StringContent(endDate.ToString("yyyy-MM-dd")), "EndDate");
 
@@ -28,16 +27,16 @@ namespace PROG7311_PoE.Services
 
                 streamContent.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue(selectedFile.ContentType);
 
-                content.Add(streamContent, "contractFile", selectedFile.Name);
+                content.Add(streamContent, "ContractFile", selectedFile.Name);
             }
 
-            var response = await _httpClient.PostAsJsonAsync("api/contract/createContract", content);
+            var response = await _httpClient.PostAsync("api/Contract/createContract", content);
             return response.IsSuccessStatusCode;
         }
 
         public async Task<List<ContractDto>> GetActiveContractsAsync()
         {
-            return await _httpClient.GetFromJsonAsync<List<ContractDto>>("api/contract/activeContracts") ?? new List<ContractDto>();
+            return await _httpClient.GetFromJsonAsync<List<ContractDto>>("api/Contract/activeContracts") ?? new List<ContractDto>();
         }
 
         public async Task<List<ContractDto>> GetFilteredContractsAsync(DateTime? startDate, DateTime? endDate, string? contractStatus)
@@ -59,7 +58,7 @@ namespace PROG7311_PoE.Services
                 queryParams.Add($"contractStatus={contractStatus}");
             }
 
-            var query = "api/contract/filterContracts";
+            var query = "api/Contract/filterContracts";
 
             if (queryParams.Any())
             {
@@ -72,22 +71,22 @@ namespace PROG7311_PoE.Services
 
         public async Task<List<ContractDto>> ViewMyContractsAsync(string userId)
         {
-            return await _httpClient.GetFromJsonAsync<List<ContractDto>>($"api/contract/allClientContracts/{userId}") ?? new List<ContractDto>();
+            return await _httpClient.GetFromJsonAsync<List<ContractDto>>($"api/Contract/allClientContracts/{userId}") ?? new List<ContractDto>();
         }
 
         public async Task<List<ContractDto>> ShowAllContractsAsync()
         {
-            return await _httpClient.GetFromJsonAsync<List<ContractDto>>("api/contract/allContracts") ?? new List<ContractDto>();
+            return await _httpClient.GetFromJsonAsync<List<ContractDto>>("api/Contract/allContracts") ?? new List<ContractDto>();
         }
 
         public async Task<List<ContractFileDto>> ViewContractFilesAsync()
         {
-            return await _httpClient.GetFromJsonAsync<List<ContractFileDto>>("api/contract/allContractFiles") ?? new List<ContractFileDto>();
+            return await _httpClient.GetFromJsonAsync<List<ContractFileDto>>("api/Contract/allContractFiles") ?? new List<ContractFileDto>();
         }
 
         public async Task<HttpResponseMessage> FileDownloadAsync(string storedFileName)
         {
-            return await _httpClient.GetAsync($"api/contract/fileDownload/{storedFileName}");
+            return await _httpClient.GetAsync($"api/Contract/fileDownload/{storedFileName}");
         }
 
         public async Task<bool> UpdateContractStatusAsync(int contractId, string contractStatus)
@@ -98,7 +97,7 @@ namespace PROG7311_PoE.Services
                 new KeyValuePair<string, string>("contractStatus", contractStatus)
             });
 
-            var response = await _httpClient.PatchAsync("api/contract/updateContractStatus", dataFromForm);
+            var response = await _httpClient.PatchAsync("api/Contract/updateContractStatus", dataFromForm);
             return response.IsSuccessStatusCode;
         }
     }

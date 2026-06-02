@@ -1,17 +1,11 @@
 ﻿using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc;
+using TechMove.Database.DTOs;
+using TechMove.Database.Models;
 using Microsoft.EntityFrameworkCore;
 using TechMove.Backend_API.Data;
 
 namespace TechMove.Backend_API.Services
 {
-    public class AdminUserDto
-    {
-        public string Id { get; set; } = null!;
-        public string Email { get; set; } = null!;
-        public string Role { get; set; } = null!;
-    }
-
     public class AdminService
     {
         private readonly IDbContextFactory<AppDbContext> _contextFactory;
@@ -60,8 +54,33 @@ namespace TechMove.Backend_API.Services
                 }
 
                 await _userManager.AddToRoleAsync(user, role);
-            }
 
+                if (role.Equals("Client", StringComparison.OrdinalIgnoreCase))
+                {
+                    try
+                    {
+                        using var context = await _contextFactory.CreateDbContextAsync();
+
+                        var newClientProfile = new Client
+                        {
+                            UserId = user.Id,
+                            clientName = email,
+                            clientEmail = email,
+                            clientPhoneNumber = "000-000-0000"
+                        };
+
+                        context.Clients.Add(newClientProfile);
+                        await context.SaveChangesAsync();
+                    }
+                    catch (Exception ex)
+                    {
+                        return IdentityResult.Failed(new IdentityError
+                        {
+                            Description = $"User account created, but Client profile initialization failed: {ex.Message}"
+                        });
+                    }
+                }
+            }
             return result;
         }
 
@@ -74,6 +93,28 @@ namespace TechMove.Backend_API.Services
             if (user == null)
             {
                 return IdentityResult.Failed(new IdentityError { Description = "User not found" });
+            }
+
+            try
+            {
+                using var context = await _contextFactory.CreateDbContextAsync();
+
+                var linkedClientProfile = await context.Clients
+                    .FirstOrDefaultAsync(c => c.UserId == userId);
+
+                if (linkedClientProfile != null)
+                {
+                    context.Clients.Remove(linkedClientProfile);
+                    await context.SaveChangesAsync();
+                }
+            }
+            catch (Exception ex)
+            {
+                var innerMessage = ex.InnerException != null ? ex.InnerException.Message : ex.Message;
+                return IdentityResult.Failed(new IdentityError
+                {
+                    Description = $"Failed to delete the user: {innerMessage}"
+                });
             }
 
             return await _userManager.DeleteAsync(user);

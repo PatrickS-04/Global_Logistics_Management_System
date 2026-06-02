@@ -1,7 +1,9 @@
 using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using PROG7311_PoE.Components;
+using PROG7311_PoE.Services;
 
 namespace PROG7311_PoE
 {
@@ -20,12 +22,14 @@ namespace PROG7311_PoE
                 BaseAddress = new Uri("http://localhost:5068/")
             });
 
-            builder.Services.AddControllers().AddJsonOptions(options =>
-            {
-                options.JsonSerializerOptions.ReferenceHandler = System.Text.Json.Serialization.ReferenceHandler.IgnoreCycles;
-            });
+            builder.Services.AddScoped<ContractService>();
+            builder.Services.AddScoped<ServiceRequestService>();
+            builder.Services.AddScoped<AdminService>();
+            builder.Services.AddScoped<AuthorizationService>();
 
             builder.Services.AddCascadingAuthenticationState();
+
+            builder.Services.AddScoped<AuthenticationStateProvider, CustomAuthStateProvider>();
 
             var app = builder.Build();
 
@@ -40,9 +44,6 @@ namespace PROG7311_PoE
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
-            app.UseRouting();
-            app.UseAuthentication();
-            app.UseAuthorization();
             app.UseAntiforgery();
             app.UseStatusCodePagesWithReExecute("/not-found");
 
@@ -50,7 +51,7 @@ namespace PROG7311_PoE
             app.MapRazorComponents<App>()
                 .AddInteractiveServerRenderMode();
 
-            app.Run();
+            await app.RunAsync();
         }
     }
 }

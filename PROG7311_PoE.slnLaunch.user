@@ -1,0 +1,15 @@
+[
+  {
+    "Name": "New Profile",
+    "Projects": [
+      {
+        "Path": "PROG7311_PoE\\PROG7311_PoE.csproj",
+        "Action": "Start"
+      },
+      {
+        "Path": "TechMove.Backend-API\\TechMove.Backend_API.csproj",
+        "Action": "Start"
+      }
+    ]
+  }
+]

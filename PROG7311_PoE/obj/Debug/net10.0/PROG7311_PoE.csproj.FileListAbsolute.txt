@@ -204,8 +204,8 @@ C:\Users\lab_services_student\Desktop\prog7311-poe-part2-ST10440987-Patrick\PROG
 C:\Users\lab_services_student\Desktop\prog7311-poe-part2-ST10440987-Patrick\PROG7311_PoE\obj\Debug\net10.0\compressed\medleav98i-{0}-63fj8s7r0e-63fj8s7r0e.gz
 C:\Users\lab_services_student\Desktop\prog7311-poe-part2-ST10440987-Patrick\PROG7311_PoE\obj\Debug\net10.0\compressed\clf0s8juce-{0}-0j3bgjxly4-0j3bgjxly4.gz
 C:\Users\lab_services_student\Desktop\prog7311-poe-part2-ST10440987-Patrick\PROG7311_PoE\obj\Debug\net10.0\compressed\uv3jm7ahfu-{0}-abdmv1u4y3-abdmv1u4y3.gz
-C:\Users\lab_services_student\Desktop\prog7311-poe-part2-ST10440987-Patrick\PROG7311_PoE\obj\Debug\net10.0\compressed\awd8a4ohb8-{0}-qcnkhbt5lj-qcnkhbt5lj.gz
-C:\Users\lab_services_student\Desktop\prog7311-poe-part2-ST10440987-Patrick\PROG7311_PoE\obj\Debug\net10.0\compressed\b06krlnghx-{0}-12rnbzdyyc-12rnbzdyyc.gz
+C:\Users\lab_services_student\Desktop\prog7311-poe-part2-ST10440987-Patrick\PROG7311_PoE\obj\Debug\net10.0\compressed\awd8a4ohb8-{0}-ej96puwv3k-ej96puwv3k.gz
+C:\Users\lab_services_student\Desktop\prog7311-poe-part2-ST10440987-Patrick\PROG7311_PoE\obj\Debug\net10.0\compressed\b06krlnghx-{0}-cj5793hgrt-cj5793hgrt.gz
 C:\Users\lab_services_student\Desktop\prog7311-poe-part2-ST10440987-Patrick\PROG7311_PoE\obj\Debug\net10.0\compressed\xvuuar4baq-{0}-v37d98uxte-v37d98uxte.gz
 C:\Users\lab_services_student\Desktop\prog7311-poe-part2-ST10440987-Patrick\PROG7311_PoE\obj\Debug\net10.0\compressed\f4winfbczw-{0}-v37d98uxte-v37d98uxte.gz
 C:\Users\lab_services_student\Desktop\prog7311-poe-part2-ST10440987-Patrick\PROG7311_PoE\obj\Debug\net10.0\staticwebassets.build.json

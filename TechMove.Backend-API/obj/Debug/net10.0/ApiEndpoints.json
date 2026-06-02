@@ -1,5 +1,46 @@
 [
   {
+    "ContainingType": "TechMove.Backend_API.Controllers.UserAccountController",
+    "Method": "Login",
+    "RelativePath": "api/account/login",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "email",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "password",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "TechMove.Backend_API.Controllers.UserAccountController",
+    "Method": "Logout",
+    "RelativePath": "api/account/logout",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "TechMove.Backend_API.Controllers.UserAccountController",
+    "Method": "GetUserState",
+    "RelativePath": "api/account/userState",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "TechMove.Backend_API.Controllers.AdminController",
     "Method": "ChangeRole",
     "RelativePath": "api/Admin/changeRole",
@@ -49,7 +90,7 @@
   {
     "ContainingType": "TechMove.Backend_API.Controllers.AdminController",
     "Method": "DeleteUser",
-    "RelativePath": "api/Admin/deleteUser",
+    "RelativePath": "api/Admin/deleteUser/{userId}",
     "HttpMethod": "DELETE",
     "IsController": true,
     "Order": 0,
@@ -57,7 +98,7 @@
       {
         "Name": "userId",
         "Type": "System.String",
-        "IsRequired": false
+        "IsRequired": true
       }
     ],
     "ReturnTypes": []
@@ -82,7 +123,7 @@
     "Parameters": [],
     "ReturnTypes": [
       {
-        "Type": "System.Collections.Generic.List\u00601[[TechMove.Database.Models.Contract, TechMove.Database, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "Type": "System.Collections.Generic.List\u00601[[TechMove.Database.DTOs.ContractDto, TechMove.Database, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
         "MediaTypes": [
           "text/plain",
           "application/json",
@@ -118,7 +159,7 @@
     "Parameters": [],
     "ReturnTypes": [
       {
-        "Type": "System.Collections.Generic.List\u00601[[TechMove.Database.Models.ContractFile, TechMove.Database, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "Type": "System.Collections.Generic.List\u00601[[TechMove.Database.DTOs.ContractFileDto, TechMove.Database, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
         "MediaTypes": [
           "text/plain",
           "application/json",
@@ -211,7 +252,7 @@
     ],
     "ReturnTypes": [
       {
-        "Type": "System.Collections.Generic.List\u00601[[TechMove.Database.Models.Contract, TechMove.Database, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "Type": "System.Collections.Generic.List\u00601[[TechMove.Database.DTOs.ContractDto, TechMove.Database, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
         "MediaTypes": [
           "text/plain",
           "application/json",
@@ -276,37 +317,6 @@
         "IsRequired": false
       }
     ],
-    "ReturnTypes": []
-  },
-  {
-    "ContainingType": "TechMove.Backend_API.Controllers.UserAccountController",
-    "Method": "Login",
-    "RelativePath": "login-action/login",
-    "HttpMethod": "POST",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "email",
-        "Type": "System.String",
-        "IsRequired": false
-      },
-      {
-        "Name": "password",
-        "Type": "System.String",
-        "IsRequired": false
-      }
-    ],
-    "ReturnTypes": []
-  },
-  {
-    "ContainingType": "TechMove.Backend_API.Controllers.UserAccountController",
-    "Method": "Logout",
-    "RelativePath": "login-action/logout",
-    "HttpMethod": "POST",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [],
     "ReturnTypes": []
   }
 ]

@@ -1,5 +1,5 @@
-C:\Users\lab_services_student\.nuget\packages\microsoft.aspnetcore.app.internal.assets\10.0.6\build\..\_framework\blazor.server.js
-C:\Users\lab_services_student\.nuget\packages\microsoft.aspnetcore.app.internal.assets\10.0.6\build\..\_framework\blazor.web.js
+C:\Users\lab_services_student\.nuget\packages\microsoft.aspnetcore.app.internal.assets\10.0.8\build\..\_framework\blazor.server.js
+C:\Users\lab_services_student\.nuget\packages\microsoft.aspnetcore.app.internal.assets\10.0.8\build\..\_framework\blazor.web.js
 Components\Layout\ReconnectModal.razor.js
 C:\Users\lab_services_student\Desktop\prog7311-poe-part2-ST10440987-Patrick\PROG7311_PoE\wwwroot\lib\bootstrap\dist\css\bootstrap-utilities.rtl.css
 C:\Users\lab_services_student\Desktop\prog7311-poe-part2-ST10440987-Patrick\PROG7311_PoE\wwwroot\lib\bootstrap\dist\css\bootstrap.min.css.map
@@ -13,8 +13,8 @@ C:\Users\lab_services_student\Desktop\prog7311-poe-part2-ST10440987-Patrick\PROG
 C:\Users\lab_services_student\Desktop\prog7311-poe-part2-ST10440987-Patrick\PROG7311_PoE\wwwroot\lib\bootstrap\dist\css\bootstrap-utilities.min.css
 C:\Users\lab_services_student\Desktop\prog7311-poe-part2-ST10440987-Patrick\PROG7311_PoE\wwwroot\app.css
 C:\Users\lab_services_student\Desktop\prog7311-poe-part2-ST10440987-Patrick\PROG7311_PoE\wwwroot\lib\bootstrap\dist\css\bootstrap-utilities.css.map
-C:\Users\lab_services_student\.nuget\packages\microsoft.aspnetcore.app.internal.assets\10.0.6\_framework\blazor.web.js
-C:\Users\lab_services_student\.nuget\packages\microsoft.aspnetcore.app.internal.assets\10.0.6\_framework\blazor.server.js
+C:\Users\lab_services_student\.nuget\packages\microsoft.aspnetcore.app.internal.assets\10.0.8\_framework\blazor.web.js
+C:\Users\lab_services_student\.nuget\packages\microsoft.aspnetcore.app.internal.assets\10.0.8\_framework\blazor.server.js
 C:\Users\lab_services_student\Desktop\prog7311-poe-part2-ST10440987-Patrick\PROG7311_PoE\wwwroot\lib\bootstrap\dist\js\bootstrap.bundle.js
 C:\Users\lab_services_student\Desktop\prog7311-poe-part2-ST10440987-Patrick\PROG7311_PoE\wwwroot\lib\bootstrap\dist\js\bootstrap.min.js.map
 C:\Users\lab_services_student\Desktop\prog7311-poe-part2-ST10440987-Patrick\PROG7311_PoE\wwwroot\lib\bootstrap\dist\css\bootstrap-reboot.min.css

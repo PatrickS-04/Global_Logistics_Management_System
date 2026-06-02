@@ -11,6 +11,13 @@
             <h4 class="mb-0">Create New Contract</h4>
         </div>
         <div class="card-body">
+            @if (!string.IsNullOrEmpty(internalValidationErrorMessage))
+            {
+                <div class="alert alert-danger shadow-sm py-2 small">
+                    @internalValidationErrorMessage
+                </div>
+            }
+
             <EditForm Model="@contractModel" OnValidSubmit="HandleSubmit">
                 <DataAnnotationsValidator />
                 <ValidationSummary class="text-danger small" />
@@ -53,6 +60,7 @@
 @code {
     private ContractFormModel contractModel = new();
     private IBrowserFile? selectedFile;
+    private string? internalValidationErrorMessage;
 
     private void HandleFileSelected(InputFileChangeEventArgs ev)
     {
@@ -63,6 +71,8 @@
     {
         try
         {
+            internalValidationErrorMessage = null;
+
             bool isSuccessful = await ContractService.CreateContractAsync(
                 contractModel.Type,
                 contractModel.StartDate,
@@ -74,17 +84,27 @@
             {
                 NavigationManager.NavigateTo("/Home");
             }
+            else
+            {
+                internalValidationErrorMessage = "The server rejected the contract creation. Please check your inputs.";
+            }
         }
-        catch (Exception ex)
+        catch (Exception exception)
         {
-            Console.WriteLine($"Error transmitting contract data over network: {ex.Message}");
+            internalValidationErrorMessage = $"Error: {exception.Message}";
+            Console.WriteLine($"Error transmitting contract data over network: {exception.Message}");
         }
     }
 
     public class ContractFormModel
     {
+        [System.ComponentModel.DataAnnotations.Required(ErrorMessage = "Please select a specific contract type category.")]
         public string? Type { get; set; }
+
+        [System.ComponentModel.DataAnnotations.Required(ErrorMessage = "A valid Start Date calendar baseline is required.")]
         public DateTime StartDate { get; set; } = DateTime.Today;
+
+        [System.ComponentModel.DataAnnotations.Required(ErrorMessage = "A valid End Date calendar baseline is required.")]
         public DateTime EndDate { get; set; } = DateTime.Today.AddYears(1);
     }
 }

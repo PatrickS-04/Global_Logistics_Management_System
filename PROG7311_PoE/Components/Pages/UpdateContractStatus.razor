@@ -27,16 +27,27 @@
                 <select @bind="contractId" class="form-select" required>
                     <option value="">-- Select Contract --</option>
 
-                    @foreach (var contract in contracts)
+                    @if (contracts == null)
                     {
-                        <option value="@contract.ContractId">
-                            @contract.ClientName -
-                            @contract.Type -
-                            @contract.StartDate.ToString("dd MMM yyyy")
-                            to
-                            @contract.EndDate.ToString("dd MMM yyyy")
-                            (@contract.ContractStatus)
-                        </option>
+                        <option disabled>Loading data...</option>
+                    }
+                    else if (!contracts.Any())
+                    {
+                        <option disabled>No contracts were found</option>
+                    }
+                    else
+                    {
+                        @foreach (var contract in contracts)
+                        {
+                            <option value="@contract.ContractId">
+                                @contract.ClientName -
+                                @contract.Type -
+                                @contract.StartDate.ToString("dd MMM yyyy")
+                                to
+                                @contract.EndDate.ToString("dd MMM yyyy")
+                                (@contract.ContractStatus)
+                            </option>
+                        }
                     }
                 </select>
             </div>

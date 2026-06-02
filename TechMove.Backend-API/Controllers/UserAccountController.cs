@@ -1,11 +1,11 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using TechMove.Database.Models;
-using TechMove.Backend_API.Services;
+using System.Security.Claims;
 
 namespace TechMove.Backend_API.Controllers
 {
-    [Route("login-action")]
+    [Route("api/account")]
     [ApiController]
     public class UserAccountController : ControllerBase
     {
@@ -19,14 +19,36 @@ namespace TechMove.Backend_API.Controllers
         // ---------------------------------------------------------------------------------------------------------
         // Method logs in users with correct credentials
         [HttpPost("login")]
-        [IgnoreAntiforgeryToken]
         public async Task<IActionResult> Login([FromForm] string email, [FromForm] string password)
         {
-            var userLoggedIn = await _signInManager.PasswordSignInAsync(email, password, false, lockoutOnFailure : false);
+            var user = await _signInManager.UserManager.FindByEmailAsync(email);
+            if (user == null)
+            {
+                return BadRequest("User was NOT logged in successfully");
+            }
+
+            var userLoggedIn = await _signInManager.CheckPasswordSignInAsync(user, password, lockoutOnFailure : false);
 
             if (userLoggedIn.Succeeded)
             {
-                return Ok("User Successfully Logged In!");
+                var claims = new List<Claim>
+                {
+                    new Claim(ClaimTypes.NameIdentifier, user.Id),
+                    new Claim(ClaimTypes.Name, user.Email),
+                };
+
+                var roles = await _signInManager.UserManager.GetRolesAsync(user);
+                foreach (var role in roles)
+                {
+                    claims.Add(new Claim(ClaimTypes.Role, role));
+                }
+
+                var claimsIdentity = new ClaimsIdentity(claims, IdentityConstants.ApplicationScheme);
+                var claimsPrincipal = new ClaimsPrincipal(claimsIdentity);
+
+                await HttpContext.SignInAsync(IdentityConstants.ApplicationScheme, claimsPrincipal);
+
+                return Ok(new { Message = "User Successfully Logged In!" });
             }
 
             return BadRequest("User was NOT logged in successfully");
@@ -35,11 +57,28 @@ namespace TechMove.Backend_API.Controllers
         // ---------------------------------------------------------------------------------------------------------
         // Method logs users out
         [HttpPost("logout")]
-        [IgnoreAntiforgeryToken]
         public async Task<IActionResult> Logout()
         {
             await _signInManager.SignOutAsync();
-            return Ok("User was successfully Logged Out");
+            return Ok(new { Message = "User was successfully Logged Out" });
+        }
+
+        [HttpGet("userState")]
+        public IActionResult GetUserState()
+        {
+            if (User.Identity?.IsAuthenticated == true)
+            {
+                var roles = User.FindAll(ClaimTypes.Role).Select(currentUser => currentUser.Value).ToList();
+
+                return Ok(new
+                {
+                    isAuthenticated = true,
+                    name = User.Identity.Name,
+                    roles = roles
+                });
+            }
+
+            return Ok(new { isAuthenticated = false });
         }
     }
 }
