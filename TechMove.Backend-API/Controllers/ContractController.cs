@@ -29,20 +29,27 @@ namespace TechMove.Backend_API.Controllers
         [HttpGet("activeContracts")]
         public async Task<ActionResult<List<ContractDto>>> GetActiveContracts()
         {
-            var activeContracts = await _contractService.GetActiveContracts();
-
-            var contractDTOs = activeContracts.Select(contract => new ContractDto
+            try
             {
-                ContractId = contract.ContractId,
-                ClientName = contract.Client?.clientName ?? "Unknown Client",
-                Type = contract.GetType().Name,
-                StartDate = contract.startDate,
-                EndDate = contract.endDate,
-                ContractStatus = contract.contractStatus.ToString(),
-                DefaultCurrency = contract.defaultCurrency ?? "ZAR"
-            }).ToList();
+                var activeContracts = await _contractService.GetActiveContracts();
 
-            return Ok(contractDTOs);
+                var contractDTOs = activeContracts.Select(contract => new ContractDto
+                {
+                    ContractId = contract.ContractId,
+                    ClientName = contract.Client?.clientName ?? "Unknown Client",
+                    Type = contract.GetType().Name,
+                    StartDate = contract.startDate,
+                    EndDate = contract.endDate,
+                    ContractStatus = contract.contractStatus.ToString(),
+                    DefaultCurrency = contract.defaultCurrency ?? "ZAR"
+                }).ToList();
+
+                return Ok(contractDTOs);
+            }
+            catch (Exception exception)
+            {
+                return BadRequest(exception.Message);
+            }
         }
 
         // ---------------------------------------------------------------------------------------------------------

@@ -1,6 +1,6 @@
 <Solution>
   <Project Path="PROG7311_PoE/PROG7311_PoE.csproj" />
-  <Project Path="PROG7311_UnitTesting/PROG7311_UnitTesting.csproj" Id="3bd36ee3-aadb-4af7-985d-da57d0012c33" />
+  <Project Path="PROG7311_UnitTesting/PROG7311_Testing.csproj" Id="3bd36ee3-aadb-4af7-985d-da57d0012c33" />
   <Project Path="TechMove.Backend-API/TechMove.Backend_API.csproj" Id="4b60d883-ee43-44a7-a618-228964963b91" />
   <Project Path="TechMove.Database/TechMove.Database.csproj" Id="75302ddc-1853-4288-8144-6ad0af42f1d3" />
 </Solution>

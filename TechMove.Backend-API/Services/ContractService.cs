@@ -42,7 +42,7 @@ namespace TechMove.Backend_API.Services
 
         // ---------------------------------------------------------------------------------------------------------
         // Method returns a list of all Active Contracts
-        public async Task<List<Contract>> GetActiveContracts()
+        public async virtual Task<List<Contract>> GetActiveContracts()
         {
             using var contextFactoryDb = _contextFactory.CreateDbContext();
             return await contextFactoryDb.Contracts
@@ -121,7 +121,7 @@ namespace TechMove.Backend_API.Services
 
         // ---------------------------------------------------------------------------------------------------------
         // Method updated contract statuses and saves it to the database
-        public async Task UpdateContractStatus(ContractStatus updatedContractStatus, int contractId)
+        public async virtual Task UpdateContractStatus(ContractStatus updatedContractStatus, int contractId)
         {
             using var contextFactoryDb = _contextFactory.CreateDbContext();
 

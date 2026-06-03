@@ -46,7 +46,7 @@ namespace TechMove.Backend_API.Services
 
         // ---------------------------------------------------------------------------------------------------------
         // Method creates a new service request after validating the contracts eligibility and then converting the cost to ZAR
-        public async Task ServiceRequestCreation(ServiceRequest newServiceRequest, string chosenCurrency)
+        public async virtual Task ServiceRequestCreation(ServiceRequest newServiceRequest, string chosenCurrency)
         {
             bool isContractEligible = await IsContractEligibleForServiceRequestCreation(newServiceRequest.ContractId);
 

@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("TechMove.Database")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+b2b832571f09a3ab18b7bff6de6a4ca195d0de18")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+f809448954ee3fda42b22e6e78027adad7e82345")]
 [assembly: System.Reflection.AssemblyProductAttribute("TechMove.Database")]
 [assembly: System.Reflection.AssemblyTitleAttribute("TechMove.Database")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

@@ -35,6 +35,9 @@
             "projectReferences": {
               "C:\\Users\\lab_services_student\\Desktop\\prog7311-poe-part2-ST10440987-Patrick\\TechMove.Backend-API\\TechMove.Backend_API.csproj": {
                 "projectPath": "C:\\Users\\lab_services_student\\Desktop\\prog7311-poe-part2-ST10440987-Patrick\\TechMove.Backend-API\\TechMove.Backend_API.csproj"
+              },
+              "C:\\Users\\lab_services_student\\Desktop\\prog7311-poe-part2-ST10440987-Patrick\\TechMove.Database\\TechMove.Database.csproj": {
+                "projectPath": "C:\\Users\\lab_services_student\\Desktop\\prog7311-poe-part2-ST10440987-Patrick\\TechMove.Database\\TechMove.Database.csproj"
               }
             }
           }
