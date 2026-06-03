@@ -14,7 +14,8 @@ namespace TechMove.Backend_API
 
             // Add services to the container.
             builder.Services.AddDbContextFactory<AppDbContext>(options =>
-                options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"), sqlOptions => sqlOptions.EnableRetryOnFailure()));
+                options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"), 
+                sqlOptions => sqlOptions.EnableRetryOnFailure()));
 
             builder.Services.AddIdentity<IdentityUser, IdentityRole>()
             .AddEntityFrameworkStores<AppDbContext>()

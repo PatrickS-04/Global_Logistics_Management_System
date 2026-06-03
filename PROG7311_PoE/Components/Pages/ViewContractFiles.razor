@@ -39,11 +39,9 @@
                                 <td>@file.FileName</td>
                                 <td>@file.DateOfUpload</td>
                                 <td class="text-center">
-                                    <a href="/api/contract/fileDownload/@file.StoredFileName"
-                                           class="btn btn-primary btn-sm"
-                                           @onclick="() => DownloadFile(file.StoredFileName, file.FileName)">
+                                    <button class="btn btn-primary btn-sm" @onclick="() => DownloadFile(file.StoredFileName, file.FileName)">
                                         <span class="bi bi-download"></span> Download
-                                    </a>
+                                    </button>
                                 </td>
                             </tr>
                         }
@@ -81,8 +79,9 @@
             if (response.IsSuccessStatusCode)
             {
                 var bytesOfFile = await response.Content.ReadAsByteArrayAsync();
-                var baseData = Convert.ToBase64String(bytesOfFile);
-                await JS.InvokeVoidAsync("open", $"data:application/pdf;base64,{baseData}", "_blank");
+                var fileStream = new MemoryStream(bytesOfFile);
+                using var stream = new DotNetStreamReference(stream: fileStream);
+                await JS.InvokeVoidAsync("downloadFileFromStream", originalFileName, stream);
             }
             else
             {

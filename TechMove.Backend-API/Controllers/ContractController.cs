@@ -225,13 +225,13 @@ namespace TechMove.Backend_API.Controllers
 
         // ---------------------------------------------------------------------------------------------------------
         // Method allows the user to download the contract file in the UI by calling the method from the service
-        [HttpGet("fileDownload/{storedName}")]
+        [HttpGet("fileDownload/{storedFileName}")]
         [Authorize(Roles = "LogisticsManager")]
-        public async Task<IActionResult> FileDownload(string storedName)
+        public async Task<IActionResult> FileDownload(string storedFileName)
         {
             try
             {
-                (byte[] fileBytes, string fileOriginalName) = await _contractFileService.GetFileDetailsToDownload(storedName);
+                (byte[] fileBytes, string fileOriginalName) = await _contractFileService.GetFileDetailsToDownload(storedFileName);
 
                 return File(fileBytes, "application/pdf", fileOriginalName);
             }

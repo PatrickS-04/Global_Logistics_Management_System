@@ -123,7 +123,10 @@
         try
         {
             var authenticationState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
-            var userId = authenticationState.User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value;
+            var user = authenticationState.User;
+
+            var userId = user.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value
+                ?? user.FindFirst(System.Security.Claims.ClaimTypes.Name)?.Value;
 
             if (!string.IsNullOrEmpty(userId))
             {

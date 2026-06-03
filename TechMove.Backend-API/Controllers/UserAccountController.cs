@@ -70,9 +70,12 @@ namespace TechMove.Backend_API.Controllers
             {
                 var roles = User.FindAll(ClaimTypes.Role).Select(currentUser => currentUser.Value).ToList();
 
+                var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
                 return Ok(new
                 {
                     isAuthenticated = true,
+                    id = userId,
                     name = User.Identity.Name,
                     roles = roles
                 });

@@ -37,9 +37,14 @@ namespace PROG7311_PoE.Services
                 var identity = new ClaimsIdentity("BackendCookieAuth");
                 identity.AddClaim(new Claim(ClaimTypes.Name, root.GetProperty("name").GetString() ?? ""));
 
-                foreach (var roleElement in root.GetProperty("roles").EnumerateArray())
+                if (root.TryGetProperty("id", out var idElement))
                 {
-                    identity.AddClaim(new Claim(ClaimTypes.Role, roleElement.GetString() ?? ""));
+                    identity.AddClaim(new Claim(ClaimTypes.NameIdentifier, idElement.GetString() ?? ""));
+                }
+
+                foreach (var role in root.GetProperty("roles").EnumerateArray())
+                {
+                    identity.AddClaim(new Claim(ClaimTypes.Role, role.GetString() ?? ""));
                 }
 
                 return new AuthenticationState(new ClaimsPrincipal(identity));

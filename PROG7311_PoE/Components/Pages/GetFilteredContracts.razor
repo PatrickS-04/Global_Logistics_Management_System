@@ -169,6 +169,23 @@
     private DateTime? endDate;
     private string? selectedStatus;
 
+    protected override async Task OnInitializedAsync()
+    {
+        await DefaultFilter();
+    }
+
+    private async Task DefaultFilter()
+    {
+        try
+        {
+            contracts = await ContractService.ShowAllContractsAsync();
+        }
+        catch (Exception exception)
+        {
+            contracts = new List<ContractDto>();
+        }
+    }
+
     private async Task ApplyFilter()
     {
         try
@@ -182,11 +199,13 @@
         }
     }
 
-    private void ClearFilter()
+    private async Task ClearFilter()
     {
         startDate = null;
         endDate = null;
         selectedStatus = null;
         contracts = null;
+
+        await DefaultFilter();
     }
 }

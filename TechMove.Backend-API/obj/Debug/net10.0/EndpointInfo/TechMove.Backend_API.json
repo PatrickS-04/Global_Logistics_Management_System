@@ -382,14 +382,14 @@
         }
       }
     },
-    "/api/Contract/fileDownload/{storedName}": {
+    "/api/Contract/fileDownload/{storedFileName}": {
       "get": {
         "tags": [
           "Contract"
         ],
         "parameters": [
           {
-            "name": "storedName",
+            "name": "storedFileName",
             "in": "path",
             "required": true,
             "schema": {

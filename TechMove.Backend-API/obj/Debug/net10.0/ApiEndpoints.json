@@ -213,13 +213,13 @@
   {
     "ContainingType": "TechMove.Backend_API.Controllers.ContractController",
     "Method": "FileDownload",
-    "RelativePath": "api/Contract/fileDownload/{storedName}",
+    "RelativePath": "api/Contract/fileDownload/{storedFileName}",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
     "Parameters": [
       {
-        "Name": "storedName",
+        "Name": "storedFileName",
         "Type": "System.String",
         "IsRequired": true
       }
