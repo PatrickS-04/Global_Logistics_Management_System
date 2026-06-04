@@ -25,7 +25,7 @@ namespace TechMove.Backend_API
             {
                 options.AddPolicy("AllowBlazorFrontend", policy =>
                 {
-                    policy.WithOrigins("http://localhost:5105", "https://localhost:7155")
+                    policy.WithOrigins("http://localhost:5105", "https://localhost:7155", "http://localhost:5000")
                         .AllowAnyHeader()
                         .AllowAnyMethod()
                         .AllowCredentials();
@@ -51,15 +51,20 @@ namespace TechMove.Backend_API
             {
                 app.UseSwagger();
                 app.UseSwaggerUI();
+                app.UseHttpsRedirection();
             }
 
             using (var scope = app.Services.CreateScope())
             {
                 var services = scope.ServiceProvider;
+
+                var db = services.GetRequiredService<IDbContextFactory<AppDbContext>>()
+                    .CreateDbContext();
+                await db.Database.MigrateAsync();
+
                 await InitializeDatabase.TestUsers(services);
             }
 
-            app.UseHttpsRedirection();
             app.UseCors("AllowBlazorFrontend");
             app.UseAuthentication();
             app.UseAuthorization();

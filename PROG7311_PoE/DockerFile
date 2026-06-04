@@ -1,18 +1,18 @@
 # Build Stage
 
-FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
+FROM mcr.microsoft.com/dotnet/sdk:10.0 AS build
 
 WORKDIR /src
 
 COPY . .
 
-RUN dotnet restore
+RUN dotnet restore "PROG7311_PoE/PROG7311_PoE.csproj"
 
-RUN dotnet publish -c Release -o /app/publish
+RUN dotnet publish "PROG7311_PoE/PROG7311_PoE.csproj" -c Release -o /app/publish
 
 # Runtime Stage
 
-FROM mcr.microsoft.com/dotnet/aspnet:8.0
+FROM mcr.microsoft.com/dotnet/aspnet:10.0
 
 WORKDIR /app
 

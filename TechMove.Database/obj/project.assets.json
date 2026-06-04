@@ -14,11 +14,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\lab_services_student\\Desktop\\prog7311-poe-part2-ST10440987-Patrick\\TechMove.Database\\TechMove.Database.csproj",
+      "projectUniqueName": "C:\\Users\\lab_services_student\\Desktop\\prog7311-poe-part3-ST10440987-Patrick\\TechMove.Database\\TechMove.Database.csproj",
       "projectName": "TechMove.Database",
-      "projectPath": "C:\\Users\\lab_services_student\\Desktop\\prog7311-poe-part2-ST10440987-Patrick\\TechMove.Database\\TechMove.Database.csproj",
+      "projectPath": "C:\\Users\\lab_services_student\\Desktop\\prog7311-poe-part3-ST10440987-Patrick\\TechMove.Database\\TechMove.Database.csproj",
       "packagesPath": "C:\\Users\\lab_services_student\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\lab_services_student\\Desktop\\prog7311-poe-part2-ST10440987-Patrick\\TechMove.Database\\obj\\",
+      "outputPath": "C:\\Users\\lab_services_student\\Desktop\\prog7311-poe-part3-ST10440987-Patrick\\TechMove.Database\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

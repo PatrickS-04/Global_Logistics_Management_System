@@ -3,35 +3,47 @@ version: '3.9'
 services:
   frontend:
     build:
-      context: ./PROG7311_PoE
+      context: .
+      dockerfile: PROG7311_PoE/DockerFile
     container_name: frontend
+    environment:
+      - ASPNETCORE_URLS=http://+:8080
     ports:
-      - "5000:8081"
+      - "5000:8080"
     depends_on:
       - backend
 
   backend:
     build:
-      context: ./TechMove.Backend_API
+      context: .
+      dockerfile: TechMove.Backend_API/DockerFile
     container_name: backend
     environment:
       - ConnectionStrings__DefaultConnection=Server=sqlserver;Database=TechMoveDb;User Id=sa;Password=Your_password123;TrustServerCertificate=True;
       - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://+:8080 
     ports:
       - "5001:8080"
     depends_on:
-      - sqlserver
+      sqlserver:
+        condition: service_healthy
     
   sqlserver:
     image: mcr.microsoft.com/mssql/server:2022-latest
     container_name: sqlserver
     environment:
-      SA_PASSWORD: "Your_password123"
+      MSSQL_SA_PASSWORD: "Your_password123"
       ACCEPT_EULA: "Y"
     ports:
       - "1433:1433"
     volumes:
       - sqlvolume:/var/opt/mssql
+    healthcheck:
+      test: /opt/mssql-tools18/bin/sqlcmd -S localhost -U sa -P "Your_password123" -Q "SELECT 1" -No
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 30s  
 
 volumes:
   sqlvolume:

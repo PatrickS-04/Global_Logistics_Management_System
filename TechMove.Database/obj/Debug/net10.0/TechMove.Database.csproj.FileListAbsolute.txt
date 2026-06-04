@@ -10,3 +10,15 @@ C:\Users\lab_services_student\Desktop\prog7311-poe-part2-ST10440987-Patrick\Tech
 C:\Users\lab_services_student\Desktop\prog7311-poe-part2-ST10440987-Patrick\TechMove.Database\obj\Debug\net10.0\refint\TechMove.Database.dll
 C:\Users\lab_services_student\Desktop\prog7311-poe-part2-ST10440987-Patrick\TechMove.Database\obj\Debug\net10.0\TechMove.Database.pdb
 C:\Users\lab_services_student\Desktop\prog7311-poe-part2-ST10440987-Patrick\TechMove.Database\obj\Debug\net10.0\ref\TechMove.Database.dll
+C:\Users\lab_services_student\Desktop\prog7311-poe-part3-ST10440987-Patrick\TechMove.Database\bin\Debug\net10.0\TechMove.Database.deps.json
+C:\Users\lab_services_student\Desktop\prog7311-poe-part3-ST10440987-Patrick\TechMove.Database\bin\Debug\net10.0\TechMove.Database.dll
+C:\Users\lab_services_student\Desktop\prog7311-poe-part3-ST10440987-Patrick\TechMove.Database\bin\Debug\net10.0\TechMove.Database.pdb
+C:\Users\lab_services_student\Desktop\prog7311-poe-part3-ST10440987-Patrick\TechMove.Database\obj\Debug\net10.0\TechMove.Database.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\lab_services_student\Desktop\prog7311-poe-part3-ST10440987-Patrick\TechMove.Database\obj\Debug\net10.0\TechMove.Database.AssemblyInfoInputs.cache
+C:\Users\lab_services_student\Desktop\prog7311-poe-part3-ST10440987-Patrick\TechMove.Database\obj\Debug\net10.0\TechMove.Database.AssemblyInfo.cs
+C:\Users\lab_services_student\Desktop\prog7311-poe-part3-ST10440987-Patrick\TechMove.Database\obj\Debug\net10.0\TechMove.Database.csproj.CoreCompileInputs.cache
+C:\Users\lab_services_student\Desktop\prog7311-poe-part3-ST10440987-Patrick\TechMove.Database\obj\Debug\net10.0\TechMove.Database.sourcelink.json
+C:\Users\lab_services_student\Desktop\prog7311-poe-part3-ST10440987-Patrick\TechMove.Database\obj\Debug\net10.0\TechMove.Database.dll
+C:\Users\lab_services_student\Desktop\prog7311-poe-part3-ST10440987-Patrick\TechMove.Database\obj\Debug\net10.0\refint\TechMove.Database.dll
+C:\Users\lab_services_student\Desktop\prog7311-poe-part3-ST10440987-Patrick\TechMove.Database\obj\Debug\net10.0\TechMove.Database.pdb
+C:\Users\lab_services_student\Desktop\prog7311-poe-part3-ST10440987-Patrick\TechMove.Database\obj\Debug\net10.0\ref\TechMove.Database.dll

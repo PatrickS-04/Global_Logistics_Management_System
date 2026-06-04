@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "hvbPU+OB0ak=",
+  "dgSpecHash": "UZniZ+UFjiE=",
   "success": true,
-  "projectFilePath": "C:\\Users\\lab_services_student\\Desktop\\prog7311-poe-part2-ST10440987-Patrick\\PROG7311_PoE\\PROG7311_PoE.csproj",
+  "projectFilePath": "C:\\Users\\lab_services_student\\Desktop\\prog7311-poe-part3-ST10440987-Patrick\\PROG7311_PoE\\PROG7311_PoE.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\lab_services_student\\.nuget\\packages\\azure.core\\1.47.1\\azure.core.1.47.1.nupkg.sha512",
     "C:\\Users\\lab_services_student\\.nuget\\packages\\azure.identity\\1.14.2\\azure.identity.1.14.2.nupkg.sha512",
