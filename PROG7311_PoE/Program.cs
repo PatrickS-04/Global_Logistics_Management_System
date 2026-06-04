@@ -19,7 +19,7 @@ namespace PROG7311_PoE
 
             builder.Services.AddScoped(sp => new HttpClient
             {
-                BaseAddress = new Uri("http://localhost:5068/")
+                BaseAddress = new Uri("http://backend:8080/")
             });
 
             builder.Services.AddScoped<ContractService>();
