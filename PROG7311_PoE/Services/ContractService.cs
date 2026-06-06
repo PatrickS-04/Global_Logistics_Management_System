@@ -12,6 +12,8 @@ namespace PROG7311_PoE.Services
             _httpClient = httpClient;
         }
 
+        // ---------------------------------------------------------------------------------------------------------
+        // Method sends HTTP Post request to backend endpoint to create a contract using type, startDate, endDate and selectedFile
         public async Task<bool> CreateContractAsync(string type, DateTime startDate, DateTime endDate, IBrowserFile? selectedFile)
         {
             using var content = new MultipartFormDataContent();
@@ -34,6 +36,8 @@ namespace PROG7311_PoE.Services
             return response.IsSuccessStatusCode;
         }
 
+        // ---------------------------------------------------------------------------------------------------------
+        // Method sends HTTP Get request to backend endpoint to return a list of active contracts
         public async Task<List<ContractDto>> GetActiveContractsAsync()
         {
             return await _httpClient.GetFromJsonAsync<List<ContractDto>>("api/Contract/activeContracts") ?? new List<ContractDto>();
@@ -69,26 +73,36 @@ namespace PROG7311_PoE.Services
                 ?? new List<ContractDto>();
         }
 
+        // ---------------------------------------------------------------------------------------------------------
+        // Method sends HTTP Get request to backend endpoint to return a list of a clients existing contracts
         public async Task<List<ContractDto>> ViewMyContractsAsync(string userId)
         {
             return await _httpClient.GetFromJsonAsync<List<ContractDto>>($"api/Contract/allClientContracts/{userId}") ?? new List<ContractDto>();
         }
 
+        // ---------------------------------------------------------------------------------------------------------
+        // Method sends HTTP Get request to backend endpoint to return a list of all existing contracts
         public async Task<List<ContractDto>> ShowAllContractsAsync()
         {
             return await _httpClient.GetFromJsonAsync<List<ContractDto>>("api/Contract/allContracts") ?? new List<ContractDto>();
         }
 
+        // ---------------------------------------------------------------------------------------------------------
+        // Method sends HTTP Get request to backend endpoint to return a list of contract files if any
         public async Task<List<ContractFileDto>> ViewContractFilesAsync()
         {
             return await _httpClient.GetFromJsonAsync<List<ContractFileDto>>("api/Contract/allContractFiles") ?? new List<ContractFileDto>();
         }
 
+        // ---------------------------------------------------------------------------------------------------------
+        // Method sends HTTP Get request to backend endpoint to allow logistics managers to download the contract files
         public async Task<HttpResponseMessage> FileDownloadAsync(string storedFileName)
         {
             return await _httpClient.GetAsync($"api/Contract/fileDownload/{storedFileName}");
         }
 
+        // ---------------------------------------------------------------------------------------------------------
+        // Method sends HTTP Patch request to backend endpoint to update the contract status of a contract
         public async Task<bool> UpdateContractStatusAsync(int contractId, string contractStatus)
         {
             var dataFromForm = new FormUrlEncodedContent(new[]
@@ -102,3 +116,4 @@ namespace PROG7311_PoE.Services
         }
     }
 }
+// --------------------------------------------------------000... End Of File ...000------------------------------------------------------------------
