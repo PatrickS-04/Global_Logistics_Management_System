@@ -11,6 +11,8 @@ namespace PROG7311_PoE.Services
             _httpClient = httpClient;
         }
 
+        // ---------------------------------------------------------------------------------------------------------
+        // Method sends HTTP Post request to backend endpoint to create a service request for a contract
         public async Task<bool> CreateServiceRequestAsync(int contractId, string description, decimal cost, string status, string currency)
         {
             var dataFromForm = new FormUrlEncodedContent(new[]
@@ -27,3 +29,4 @@ namespace PROG7311_PoE.Services
         }
     }
 }
+// --------------------------------------------------------000... End Of File ...000------------------------------------------------------------------
