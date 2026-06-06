@@ -9,6 +9,8 @@
             _httpClient = httpClient;
         }
 
+        // ---------------------------------------------------------------------------------------------------------
+        // Method sends HTTP Post request to backend endpoint to log a user in
         public async Task<bool> LogUserInAsync(string email, string password)
         {
             var dataFromLoginForm = new FormUrlEncodedContent(new[]
@@ -21,6 +23,8 @@
             return response.IsSuccessStatusCode;
         }
 
+        // ---------------------------------------------------------------------------------------------------------
+        // Method sends HTTP Post request to backend endpoint to log a user out
         public async Task<bool> LogUserOutAsync()
         {
             var response = await _httpClient.PostAsync("api/account/logout", null);
@@ -28,3 +32,4 @@
         }
     }
 }
+// --------------------------------------------------------000... End Of File ...000------------------------------------------------------------------
