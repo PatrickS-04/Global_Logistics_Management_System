@@ -63,6 +63,8 @@ namespace TechMove.Backend_API.Controllers
             return Ok(new { Message = "User was successfully Logged Out" });
         }
 
+        // ---------------------------------------------------------------------------------------------------------
+        // Method gets the users log in state whether they are logged in or logged out
         [HttpGet("userState")]
         public IActionResult GetUserState()
         {
