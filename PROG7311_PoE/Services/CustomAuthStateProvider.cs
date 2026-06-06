@@ -13,6 +13,9 @@ namespace PROG7311_PoE.Services
             _httpClient = httpClient;
         }
 
+        // ---------------------------------------------------------------------------------------------------------
+        // Method sends HTTP Get request to backend endpoint to check whether a user is logged in or not
+        // When a user logs in, a claimsidentity is built with name, id and role and then the api checks whether the user is logged in or not
         public override async Task<AuthenticationState> GetAuthenticationStateAsync()
         {
             var anonymousState = new AuthenticationState(new ClaimsPrincipal(new ClaimsIdentity()));
@@ -55,11 +58,15 @@ namespace PROG7311_PoE.Services
             }
         }
 
+        // ---------------------------------------------------------------------------------------------------------
+        // Method tells the application to re-check the authentication status right after a user has logged in or logged out
         public void NotifyUserAuthenticationStateChanged()
         {
             NotifyAuthenticationStateChanged(GetAuthenticationStateAsync());
         }
 
+        // ---------------------------------------------------------------------------------------------------------
+        // Method clears out the claimsidentity and authentication state and logs user out
         public void NotifyUserLoggedOut()
         {
             var anonymousPrincipal = new ClaimsPrincipal(new ClaimsIdentity());
@@ -69,3 +76,4 @@ namespace PROG7311_PoE.Services
         }
     }
 }
+// --------------------------------------------------------000... End Of File ...000------------------------------------------------------------------
