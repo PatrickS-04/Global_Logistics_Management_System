@@ -21,7 +21,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\TechMove.Backend-API\TechMove.Backend_API.csproj" />
+    <ProjectReference Include="..\TechMove.Backend_API\TechMove.Backend_API.csproj" />
     <ProjectReference Include="..\TechMove.Database\TechMove.Database.csproj" />
   </ItemGroup>
 
