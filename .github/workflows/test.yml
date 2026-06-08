@@ -26,4 +26,4 @@ jobs:
       run: dotnet build --no-restore
 
     - name: Run Tests
-      run: dotnet test --no-build --verbosity normal
+      run: dotnet test "C:\Users\patri\OneDrive\Desktop\3rd Year Projects\prog7311-poe-part3-ST10440987-Patrick-master\prog7311-poe-part3-ST10440987-Patrick-master\PROG7311_UnitTesting\PROG7311_Testing.csproj" --no-build --verbosity normal
